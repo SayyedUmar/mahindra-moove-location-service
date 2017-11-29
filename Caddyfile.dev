@@ -5,6 +5,11 @@ rewrite {
 	to /fast/api/v1/drivers/{1}/heart_beat
 }
 
+rewrite {
+	r /api/v2/drivers/(.*)/update_current_location
+	to /fast/api/v2/drivers/{1}/update_current_location
+}
+
 proxy / localhost:3000 {
   except /fast
 }
