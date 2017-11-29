@@ -1,0 +1,5 @@
+:4500
+proxy / localhost:3000 {
+  except /api/v1/drivers/1659/heart_beat
+}
+proxy /api/v1/drivers/1659/heart_beat localhost:4343
