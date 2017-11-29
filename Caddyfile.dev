@@ -1,5 +1,13 @@
 :4500
-proxy / localhost:3000 {
-  except /api/v1/drivers/1659/heart_beat
+
+rewrite {
+	r /api/v1/drivers/(.*)/heart_beat
+	to /fast/api/v1/drivers/{1}/heart_beat
 }
-proxy /api/v1/drivers/1659/heart_beat localhost:4343
+
+proxy / localhost:3000 {
+  except /fast
+}
+proxy /fast localhost:4343 {
+	without /fast
+}

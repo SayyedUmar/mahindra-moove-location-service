@@ -3,11 +3,14 @@ package identity
 import (
 	"bytes"
 	"encoding/json"
+	"fmt"
 	"github.com/jmoiron/sqlx"
 	log "github.com/sirupsen/logrus"
 	"golang.org/x/crypto/bcrypt"
 	"time"
 )
+
+var tokenCache = make(map[string]string)
 
 type Token struct {
 	Token  string `json:"token"`
@@ -44,16 +47,22 @@ func (i *Identity) parseTokens() {
 }
 
 func (i *Identity) IsValid(clientId, token string) bool {
+
 	return i.isValidToken(clientId, token) && i.isValidTimeStamp(clientId, token)
 }
 
 func (i *Identity) isValidToken(clientId string, token string) bool {
+	cacheKey := fmt.Sprintf("%s-%s", clientId, token)
+	if _, ok := tokenCache[cacheKey]; ok {
+		return true
+	}
 	hash := i.ParsedTokens[clientId].Token
 	err := bcrypt.CompareHashAndPassword([]byte(hash), []byte(token))
 	if err != nil {
 		log.Debug("passwords do not match", err)
 		return false
 	}
+	tokenCache[cacheKey] = token
 	return true
 }
 

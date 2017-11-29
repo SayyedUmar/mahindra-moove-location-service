@@ -1,6 +1,7 @@
 package db
 
 import (
+	"fmt"
 	"github.com/jmoiron/sqlx"
 	log "github.com/sirupsen/logrus"
 	yaml "gopkg.in/yaml.v2"
@@ -15,12 +16,12 @@ type HeartBeat struct {
 }
 
 func (hb *HeartBeat) YamlLocation() string {
-	content, err := yaml.Marshal(map[string]float64{"lat": hb.Lat, "lng": hb.Lng})
+	content, err := yaml.Marshal(map[string]float64{":lat": hb.Lat, ":lng": hb.Lng})
 	if err != nil {
 		log.Warn("Yaml encoding of current location failed", hb)
 		return ""
 	}
-	return string(content)
+	return fmt.Sprintf("---\n%s", string(content))
 }
 
 func (hb *HeartBeat) Save(db sqlx.Execer) error {
