@@ -2,7 +2,7 @@ package main
 
 import (
 	"github.com/MOOVE-Network/location_service/db"
-	ident "github.com/MOOVE-Network/location_service/identity"
+	web "github.com/MOOVE-Network/location_service/web"
 	log "github.com/sirupsen/logrus"
 	"io"
 	"os"
@@ -17,10 +17,7 @@ func main() {
 	conn := db.InitSQLConnection()
 	db.SetActiveDB(conn)
 	defer closeConn(conn)
-	identity := ident.FetchIdentityByUID(conn, "moove.dinesh1651@gmail.com")
-	if identity.IsValid("GWyFWywJ3mf5TJe77DBIHw", "v-pWLlS4pwf_L9qbx-FtYw") {
-		log.Info("Yay! passwords match")
-	}
+	web.SetupServer()
 }
 
 func closeConn(closable io.Closer) {
