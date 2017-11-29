@@ -14,6 +14,7 @@ type Token struct {
 	Expiry int64  `json:"expiry"`
 }
 type Identity struct {
+	Id           int
 	Uid          string
 	Tokens       string
 	ParsedTokens map[string]Token
@@ -21,7 +22,7 @@ type Identity struct {
 
 func FetchIdentityByUID(db *sqlx.DB, uid string) *Identity {
 	var i Identity
-	row := db.QueryRowx("select uid, tokens from users where uid=?", uid)
+	row := db.QueryRowx("select id, uid, tokens from users where uid=?", uid)
 	if row != nil {
 		err := row.StructScan(&i)
 		if err != nil {

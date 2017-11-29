@@ -9,7 +9,7 @@ import (
 var database *sqlx.DB
 
 func InitSQLConnection() *sqlx.DB {
-	dbUrl := os.Getenv("CLUSTERING_DATABASE_URL")
+	dbUrl := os.Getenv("LOCATION_DATABASE_URL")
 	if dbUrl == "" {
 		dbUrl = "root:@/moove_development"
 	}
