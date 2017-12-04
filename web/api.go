@@ -29,6 +29,10 @@ func WriteHeartBeat(w http.ResponseWriter, req *http.Request) {
 	hb.Lat = lat
 	hb.Lng = lng
 	heartBeats[ident.Id] = hb
+	err := hb.Save(db.CurrentDB())
+	if err != nil {
+		log.Error(err)
+	}
 	writeOk(w)
 }
 

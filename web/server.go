@@ -14,8 +14,9 @@ func SetupServer() {
 		port = "4343"
 	}
 	router := mux.NewRouter()
-	router.HandleFunc("/api/v1/drivers/{id}/heart_beat", TokenAuth(WriteHeartBeat))
-	router.HandleFunc("/api/v2/drivers/{id}/update_current_location", TokenAuth(UpdateCurrentLocation))
+	router.HandleFunc("/api/v1/drivers/{id}/heart_beat", TokenAuth(WriteHeartBeat)).Methods("POST")
+	router.HandleFunc("/api/v2/drivers/{id}/update_current_location", TokenAuth(UpdateCurrentLocation)).Methods("POST")
+	router.HandleFunc("/api/v3/drivers/{id}/location", TokenAuth(LocationSocket))
 	log.Info("Starting ... ")
 	log.Infof("Listening on port %s ... ", port)
 	setupHeartBeatTimer()
