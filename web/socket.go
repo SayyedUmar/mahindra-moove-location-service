@@ -1,9 +1,9 @@
 package web
 
 import (
-	//"github.com/MOOVE-Network/location_service/identity"
+	"github.com/MOOVE-Network/location_service/identity"
 	"github.com/gorilla/websocket"
-	//log "github.com/sirupsen/logrus"
+	log "github.com/sirupsen/logrus"
 	"net/http"
 )
 
@@ -12,12 +12,14 @@ var upgrader = websocket.Upgrader{
 	WriteBufferSize: 1024,
 }
 
-//var hub := NewHub()
+var hub = NewHub()
+
 func LocationSocket(w http.ResponseWriter, r *http.Request) {
-	//ident := r.Context().Value("identity").(*identity.Identity)
-	//conn, err := upgrader.Upgrade(w, r, nil)
-	//if err != nil {
-	//log.Error(err)
-	//}
-	//log.Info(conn)
+	ident := r.Context().Value("identity").(*identity.Identity)
+	conn, err := upgrader.Upgrade(w, r, nil)
+	if err != nil {
+		log.Error(err)
+	}
+	client := NewClient(hub, conn, ident.Id)
+	hub.Register <- client
 }
