@@ -2,6 +2,12 @@
 
 
 [[projects]]
+  name = "github.com/DataDog/dd-trace-go"
+  packages = ["tracer","tracer/contrib/gorilla/muxtrace","tracer/ext"]
+  revision = "66d30ecd989ecbdc79a95347fca5ba027f625449"
+  version = "v0.6.0"
+
+[[projects]]
   name = "github.com/go-sql-driver/mysql"
   packages = ["."]
   revision = "a0583e0143b1624142adab07e0e97fe106d99561"
@@ -38,6 +44,11 @@
   version = "v1.0.3"
 
 [[projects]]
+  name = "github.com/ugorji/go"
+  packages = ["codec"]
+  revision = "9c7f9b7a2bc3a520f7c7b30b34b7f85f47fe27b6"
+
+[[projects]]
   branch = "master"
   name = "golang.org/x/crypto"
   packages = ["bcrypt","blowfish","pbkdf2","ssh/terminal"]
@@ -58,6 +69,6 @@
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "27ebc22fe267ac32213e0ca85de996a557463d62684da16102fbe4aa43fe7851"
+  inputs-digest = "a38c8a763d83df68a599508ace07c8a88a0469ae18d55679bd54badedfd1f7c7"
   solver-name = "gps-cdcl"
   solver-version = 1

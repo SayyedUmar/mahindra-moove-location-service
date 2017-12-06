@@ -2,6 +2,8 @@ package web
 
 import (
 	"fmt"
+	"github.com/DataDog/dd-trace-go/tracer"
+	"github.com/DataDog/dd-trace-go/tracer/contrib/gorilla/muxtrace"
 	"github.com/gorilla/mux"
 	log "github.com/sirupsen/logrus"
 	"net/http"
@@ -14,9 +16,13 @@ func SetupServer() {
 		port = "4343"
 	}
 	router := mux.NewRouter()
-	router.HandleFunc("/api/v1/drivers/{id}/heart_beat", TokenAuth(WriteHeartBeat)).Methods("POST")
-	router.HandleFunc("/api/v2/drivers/{id}/update_current_location", TokenAuth(UpdateCurrentLocation)).Methods("POST")
-	router.HandleFunc("/api/v3/drivers/{id}/location", TokenAuth(LocationSocket))
+	tracer := muxtrace.NewMuxTracer("my-web-app", tracer.DefaultTracer)
+	tracer.HandleFunc(router, "/api/v1/drivers/{id}/heart_beat", TokenAuth(WriteHeartBeat)).Methods("POST")
+	//router.HandleFunc("/api/v1/drivers/{id}/heart_beat", TokenAuth(WriteHeartBeat)).Methods("POST")
+	tracer.HandleFunc(router, "/api/v2/drivers/{id}/update_current_location", TokenAuth(UpdateCurrentLocation)).Methods("POST")
+	//router.HandleFunc("/api/v2/drivers/{id}/update_current_location", TokenAuth(UpdateCurrentLocation)).Methods("POST")
+	tracer.HandleFunc(router, "/api/v3/drivers/{id}/location", TokenAuth(LocationSocket))
+	//router.HandleFunc("/api/v3/drivers/{id}/location", TokenAuth(LocationSocket))
 	log.Info("Starting ... ")
 	log.Infof("Listening on port %s ... ", port)
 	setupHeartBeatTimer()
