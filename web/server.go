@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"github.com/DataDog/dd-trace-go/tracer"
 	"github.com/DataDog/dd-trace-go/tracer/contrib/gorilla/muxtrace"
+	"github.com/gorilla/handlers"
 	"github.com/gorilla/mux"
 	log "github.com/sirupsen/logrus"
 	"net/http"
@@ -26,7 +27,8 @@ func SetupServer() {
 	log.Info("Starting ... ")
 	log.Infof("Listening on port %s ... ", port)
 	setupHeartBeatTimer()
-	err := http.ListenAndServe(fmt.Sprintf(":%s", port), router)
+	handler := handlers.LoggingHandler(os.Stdout, router)
+	err := http.ListenAndServe(fmt.Sprintf(":%s", port), handler)
 	if err != nil {
 		log.Panic(err)
 	}
