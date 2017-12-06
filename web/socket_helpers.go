@@ -122,8 +122,9 @@ func (c *Client) readPump() {
 	c.conn.SetReadLimit(maxMessageSize)
 	_ = c.conn.SetReadDeadline(time.Now().Add(pongWait))
 	c.conn.SetPongHandler(func(string) error {
-		_ = c.conn.SetReadDeadline(time.Now().Add(pongWait))
-		return nil
+		err := c.conn.SetReadDeadline(time.Now().Add(pongWait))
+		log.Error(err)
+		return err
 	})
 	for {
 		_, message, err := c.conn.ReadMessage()
@@ -172,6 +173,7 @@ func (c *Client) writePump() {
 		case <-ticker.C:
 			_ = c.conn.SetWriteDeadline(time.Now().Add(writeWait))
 			if err := c.conn.WriteMessage(websocket.PingMessage, []byte{}); err != nil {
+				log.Warn("write error", err)
 				return
 			}
 		}

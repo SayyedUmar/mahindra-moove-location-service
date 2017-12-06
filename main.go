@@ -2,6 +2,7 @@ package main
 
 import (
 	"github.com/MOOVE-Network/location_service/db"
+	"github.com/MOOVE-Network/location_service/version"
 	web "github.com/MOOVE-Network/location_service/web"
 	log "github.com/sirupsen/logrus"
 	"io"
@@ -14,6 +15,7 @@ func init() {
 }
 
 func main() {
+	version.PrintVersion()
 	conn := db.InitSQLConnection()
 	db.SetActiveDB(conn)
 	defer closeConn(conn)

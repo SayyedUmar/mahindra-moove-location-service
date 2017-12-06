@@ -16,6 +16,8 @@ import (
 const salt = "encrypted cookie"
 const WARDEN_FORMAT_ERROR = "warden user key format invalid"
 
+var keyCache = make(map[string][]byte)
+
 type encrypted struct {
 	data []byte
 	iv   []byte
@@ -39,9 +41,14 @@ func decrypt(key []byte, cipherData encrypted) []byte {
 }
 
 func keyFromBase(keyBase, salt string) []byte {
+	if fromCache, ok := keyCache[keyBase]; ok {
+		return fromCache
+	}
 	iterations := 1000
 	keySize := 64
-	return pbkdf2.Key([]byte(keyBase), []byte(salt), iterations, keySize, sha1.New)[:32]
+	key := pbkdf2.Key([]byte(keyBase), []byte(salt), iterations, keySize, sha1.New)[:32]
+	keyCache[keyBase] = key
+	return key
 }
 
 func decodeCookie(cookie string) encrypted {
