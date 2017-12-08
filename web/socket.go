@@ -26,10 +26,7 @@ func LocationSocket(w http.ResponseWriter, r *http.Request) {
 	client := NewClient(hub, conn, ident.Id)
 	hub.Register <- client
 	for {
-		select {
-		case message := <-client.Receive:
-			log.Infof("from server %s \n", message)
-			client.Send <- []byte(fmt.Sprintf("Received from server %s", message))
-		}
+		message := <-client.Receive
+		client.Send <- []byte(fmt.Sprintf("Received from server %s", message))
 	}
 }
