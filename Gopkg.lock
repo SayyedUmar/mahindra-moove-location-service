@@ -2,10 +2,16 @@
 
 
 [[projects]]
-  name = "github.com/DataDog/dd-trace-go"
-  packages = ["tracer","tracer/contrib/gorilla/muxtrace","tracer/ext"]
-  revision = "66d30ecd989ecbdc79a95347fca5ba027f625449"
-  version = "v0.6.0"
+  branch = "master"
+  name = "github.com/fvbock/endless"
+  packages = ["."]
+  revision = "447134032cb6a86814f570257390a379982dfc61"
+
+[[projects]]
+  name = "github.com/go-redis/redis"
+  packages = [".","internal","internal/consistenthash","internal/hashtag","internal/pool","internal/proto"]
+  revision = "e5e021257bfc6d5fbf0beac33e30194311fb189f"
+  version = "v6.7.4"
 
 [[projects]]
   name = "github.com/go-sql-driver/mysql"
@@ -50,11 +56,6 @@
   version = "v1.0.3"
 
 [[projects]]
-  name = "github.com/ugorji/go"
-  packages = ["codec"]
-  revision = "9c7f9b7a2bc3a520f7c7b30b34b7f85f47fe27b6"
-
-[[projects]]
   branch = "master"
   name = "golang.org/x/crypto"
   packages = ["bcrypt","blowfish","pbkdf2","ssh/terminal"]
@@ -75,6 +76,6 @@
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "041fb3c9a03a68340084faa0a7ce6145c10fa9f3ab2a6e5127b2161ea0b0fc47"
+  inputs-digest = "9eac91190bec70202d010a70126e479f165b45c1beef589e669cd4acd74bc299"
   solver-name = "gps-cdcl"
   solver-version = 1

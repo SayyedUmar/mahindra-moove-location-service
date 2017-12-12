@@ -1,8 +1,8 @@
 package web
 
 import (
-	"fmt"
 	"github.com/MOOVE-Network/location_service/identity"
+	"github.com/MOOVE-Network/location_service/socketstore"
 	"github.com/gorilla/websocket"
 	log "github.com/sirupsen/logrus"
 	"net/http"
@@ -25,8 +25,24 @@ func LocationSocket(w http.ResponseWriter, r *http.Request) {
 	}
 	client := NewClient(hub, conn, ident.Id)
 	hub.Register <- client
+	go readMessages(client)
+}
+func readMessages(client *Client) {
 	for {
 		message := <-client.Receive
-		client.Send <- []byte(fmt.Sprintf("Received from server %s", message))
+		switch socketstore.MessageType(message) {
+		case "LOCATION":
+			locationUpdate, err := socketstore.LocationUpdateFromJSON(message)
+			if err != nil {
+				log.Warnf("Unable to decode location update message %s", string(message))
+			}
+			client.hub.Send(string(locationUpdate.TripID), message)
+			client.hub.Send(string(client.ID), message)
+		case "HEARTBEAT":
+			log.Infof("received heartbeat %s", message)
+		default:
+			log.Warnf("Unknown message type detected %s", string(message))
+		}
+		log.Infof("got message %s", message)
 	}
 }

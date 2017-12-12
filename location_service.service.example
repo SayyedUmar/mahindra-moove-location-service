@@ -1,0 +1,26 @@
+[Unit]
+Description=Location Service
+ConditionPathExists=/home/ubuntu/moove/location_service/location_service
+After=network.target
+
+[Service]
+Type=simple
+User=ubuntu
+Group=ubuntu
+LimitNOFILE=1024
+
+Restart=on-failure
+RestartSec=10
+startLimitIntervalSec=60
+Environment="LOCATION_DATABASE=user:password@tcp(mysqlserver:3306)/db"
+
+WorkingDirectory=/home/ubuntu/moove/location_service
+ExecStart=/home/ubuntu/moove/location_service/location_service
+
+PermissionsStartOnly=true
+StandardOutput=syslog
+StandardError=syslog
+SyslogIdentifier=location_service
+
+[Install]
+WantedBy=multi-user.target

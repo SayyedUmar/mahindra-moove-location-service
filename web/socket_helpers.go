@@ -2,9 +2,10 @@ package web
 
 import (
 	"bytes"
+	"time"
+
 	"github.com/gorilla/websocket"
 	log "github.com/sirupsen/logrus"
-	"time"
 )
 
 const (
@@ -30,6 +31,7 @@ type message struct {
 	message []byte
 }
 
+// Hub serves a hub to hold connections to multiple clients
 type Hub struct {
 	topics      map[string][]*Client
 	Clients     map[*Client]bool
@@ -39,6 +41,7 @@ type Hub struct {
 	messageChan chan message
 }
 
+// NewHub creates a new hub
 func NewHub() *Hub {
 	return &Hub{
 		topics:      make(map[string][]*Client),
@@ -129,6 +132,7 @@ func (c *Client) readPump() {
 	for {
 		_, message, err := c.conn.ReadMessage()
 		if err != nil {
+			log.Error(err)
 			if websocket.IsUnexpectedCloseError(err, websocket.CloseGoingAway) {
 				log.Errorf("Error reading from socket: %v", err)
 				break

@@ -29,3 +29,11 @@ $ docker build -t moove/location_service:latest .
 ## :rocket: Running
 
 This service currently needs only one environment variable `LOCATION_DATABASE_URL`. It needs to be a connection string to the `mysql` server like so `user:pass@server:port/database`. Sometimes if the server name contains hyphens (`-`) as in the case of RDS, you might have to wrap the connection string like so `user:pass@tcp(server:port)/database`.
+
+### Configuring systemd
+
+* Copy `location_service.service.example` to `/lib/systemd/system/location_service.service`. 
+* Once done, make sure to `sudo chmod 755 /lib/systemd/system/location_service.service`.
+* To enable`sudo systemctl enable location_service.service`
+* To start `sudo systemctl start location_service`
+* To look at the logs you can use `sudo journalctl -f -u location_service`
