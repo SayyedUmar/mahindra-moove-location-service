@@ -135,8 +135,8 @@ func (c *Client) readPump() {
 			log.Error(err)
 			if websocket.IsUnexpectedCloseError(err, websocket.CloseGoingAway) {
 				log.Errorf("Error reading from socket: %v", err)
-				break
 			}
+			break
 		}
 		message = bytes.TrimSpace(bytes.Replace(message, newline, space, -1))
 		c.Receive <- message
