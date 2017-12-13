@@ -7,6 +7,7 @@ import (
 	"github.com/gorilla/websocket"
 	log "github.com/sirupsen/logrus"
 	"net/http"
+	"strconv"
 	"time"
 )
 
@@ -41,11 +42,17 @@ func readMessages(client *Client) {
 			if err != nil {
 				log.Warnf("Unable to decode location update message %s", string(message))
 			}
-			client.hub.Send(string(locationUpdate.TripID), message)
-			client.hub.Send(string(client.ID), message)
+			client.hub.Send(strconv.Itoa(locationUpdate.TripID), message)
+			client.hub.Send(strconv.Itoa(client.ID), message)
 		case "HEARTBEAT":
 			hb := &db.HeartBeat{UserID: client.ID, UpdatedAt: time.Now()}
 			heartBeats[client.ID] = hb
+		case "SUBSCRIBE":
+			subscription, err := socketstore.SubscribeEventFromJSON(message)
+			if err != nil {
+				log.Warnf("Unable to decode subscription %s", string(message))
+			}
+			hub.Subscribe(subscription.Topic, client)
 		default:
 			log.Warnf("Unknown message type detected %s", string(message))
 		}
