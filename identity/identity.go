@@ -36,6 +36,19 @@ func FetchIdentityByUID(db *sqlx.DB, uid string) *Identity {
 	}
 	return &i
 }
+func FetchIdentityByID(db *sqlx.DB, id int) *Identity {
+	var i Identity
+	row := db.QueryRowx("select id, uid, tokens from users where id=?", id)
+	if row != nil {
+		err := row.StructScan(&i)
+		if err != nil {
+			return nil
+		}
+		i.parseTokens()
+		return &i
+	}
+	return &i
+}
 
 func (i *Identity) parseTokens() {
 	buffer := bytes.NewBuffer([]byte(i.Tokens))

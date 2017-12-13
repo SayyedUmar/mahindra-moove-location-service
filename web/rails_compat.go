@@ -52,6 +52,10 @@ func keyFromBase(keyBase, salt string) []byte {
 }
 
 func decodeCookie(cookie string) encrypted {
+	// weird corner case when Rails5 decides to add other information to the encrypted cookie
+	if strings.Contains(cookie, "--") {
+		cookie = strings.Split(cookie, "--")[0]
+	}
 	cookieBytes, err := base64.StdEncoding.DecodeString(cookie)
 	if err != nil {
 		log.Panic(err)
