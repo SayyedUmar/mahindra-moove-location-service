@@ -3,13 +3,14 @@ package web
 import (
 	"encoding/json"
 	"fmt"
-	"github.com/MOOVE-Network/location_service/db"
-	"github.com/MOOVE-Network/location_service/utils"
-	log "github.com/sirupsen/logrus"
 	"net/http"
 	"strconv"
 	"strings"
 	"time"
+
+	"github.com/MOOVE-Network/location_service/db"
+	"github.com/MOOVE-Network/location_service/utils"
+	log "github.com/sirupsen/logrus"
 )
 
 type UCLRequest struct {
@@ -32,7 +33,7 @@ type TripLocation struct {
 }
 
 func (tl *TripLocation) ToDB() (*db.TripLocation, error) {
-	location, err := utils.ToLocation(tl.Lat, tl.Lng)
+	location, err := utils.ToYamlLocation(tl.Lat, tl.Lng)
 
 	if err != nil {
 		return nil, err

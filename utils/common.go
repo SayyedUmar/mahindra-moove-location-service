@@ -2,11 +2,35 @@ package utils
 
 import (
 	"fmt"
+
 	yaml "gopkg.in/yaml.v2"
 )
 
-func ToLocation(lat float64, lng float64) (string, error) {
-	content, err := yaml.Marshal(map[string]float64{":lat": lat, ":lng": lng})
+// Location encodes a Latitude and Longitude
+type Location struct {
+	Lat float64 `yaml:":lat"`
+	Lng float64 `yaml:":lng"`
+}
+
+// ToYaml encodes location in rails friendly yaml hash
+func (l *Location) ToYaml() (string, error) {
+	return ToYamlLocation(l.Lat, l.Lng)
+}
+
+// LocationFromYaml returns a Location struct parsing rails friendly yaml
+func LocationFromYaml(yml string) (*Location, error) {
+	var loc Location
+	err := yaml.Unmarshal([]byte(yml), &loc)
+	if err != nil {
+		return nil, err
+	}
+	return &loc, nil
+}
+
+// ToYamlLocation encodes lat and lng in a rails friendly Hash in YAML format
+func ToYamlLocation(lat float64, lng float64) (string, error) {
+	// content, err := yaml.Marshal(map[string]float64{":lat": lat, ":lng": lng})
+	content, err := yaml.Marshal(Location{Lat: lat, Lng: lng})
 	if err != nil {
 		return "", err
 	}

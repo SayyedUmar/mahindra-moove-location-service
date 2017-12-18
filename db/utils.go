@@ -2,8 +2,12 @@ package db
 
 import (
 	"database/sql"
+
+	"github.com/MOOVE-Network/location_service/utils"
 	"github.com/jmoiron/sqlx"
 )
+
+type Location struct{ utils.Location }
 
 type Preparex interface {
 	sqlx.Preparer

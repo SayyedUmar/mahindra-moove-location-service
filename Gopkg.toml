@@ -60,3 +60,11 @@
 [[constraint]]
   name = "github.com/go-redis/redis"
   version = "6.7.4"
+
+[[constraint]]
+  branch = "master"
+  name = "googlemaps.github.io/maps"
+
+[[constraint]]
+  name = "github.com/stretchr/testify"
+  version = "1.1.4"

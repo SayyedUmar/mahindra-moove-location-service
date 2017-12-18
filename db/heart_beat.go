@@ -1,9 +1,10 @@
 package db
 
 import (
+	"time"
+
 	"github.com/MOOVE-Network/location_service/utils"
 	"github.com/jmoiron/sqlx"
-	"time"
 )
 
 type HeartBeat struct {
@@ -22,7 +23,7 @@ func (hb *HeartBeat) Save(db sqlx.Execer) error {
 }
 
 func (hb *HeartBeat) SaveWithLatLng(db sqlx.Execer) error {
-	currentLocation, err := utils.ToLocation(hb.Lat, hb.Lng)
+	currentLocation, err := utils.ToYamlLocation(hb.Lat, hb.Lng)
 	if err != nil {
 		return hb.SaveOnlyTime(db)
 	}
