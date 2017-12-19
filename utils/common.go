@@ -12,6 +12,11 @@ type Location struct {
 	Lng float64 `yaml:":lng"`
 }
 
+// ToString returns a string representation of Location
+func (l *Location) ToString() string {
+	return fmt.Sprintf("%f,%f", l.Lat, l.Lng)
+}
+
 // ToYaml encodes location in rails friendly yaml hash
 func (l *Location) ToYaml() (string, error) {
 	return ToYamlLocation(l.Lat, l.Lng)
