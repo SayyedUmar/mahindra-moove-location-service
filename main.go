@@ -1,12 +1,14 @@
 package main
 
 import (
+	"io"
+	"os"
+
 	"github.com/MOOVE-Network/location_service/db"
+	"github.com/MOOVE-Network/location_service/services"
 	"github.com/MOOVE-Network/location_service/version"
 	web "github.com/MOOVE-Network/location_service/web"
 	log "github.com/sirupsen/logrus"
-	"io"
-	"os"
 )
 
 func init() {
@@ -17,6 +19,7 @@ func init() {
 
 func main() {
 	version.PrintVersion()
+	services.InitDurationService(os.Getenv("LOCATION_MAPS_API_KEY"))
 	conn := db.InitSQLConnection()
 	db.SetActiveDB(conn)
 	defer closeConn(conn)

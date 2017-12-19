@@ -46,7 +46,15 @@ func (t *Trip) LoadTripRoutes(db sqlx.Queryer, force bool) error {
 	if t.isRoutesLoaded && !force {
 		return nil
 	}
-	rows, err := db.Queryx("select id, trip_id, status, scheduled_route_order, scheduled_start_location, scheduled_end_location from trip_routes where trip_id=? order by scheduled_route_order asc", t.ID)
+	rows, err := db.Queryx(`
+		select tr.id, tr.trip_id, tr.status, u.id as employee_user_id,
+		tr.scheduled_route_order, tr.scheduled_start_location, tr.scheduled_end_location
+		from trip_routes tr
+		join employee_trips et on et.id = tr.employee_trip_id
+		join employees e on e.id = et.employee_id
+		join users u on u.entity_id=e.id and u.entity_type="Employee"
+		where tr.trip_id=? order by scheduled_route_order asc
+		`, t.ID)
 	if err != nil {
 		return err
 	}

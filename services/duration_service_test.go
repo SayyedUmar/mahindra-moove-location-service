@@ -18,13 +18,19 @@ const TarkaLabsLng float64 = 80.2142206
 const HomeOneLat float64 = 12.8947997
 const HomeOneLng float64 = 80.2010107
 
+// This tests only exists for sanity and provides
+// no valuable assertions
 func TestGoogleDurationService_GetDuration_Actual(t *testing.T) {
 	mapsAPIKey := os.Getenv("LOCATION_MAPS_API_KEY")
+	if mapsAPIKey == "" {
+		t.Skip("Skipping duration test since environment variable is unset")
+		return
+	}
 	gds, err := MakeGoogleDurationService(mapsAPIKey)
 	tst.FailNowOnErr(t, err)
 	startLocation := db.Location{utils.Location{Lat: TarkaLabsLat, Lng: TarkaLabsLng}}
 	endLocation := db.Location{utils.Location{Lat: HomeOneLat, Lng: HomeOneLng}}
-	duration, err := gds.GetDuration(startLocation, endLocation, time.Now())
+	dm, err := gds.GetDuration(startLocation, endLocation, time.Now())
 	tst.FailNowOnErr(t, err)
-	assert.True(t, duration.Seconds() > 1)
+	assert.True(t, dm.Duration.Seconds() > 1)
 }
