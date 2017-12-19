@@ -1,3 +1,5 @@
+[![CircleCI](https://circleci.com/gh/MOOVE-Network/location_service.svg?style=svg&circle-token=3342db5a1501e6add8807b75b18683feea41aec6)](https://circleci.com/gh/MOOVE-Network/location_service)
+
 Location service provides drop in replacement for existing Rails endpoints dealing with Heartbeat and current location
 
 ## :hammer: Building (without docker)
