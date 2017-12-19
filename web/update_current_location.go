@@ -33,11 +33,8 @@ type TripLocation struct {
 }
 
 func (tl *TripLocation) ToDB() (*db.TripLocation, error) {
-	location, err := utils.ToYamlLocation(tl.Lat, tl.Lng)
 
-	if err != nil {
-		return nil, err
-	}
+	location := db.Location{utils.Location{Lat: tl.Lat, Lng: tl.Lng}}
 
 	tripId, err := strconv.Atoi(tl.TripID)
 
@@ -46,7 +43,7 @@ func (tl *TripLocation) ToDB() (*db.TripLocation, error) {
 	}
 
 	dbTL := &db.TripLocation{
-		TripId:    tripId,
+		TripID:    tripId,
 		Location:  location,
 		Time:      tl.Time,
 		CreatedAt: time.Now(),

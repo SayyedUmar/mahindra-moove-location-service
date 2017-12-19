@@ -1,14 +1,18 @@
 package db
 
 import (
+	"fmt"
+	"time"
+
 	"github.com/jmoiron/sqlx"
 	log "github.com/sirupsen/logrus"
-	"time"
 )
 
+// TripLocation represents a record in the trip_locations table
 type TripLocation struct {
-	TripId    int       `db:"trip_id"`
-	Location  string    `db:"location"`
+	ID        int       `db:"id"`
+	TripID    int       `db:"trip_id"`
+	Location  Location  `db:"location"`
 	Time      time.Time `db:"time"`
 	Speed     string    `db:"speed"`
 	Distance  int       `db:"distance"`
@@ -16,21 +20,30 @@ type TripLocation struct {
 	UpdatedAt time.Time `db:"updated_at"`
 }
 
+// InsertTripLocationStatement returns a prepared statement that can be used to create
+// a TripLocation struct in the database
 func InsertTripLocationStatement(db Preparex) *sqlx.NamedStmt {
 	stmt, err := db.PrepareNamed(`insert into
-													 trip_locations(trip_id, location, time,
-													 								speed, distance,
-																					created_at, updated_at)
-													 values(:trip_id, :location,
-													 				:time, :speed, :distance,
-																	:created_at, :updated_at)`)
+		trip_locations(trip_id, location, time, speed, distance, created_at, updated_at)
+		values(:trip_id, :location, :time, :speed, :distance, :created_at, :updated_at)`)
 	if err != nil {
 		log.Panic(err)
 	}
 	return stmt
 }
 
+// Save saves the trip location to the database
 func (tl *TripLocation) Save(db NamedExecer) error {
 	_, err := db.Exec(tl)
 	return err
+}
+
+// LatestTripLocation returns the latest trip location of the trip
+func LatestTripLocation(q sqlx.Queryer, tripID int) (*TripLocation, error) {
+	var tl TripLocation
+	row := q.QueryRowx("select * from trip_locations where trip_id=? order by id desc limit 1", tripID)
+	cols, _ := row.Columns()
+	fmt.Println(cols)
+	err := row.StructScan(&tl)
+	return &tl, err
 }

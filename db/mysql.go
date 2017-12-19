@@ -1,9 +1,10 @@
 package db
 
 import (
+	"os"
+	// mysql driver import for database/sql
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/jmoiron/sqlx"
-	"os"
 )
 
 var database *sqlx.DB
@@ -11,7 +12,7 @@ var database *sqlx.DB
 func InitSQLConnection() *sqlx.DB {
 	dbUrl := os.Getenv("LOCATION_DATABASE_URL")
 	if dbUrl == "" {
-		dbUrl = "root:@/moove_development"
+		dbUrl = "root:@/moove_development?parseTime=true"
 	}
 	localDb, err := sqlx.Open("mysql", dbUrl)
 	if err != nil {

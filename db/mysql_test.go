@@ -30,7 +30,7 @@ func handleExit() {
 
 func TestMain(m *testing.M) {
 	defer handleExit()
-	os.Setenv("LOCATION_DATABASE_URL", "root:@/moove_test?multiStatements=true&autocommit=false")
+	os.Setenv("LOCATION_DATABASE_URL", "root:@/moove_test?multiStatements=true&autocommit=false&parseTime=true")
 	db := InitSQLConnection()
 	_, err := sqlx.LoadFile(db, "../data/mysql_structure.sql")
 	if err != nil {
