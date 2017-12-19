@@ -81,9 +81,21 @@
 
 [[projects]]
   branch = "master"
+  name = "golang.org/x/net"
+  packages = ["context","context/ctxhttp"]
+  revision = "d866cfc389cec985d6fda2859936a575a55a3ab6"
+
+[[projects]]
+  branch = "master"
   name = "golang.org/x/sys"
   packages = ["unix","windows"]
   revision = "a204229cd828a74741ee7b5da9bf4794497f85ed"
+
+[[projects]]
+  branch = "master"
+  name = "googlemaps.github.io/maps"
+  packages = [".","internal"]
+  revision = "7bc07438db8f569e75a2d2ca1be64fde336962f5"
 
 [[projects]]
   branch = "v2"
@@ -94,6 +106,6 @@
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "6bbadee065c4799e461c6f582a861b278047406234dd753fd6ad9f01a6e6cbfd"
+  inputs-digest = "d66a38a6534e7bcc8ee6d4306e9759a6d765f94b8105aaea864488d9cc498d09"
   solver-name = "gps-cdcl"
   solver-version = 1
