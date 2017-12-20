@@ -20,6 +20,7 @@ func init() {
 func main() {
 	version.PrintVersion()
 	services.InitDurationService(os.Getenv("LOCATION_MAPS_API_KEY"))
+	services.InitNotificationService(os.Getenv("FCM_API_KEY"), os.Getenv("FCM_TOPIC_PREFIX"))
 	conn := db.InitSQLConnection()
 	db.SetActiveDB(conn)
 	defer closeConn(conn)

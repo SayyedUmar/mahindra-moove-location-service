@@ -9,28 +9,31 @@ import (
 
 func handleCheckinTrip(trip *db.Trip, currentLocation db.Location) error {
 	ds := GetDurationService()
+	ns := GetNotificationService()
 	if trip.AllCheckedIn() {
 		endLocation := trip.TripRoutes[len(trip.TripRoutes)-1].ScheduledEndLocation
-		_, err := ds.GetDuration(currentLocation, endLocation, time.Now())
+		dm, err := ds.GetDuration(currentLocation, endLocation, time.Now())
 		if err != nil {
 			return err
 		}
-		// notify all trip routes
+		for _, tr := range trip.TripRoutes {
+			go NotifyTripRoute(&tr, &dm, ns)
+		}
 		return nil
 	}
-	var toSiteDuration time.Duration
+	toSiteDuration := DurationMetrics{}
 	var offset time.Duration
 	for _, tr := range trip.TripRoutes {
 		if tr.IsOnBoard() {
-			if toSiteDuration == 0 {
+			if toSiteDuration.Duration == 0 {
 				endLocation := trip.TripRoutes[len(trip.TripRoutes)-1].ScheduledEndLocation
 				dm, err := ds.GetDuration(currentLocation, endLocation, time.Now())
 				if err != nil {
 					return err
 				}
-				toSiteDuration = dm.Duration
+				toSiteDuration = dm
 			}
-			// notify tr with toSiteDuration
+			go NotifyTripRoute(&tr, &toSiteDuration, ns)
 		}
 		if tr.Status == "not_started" && offset == 0 {
 			startLoc := currentLocation
@@ -40,7 +43,7 @@ func handleCheckinTrip(trip *db.Trip, currentLocation db.Location) error {
 				return err
 			}
 			offset = dm.Duration
-			// notify tr with dur
+			go NotifyTripRoute(&tr, &dm, ns)
 		}
 		if tr.Status == "not_started" && offset > 0 {
 			startLoc := tr.ScheduledStartLocation
@@ -50,7 +53,7 @@ func handleCheckinTrip(trip *db.Trip, currentLocation db.Location) error {
 				return err
 			}
 			offset += dm.Duration
-			// notify
+			go NotifyTripRoute(&tr, &dm, ns)
 		}
 	}
 	return nil
@@ -58,6 +61,7 @@ func handleCheckinTrip(trip *db.Trip, currentLocation db.Location) error {
 
 func handleCheckoutTrip(trip *db.Trip, currentLocation db.Location) error {
 	ds := GetDurationService()
+	ns := GetNotificationService()
 	var dmToSite DurationMetrics
 	for _, tr := range trip.TripRoutes {
 		if tr.Status == "not_started" || tr.Status == "driver_arrived" {
@@ -70,7 +74,8 @@ func handleCheckoutTrip(trip *db.Trip, currentLocation db.Location) error {
 				}
 				dmToSite = dm
 			}
-			// notify trip_route with dm
+			go NotifyTripRoute(&tr, &dmToSite, ns)
+
 		}
 		var offset time.Duration
 		if tr.Status == "on_board" && offset == 0 {
@@ -81,6 +86,7 @@ func handleCheckoutTrip(trip *db.Trip, currentLocation db.Location) error {
 				return err
 			}
 			offset += dm.Duration
+			go NotifyTripRoute(&tr, &dm, ns)
 			// notify trip_route with dm
 		}
 		if tr.Status == "on_board" && offset > 0 {
@@ -91,7 +97,7 @@ func handleCheckoutTrip(trip *db.Trip, currentLocation db.Location) error {
 				return err
 			}
 			offset += dm.Duration
-			// notify trip_route with dm
+			go NotifyTripRoute(&tr, &dm, ns)
 		}
 	}
 	return nil

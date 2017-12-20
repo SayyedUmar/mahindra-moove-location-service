@@ -2,6 +2,12 @@
 
 
 [[projects]]
+  name = "github.com/appleboy/go-fcm"
+  packages = ["."]
+  revision = "3bc382cee4180b7e4753761fda69a003de97b0e9"
+  version = "0.1.1"
+
+[[projects]]
   name = "github.com/davecgh/go-spew"
   packages = ["spew"]
   revision = "346938d642f2ec3594ed81d874461961cd0faa76"
@@ -106,6 +112,6 @@
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "d66a38a6534e7bcc8ee6d4306e9759a6d765f94b8105aaea864488d9cc498d09"
+  inputs-digest = "f518926cd13b11ee0acef6069515a30f4490765e6083a5dfec215693d4c2126e"
   solver-name = "gps-cdcl"
   solver-version = 1
