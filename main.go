@@ -7,7 +7,7 @@ import (
 	"github.com/MOOVE-Network/location_service/db"
 	"github.com/MOOVE-Network/location_service/services"
 	"github.com/MOOVE-Network/location_service/version"
-	web "github.com/MOOVE-Network/location_service/web"
+	"github.com/MOOVE-Network/location_service/web"
 	log "github.com/sirupsen/logrus"
 )
 

@@ -97,7 +97,6 @@ func TestMain(m *testing.M) {
 	if err != nil {
 		panic(err)
 	}
-
 	SetActiveDB(db)
 	defer db.Close()
 	panic(exit{code: m.Run()})
