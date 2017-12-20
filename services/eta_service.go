@@ -5,6 +5,7 @@ import (
 
 	"github.com/MOOVE-Network/location_service/db"
 	"github.com/jmoiron/sqlx"
+	log "github.com/sirupsen/logrus"
 )
 
 func handleCheckinTrip(trip *db.Trip, currentLocation db.Location) error {
@@ -25,7 +26,7 @@ func handleCheckinTrip(trip *db.Trip, currentLocation db.Location) error {
 	var offset time.Duration
 	var trsToBeNotified []db.TripRoute
 	lastDurationMetric := DurationMetrics{}
-	for idx, tr := range trip.TripRoutes {
+	for _, tr := range trip.TripRoutes {
 		if tr.Status == "on_board" {
 			// Notify them the last
 			trsToBeNotified = append(trsToBeNotified, tr)
@@ -123,4 +124,28 @@ func GetETAForTrip(q sqlx.Queryer, trip *db.Trip) error {
 		return handleCheckinTrip(trip, currentLocation)
 	}
 	return handleCheckoutTrip(trip, currentLocation)
+}
+
+func StartETAServiceTimer(cancelChan chan bool) {
+	ticker := time.NewTicker(2 * time.Minute)
+	for {
+		select {
+		case _ = <-ticker.C:
+			activeTrips, err := db.GetTripsByStatus(db.CurrentDB(), "active")
+			if err != nil {
+				log.Errorf("unable to get active trips - %s", err)
+			}
+			for _, t := range activeTrips {
+				go func(t *db.Trip) {
+					err := GetETAForTrip(db.CurrentDB(), t)
+					if err != nil {
+						log.Errorf("Error processing ETA for Trip %d", t.ID)
+						log.Error(err)
+					}
+				}(t)
+			}
+		case _ = <-cancelChan:
+			break
+		}
+	}
 }

@@ -3,6 +3,7 @@ package main
 import (
 	"io"
 	"os"
+	"os/signal"
 
 	"github.com/MOOVE-Network/location_service/db"
 	"github.com/MOOVE-Network/location_service/services"
@@ -19,12 +20,25 @@ func init() {
 
 func main() {
 	version.PrintVersion()
-	services.InitDurationService(os.Getenv("LOCATION_MAPS_API_KEY"))
-	services.InitNotificationService(os.Getenv("FCM_API_KEY"), os.Getenv("FCM_TOPIC_PREFIX"))
 	conn := db.InitSQLConnection()
 	db.SetActiveDB(conn)
 	defer closeConn(conn)
+
+	services.InitDurationService(os.Getenv("LOCATION_MAPS_API_KEY"))
+	services.InitNotificationService(os.Getenv("FCM_API_KEY"), os.Getenv("FCM_TOPIC_PREFIX"))
+	cancelable := make(chan bool)
+	go services.StartETAServiceTimer(cancelable)
+	go cancelOnSignal(cancelable)
+
 	web.SetupServer()
+}
+
+func cancelOnSignal(cancelable chan bool) {
+	sigIntChan := make(chan os.Signal, 1)
+	signal.Notify(sigIntChan, os.Interrupt, os.Kill)
+	//block on receiving signal
+	_ = <-sigIntChan
+	cancelable <- true
 }
 
 func closeConn(closable io.Closer) {
