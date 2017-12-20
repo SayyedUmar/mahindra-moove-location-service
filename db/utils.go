@@ -17,3 +17,8 @@ type Preparex interface {
 type NamedExecer interface {
 	Exec(interface{}) (sql.Result, error)
 }
+
+type RebindQueryer interface {
+	sqlx.Queryer
+	Rebind(string) string
+}

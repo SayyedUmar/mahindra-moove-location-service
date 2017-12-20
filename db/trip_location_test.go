@@ -21,7 +21,7 @@ func tripLocationsRowCount(q sqlx.Queryer) (int, error) {
 func TestTripLocation_Save(t *testing.T) {
 	tx := createTx(t)
 	defer tx.Rollback()
-	trip, err := createTripWithRoutes(tx)
+	trip, err := createTripWithRoutes(tx, 23, 54)
 	tst.FailNowOnErr(t, err)
 	tl1 := TripLocation{
 		TripID:    trip.ID,
@@ -49,7 +49,7 @@ func TestTripLocation_Save(t *testing.T) {
 func TestLatestTripLocation(t *testing.T) {
 	tx := createTx(t)
 	defer tx.Rollback()
-	trip, err := createTripWithRoutes(tx)
+	trip, err := createTripWithRoutes(tx, 23, 42)
 	tst.FailNowOnErr(t, err)
 	tl1 := TripLocation{
 		TripID:    trip.ID,

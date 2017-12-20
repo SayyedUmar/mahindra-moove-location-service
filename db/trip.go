@@ -13,6 +13,27 @@ const (
 	TripTypeCheckOut = iota
 )
 
+var tripRoutesForTripQuery = `
+	select tr.id, tr.trip_id, tr.status, u.id as employee_user_id,
+	tr.scheduled_route_order, tr.scheduled_start_location, tr.scheduled_end_location
+	from trip_routes tr
+	join employee_trips et on et.id = tr.employee_trip_id
+	join employees e on e.id = et.employee_id
+	join users u on u.entity_id=e.id and u.entity_type="Employee"
+	where tr.trip_id=? order by scheduled_route_order asc`
+
+var tripRoutesForTripIDsQuery = `
+	select tr.id, tr.trip_id, tr.status, u.id as employee_user_id,
+	tr.scheduled_route_order, tr.scheduled_start_location, tr.scheduled_end_location
+	from trip_routes tr
+	join employee_trips et on et.id = tr.employee_trip_id
+	join employees e on e.id = et.employee_id
+	join users u on u.entity_id=e.id and u.entity_type="Employee"
+	where tr.trip_id in (?) order by tr.trip_id, scheduled_route_order asc`
+
+var tripByIDQuery = "select id, trip_type, driver_id, vehicle_id, status from trips where id=?"
+var tripsByStatusQuery = "select id, trip_type, driver_id, vehicle_id, status from trips where status=?"
+
 // Trip structure maps to the trips table
 type Trip struct {
 	ID             int    `db:"id"`
@@ -26,7 +47,7 @@ type Trip struct {
 
 // GetTripByID returns a trip if found otherwise returns an error
 func GetTripByID(db sqlx.Queryer, id int) (*Trip, error) {
-	row := db.QueryRowx("select id, trip_type, driver_id, vehicle_id, status from trips where id=?", id)
+	row := db.QueryRowx(tripByIDQuery, id)
 	var t Trip
 	err := row.StructScan(&t)
 	if err != nil {
@@ -46,15 +67,7 @@ func (t *Trip) LoadTripRoutes(db sqlx.Queryer, force bool) error {
 	if t.isRoutesLoaded && !force {
 		return nil
 	}
-	rows, err := db.Queryx(`
-		select tr.id, tr.trip_id, tr.status, u.id as employee_user_id,
-		tr.scheduled_route_order, tr.scheduled_start_location, tr.scheduled_end_location
-		from trip_routes tr
-		join employee_trips et on et.id = tr.employee_trip_id
-		join employees e on e.id = et.employee_id
-		join users u on u.entity_id=e.id and u.entity_type="Employee"
-		where tr.trip_id=? order by scheduled_route_order asc
-		`, t.ID)
+	rows, err := db.Queryx(tripRoutesForTripQuery, t.ID)
 	if err != nil {
 		return err
 	}
@@ -71,6 +84,48 @@ func (t *Trip) LoadTripRoutes(db sqlx.Queryer, force bool) error {
 	t.isRoutesLoaded = true
 	t.TripRoutes = tripRoutes
 	return nil
+}
+
+// GetTripsByStatus loads trips with a given status and also eager loads trip routes along with it
+func GetTripsByStatus(db RebindQueryer, status string) ([]*Trip, error) {
+	var trips []*Trip
+	tripMap := make(map[int]*Trip)
+	rows, err := db.Queryx(tripsByStatusQuery, status)
+	if err != nil {
+		return nil, err
+	}
+	for rows.Next() {
+		var t Trip
+		err = rows.StructScan(&t)
+		if err != nil {
+			return nil, err
+		}
+		tripMap[t.ID] = &t
+	}
+	var tripIDs []int
+	for id, t := range tripMap {
+		tripIDs = append(tripIDs, id)
+		trips = append(trips, t)
+	}
+
+	q, args, err := sqlx.In(tripRoutesForTripIDsQuery, tripIDs)
+	if err != nil {
+		return nil, err
+	}
+	q = db.Rebind(q)
+	trRows, err := db.Queryx(q, args...)
+	if err != nil {
+		return nil, err
+	}
+	for trRows.Next() {
+		var tr TripRoute
+		err := trRows.StructScan(&tr)
+		if err != nil {
+			return nil, err
+		}
+		tripMap[tr.TripID].TripRoutes = append(tripMap[tr.TripID].TripRoutes, tr)
+	}
+	return trips, nil
 }
 
 func (t *Trip) IsCheckIn() bool {
