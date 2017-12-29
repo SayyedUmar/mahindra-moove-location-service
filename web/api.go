@@ -1,12 +1,13 @@
 package web
 
 import (
-	"github.com/MOOVE-Network/location_service/db"
-	"github.com/MOOVE-Network/location_service/identity"
-	log "github.com/sirupsen/logrus"
 	"net/http"
 	"strconv"
 	"time"
+
+	"github.com/MOOVE-Network/location_service/db"
+	"github.com/MOOVE-Network/location_service/identity"
+	log "github.com/sirupsen/logrus"
 )
 
 var heartBeats = make(map[int]*db.HeartBeat)
@@ -37,7 +38,7 @@ func WriteHeartBeat(w http.ResponseWriter, req *http.Request) {
 }
 
 func setupHeartBeatTimer() {
-	ticker := time.NewTicker(time.Second * 1)
+	ticker := time.NewTicker(time.Second * 5)
 	go func() {
 		for _ = range ticker.C {
 			tx := db.CurrentDB().MustBegin()

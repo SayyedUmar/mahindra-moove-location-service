@@ -1,8 +1,10 @@
 package web
 
 import (
+	"bytes"
 	"encoding/json"
 	"fmt"
+	"io/ioutil"
 	"net/http"
 	"strconv"
 	"strings"
@@ -84,11 +86,20 @@ func (tl *TripLocation) parse() {
 
 func UpdateCurrentLocation(w http.ResponseWriter, r *http.Request) {
 	var uclRequest *UCLRequest
-	decoder := json.NewDecoder(r.Body)
-	err := decoder.Decode(&uclRequest)
+	body, err := ioutil.ReadAll(r.Body)
+	if err != nil {
+		log.Warn("Error reading location request body", err)
+		ErrorWithMessage("Unable to update current location body").Respond(w, 422)
+		return
+	}
+	log.Info(string(body))
+	jsonBody := bytes.NewBuffer(body)
+	decoder := json.NewDecoder(jsonBody)
+	err = decoder.Decode(&uclRequest)
 	if err != nil {
 		log.Warn("unable to decode json request", err)
 		ErrorWithMessage("unable decode json").Respond(w, 422)
+		return
 	}
 	var tls []*db.TripLocation
 	for _, v := range uclRequest.Values {
