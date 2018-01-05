@@ -51,6 +51,7 @@ func FetchIdentityByID(db *sqlx.DB, id int) *Identity {
 }
 
 func (i *Identity) parseTokens() {
+	i.ParsedTokens = make(map[string]Token)
 	buffer := bytes.NewBuffer([]byte(i.Tokens))
 	decoder := json.NewDecoder(buffer)
 	err := decoder.Decode(&i.ParsedTokens)
@@ -69,11 +70,14 @@ func (i *Identity) isValidToken(clientId string, token string) bool {
 	if _, ok := tokenCache[cacheKey]; ok {
 		return true
 	}
-	hash := i.ParsedTokens[clientId].Token
+	client, ok := i.ParsedTokens[clientId]
+	if !ok {
+		log.Debugf("invalid client %s passed for user %d", clientId, i.Id)
+		return false
+	}
+	hash := client.Token
 	err := bcrypt.CompareHashAndPassword([]byte(hash), []byte(token))
 	if err != nil {
-		log.Debug("hash: ", hash)
-		log.Debug("cacheKey: ", cacheKey)
 		log.Debug("passwords do not match", err)
 		return false
 	}

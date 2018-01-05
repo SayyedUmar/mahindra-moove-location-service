@@ -6,8 +6,16 @@ import (
 	"github.com/gorilla/handlers"
 	"github.com/gorilla/mux"
 	log "github.com/sirupsen/logrus"
+	"net/http"
 	"os"
 )
+
+func LogRequestsMiddleware(next http.HandlerFunc) http.HandlerFunc {
+	return func(rw http.ResponseWriter, r *http.Request) {
+		log.Infof("Serving %s %s ", r.Method, r.URL.Path)
+		next(rw, r)
+	}
+}
 
 func SetupServer() {
 	port := os.Getenv("LOCATION_PORT")
@@ -15,8 +23,8 @@ func SetupServer() {
 		port = "4343"
 	}
 	router := mux.NewRouter()
-	router.HandleFunc("/api/v1/drivers/{id}/heart_beat", TokenAuth(WriteHeartBeat)).Methods("POST")
-	router.HandleFunc("/api/v2/drivers/{id}/update_current_location", TokenAuth(UpdateCurrentLocation)).Methods("POST")
+	router.HandleFunc("/api/v1/drivers/{id}/heart_beat", LogRequestsMiddleware(TokenAuth(WriteHeartBeat))).Methods("POST")
+	router.HandleFunc("/api/v2/drivers/{id}/update_current_location", LogRequestsMiddleware(TokenAuth(UpdateCurrentLocation))).Methods("POST")
 	router.HandleFunc("/api/v3/drivers/{id}/location", Auth(LocationSocket))
 	log.Info("Starting ... ")
 	log.Infof("Listening on port %s ... ", port)
