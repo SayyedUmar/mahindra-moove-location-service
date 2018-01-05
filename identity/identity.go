@@ -72,6 +72,8 @@ func (i *Identity) isValidToken(clientId string, token string) bool {
 	hash := i.ParsedTokens[clientId].Token
 	err := bcrypt.CompareHashAndPassword([]byte(hash), []byte(token))
 	if err != nil {
+		log.Debug("hash: ", hash)
+		log.Debug("cacheKey: ", cacheKey)
 		log.Debug("passwords do not match", err)
 		return false
 	}
