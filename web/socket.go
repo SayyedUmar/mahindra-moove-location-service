@@ -45,7 +45,7 @@ func readMessages(client *Client) {
 				continue
 			}
 			tlMutex.Lock()
-			tripLocations = append(tripLocations, locationUpdate.ToTripLocation)
+			tripLocations = append(tripLocations, locationUpdate.ToTripLocation())
 			tlMutex.Unlock()
 			client.hub.Send(strconv.Itoa(locationUpdate.TripID), message)
 			client.hub.Send(strconv.Itoa(client.ID), message)
