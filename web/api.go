@@ -3,6 +3,7 @@ package web
 import (
 	"net/http"
 	"strconv"
+	"sync"
 	"time"
 
 	"github.com/MOOVE-Network/location_service/db"
@@ -10,7 +11,10 @@ import (
 	log "github.com/sirupsen/logrus"
 )
 
+var hbMutex = &sync.Mutex{}
 var heartBeats = make(map[int]*db.HeartBeat)
+var tlMutex = &sync.Mutex{}
+var tripLocations []db.TripLocation
 
 func WriteHeartBeat(w http.ResponseWriter, req *http.Request) {
 	ident := req.Context().Value("identity").(*identity.Identity)
@@ -41,8 +45,14 @@ func setupHeartBeatTimer() {
 	ticker := time.NewTicker(time.Second * 5)
 	go func() {
 		for _ = range ticker.C {
+			var hbs []*db.HeartBeat
+			hbMutex.Lock()
+			for _, hb := range heartBeats {
+				hbs = append(hbs, hb)
+			}
+			hbMutex.Unlock()
 			tx := db.CurrentDB().MustBegin()
-			for _, heartBeat := range heartBeats {
+			for _, heartBeat := range hbs {
 				err := heartBeat.Save(tx)
 				if err != nil {
 					log.Warn("Unable to save heartbeat", err)
@@ -51,6 +61,35 @@ func setupHeartBeatTimer() {
 			err := tx.Commit()
 			if err != nil {
 				log.Panic(err)
+			}
+		}
+	}()
+}
+
+func setupTripLocationTimer() {
+	ticker := time.NewTicker(time.Second * 5)
+	go func() {
+		stmt := db.InsertTripLocationStatement(db.CurrentDB())
+		for _ = range ticker.C {
+			var tls []db.TripLocation
+			tlMutex.Lock()
+			for _, tl := range tripLocations {
+				tls = append(tls, tl)
+			}
+			tripLocations = nil
+			tlMutex.Unlock()
+			tx := db.CurrentDB().MustBegin()
+			for _, tripLocation := range tls {
+				err := tripLocation.Save(stmt)
+				if err != nil {
+					log.Error("Unable to save trip location")
+					log.Error(err)
+				}
+			}
+			err := tx.Commit()
+			if err != nil {
+				log.Error("Unable to save trip location")
+				log.Error(err)
 			}
 		}
 	}()

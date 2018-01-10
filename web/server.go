@@ -2,12 +2,13 @@ package web
 
 import (
 	"fmt"
+	"net/http"
+	"os"
+
 	"github.com/fvbock/endless"
 	"github.com/gorilla/handlers"
 	"github.com/gorilla/mux"
 	log "github.com/sirupsen/logrus"
-	"net/http"
-	"os"
 )
 
 func LogRequestsMiddleware(next http.HandlerFunc) http.HandlerFunc {
@@ -29,6 +30,7 @@ func SetupServer() {
 	log.Info("Starting ... ")
 	log.Infof("Listening on port %s ... ", port)
 	setupHeartBeatTimer()
+	setupTripLocationTimer()
 	go hub.Run()
 
 	handler := handlers.LoggingHandler(os.Stdout, router)

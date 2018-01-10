@@ -1,14 +1,15 @@
 package web
 
 import (
+	"net/http"
+	"strconv"
+	"time"
+
 	"github.com/MOOVE-Network/location_service/db"
 	"github.com/MOOVE-Network/location_service/identity"
 	"github.com/MOOVE-Network/location_service/socketstore"
 	"github.com/gorilla/websocket"
 	log "github.com/sirupsen/logrus"
-	"net/http"
-	"strconv"
-	"time"
 )
 
 var upgrader = websocket.Upgrader{
@@ -41,12 +42,18 @@ func readMessages(client *Client) {
 			locationUpdate, err := socketstore.LocationUpdateFromJSON(message)
 			if err != nil {
 				log.Warnf("Unable to decode location update message %s", string(message))
+				continue
 			}
+			tlMutex.Lock()
+			tripLocations = append(tripLocations, locationUpdate.ToTripLocation)
+			tlMutex.Unlock()
 			client.hub.Send(strconv.Itoa(locationUpdate.TripID), message)
 			client.hub.Send(strconv.Itoa(client.ID), message)
 		case "HEARTBEAT":
 			hb := &db.HeartBeat{UserID: client.ID, UpdatedAt: time.Now()}
+			hbMutex.Lock()
 			heartBeats[client.ID] = hb
+			hbMutex.Unlock()
 		case "SUBSCRIBE":
 			subscription, err := socketstore.SubscribeEventFromJSON(message)
 			if err != nil {
