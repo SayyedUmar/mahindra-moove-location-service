@@ -50,6 +50,6 @@ jobs:
           docker tag moove/location_service:$TAG $DOCKER_REGISTRY_BARE/moove/location_service:$TAG
           docker tag moove/location_service:$TAG $DOCKER_REGISTRY_BARE/moove/location_service:latest
           aws configure set region $AWS_REGION
-          eval $(aws ecr get-login)
+          eval $(aws ecr get-login --no-include-email)
           docker push $DOCKER_REGISTRY_BARE/moove/location_service:$TAG
           docker push $DOCKER_REGISTRY_BARE/moove/location_service:latest
