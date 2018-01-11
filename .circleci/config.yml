@@ -26,6 +26,11 @@ jobs:
           docker_layer_caching: true
           version: 17.09.0-ce
       - run:
+        name: Install dependencies
+        command: |
+          sudo apt-get install python-pip
+          pip install awscli==1.11.76
+      - run:
           name: Waiting for mysql to be ready
           command: |
             for i in `seq 1 10`;
