@@ -1,3 +1,4 @@
 Caddyfile
 location_service
 vendor
+.DS_Store

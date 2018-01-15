@@ -8,6 +8,7 @@ import (
 
 	"github.com/MOOVE-Network/location_service/db"
 	"github.com/MOOVE-Network/location_service/utils"
+	log "github.com/sirupsen/logrus"
 	"googlemaps.github.io/maps"
 )
 
@@ -58,6 +59,8 @@ func (g *GoogleDurationService) GetDuration(start db.Location, end db.Location, 
 		TrafficModel:  maps.TrafficModelBestGuess,
 		Avoid:         []maps.Avoid{maps.AvoidTolls},
 	}
+	log.Debug("Requesting directions with parameters")
+	log.Debug(dirRequest)
 	routes, _, err := g.client.Directions(context.Background(), dirRequest)
 	if err != nil {
 		return DurationMetrics{}, err

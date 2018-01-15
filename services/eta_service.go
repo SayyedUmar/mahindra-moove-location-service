@@ -8,13 +8,13 @@ import (
 	log "github.com/sirupsen/logrus"
 )
 
-func handleCheckinTrip(trip *db.Trip, currentLocation db.Location) error {
+func handleCheckinTrip(trip *db.Trip, currentLocation db.Location, clock Clock) error {
 	ds := GetDurationService()
 	ns := GetNotificationService()
 	// TODO: Verify if driver_arrived should be one of the all checked in statuses
 	if trip.AllCheckedIn() {
 		endLocation := trip.TripRoutes[len(trip.TripRoutes)-1].ScheduledEndLocation
-		dm, err := ds.GetDuration(currentLocation, endLocation, time.Now())
+		dm, err := ds.GetDuration(currentLocation, endLocation, clock.Now())
 		if err != nil {
 			return err
 		}
@@ -34,7 +34,7 @@ func handleCheckinTrip(trip *db.Trip, currentLocation db.Location) error {
 		if tr.Status == "not_started" && offset == 0 {
 			startLoc := currentLocation
 			endLoc := tr.ScheduledStartLocation
-			dm, err := ds.GetDuration(startLoc, endLoc, time.Now())
+			dm, err := ds.GetDuration(startLoc, endLoc, clock.Now())
 			if err != nil {
 				return err
 			}
@@ -45,7 +45,7 @@ func handleCheckinTrip(trip *db.Trip, currentLocation db.Location) error {
 		if tr.Status == "not_started" && offset > 0 {
 			startLoc := tr.ScheduledStartLocation
 			endLoc := tr.ScheduledEndLocation
-			dm, err := ds.GetDuration(startLoc, endLoc, time.Now().Add(offset))
+			dm, err := ds.GetDuration(startLoc, endLoc, clock.Now().Add(offset))
 			if err != nil {
 				return err
 			}
@@ -60,7 +60,7 @@ func handleCheckinTrip(trip *db.Trip, currentLocation db.Location) error {
 	return nil
 }
 
-func handleCheckoutTrip(trip *db.Trip, currentLocation db.Location) error {
+func handleCheckoutTrip(trip *db.Trip, currentLocation db.Location, clock Clock) error {
 	ds := GetDurationService()
 	ns := GetNotificationService()
 	tripNotStarted := true
@@ -74,7 +74,7 @@ func handleCheckoutTrip(trip *db.Trip, currentLocation db.Location) error {
 		startLoc := currentLocation
 		// This needs to be only for the first employee
 		endLoc := trip.TripRoutes[0].ScheduledStartLocation
-		dm, err := ds.GetDuration(startLoc, endLoc, time.Now())
+		dm, err := ds.GetDuration(startLoc, endLoc, clock.Now())
 		if err != nil {
 			return err
 		}
@@ -89,7 +89,7 @@ func handleCheckoutTrip(trip *db.Trip, currentLocation db.Location) error {
 		if tr.Status == "on_board" && offset == 0 {
 			startLoc := currentLocation
 			endLoc := tr.ScheduledEndLocation
-			dm, err := ds.GetDuration(startLoc, endLoc, time.Now())
+			dm, err := ds.GetDuration(startLoc, endLoc, clock.Now())
 			if err != nil {
 				return err
 			}
@@ -100,7 +100,7 @@ func handleCheckoutTrip(trip *db.Trip, currentLocation db.Location) error {
 		if tr.Status == "on_board" && offset > 0 {
 			startLoc := tr.ScheduledStartLocation
 			endLoc := tr.ScheduledEndLocation
-			dm, err := ds.GetDuration(startLoc, endLoc, time.Now().Add(offset))
+			dm, err := ds.GetDuration(startLoc, endLoc, clock.Now().Add(offset))
 			if err != nil {
 				return err
 			}
@@ -111,7 +111,19 @@ func handleCheckoutTrip(trip *db.Trip, currentLocation db.Location) error {
 	return nil
 }
 
-func GetETAForTrip(q sqlx.Queryer, trip *db.Trip) error {
+type Clock interface {
+	Now() time.Time
+}
+type realClock struct {
+}
+
+func (rc realClock) Now() time.Time {
+	return time.Now()
+}
+
+var clock = realClock{}
+
+func GetETAForTrip(q sqlx.Queryer, trip *db.Trip, clock Clock) error {
 	if err := trip.LoadTripRoutes(q, false); err != nil {
 		return err
 	}
@@ -121,9 +133,9 @@ func GetETAForTrip(q sqlx.Queryer, trip *db.Trip) error {
 	}
 	currentLocation := tl.Location
 	if trip.TripType == db.TripTypeCheckIn {
-		return handleCheckinTrip(trip, currentLocation)
+		return handleCheckinTrip(trip, currentLocation, clock)
 	}
-	return handleCheckoutTrip(trip, currentLocation)
+	return handleCheckoutTrip(trip, currentLocation, clock)
 }
 
 func StartETAServiceTimer(cancelChan chan bool) {
@@ -137,7 +149,7 @@ func StartETAServiceTimer(cancelChan chan bool) {
 			}
 			for _, t := range activeTrips {
 				go func(t *db.Trip) {
-					err := GetETAForTrip(db.CurrentDB(), t)
+					err := GetETAForTrip(db.CurrentDB(), t, clock)
 					if err != nil {
 						log.Errorf("Error processing ETA for Trip %d", t.ID)
 						log.Error(err)

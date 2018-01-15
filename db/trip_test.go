@@ -117,6 +117,16 @@ func TestTrip_AllCheckedIn(t *testing.T) {
 	assert.True(t, trip.AllCheckedIn())
 }
 
+func isInTripsArr(trips []*Trip, tr *Trip) bool {
+	found := false
+	for _, t := range trips {
+		if t.ID == tr.ID {
+			return true
+		}
+	}
+	return found
+}
+
 func TestGetTripsByStatus(t *testing.T) {
 	tx := createTx(t)
 	defer tx.Rollback()
@@ -134,9 +144,9 @@ func TestGetTripsByStatus(t *testing.T) {
 
 	assert.Equal(t, len(trips), 3)
 	assert.Equal(t, len(trips[0].TripRoutes), 3)
-	assert.Equal(t, trips[0].ID, trip1.ID)
+	assert.True(t, isInTripsArr(trips, trip1))
 	assert.Equal(t, len(trips[1].TripRoutes), 3)
-	assert.Equal(t, trips[1].ID, trip2.ID)
+	assert.True(t, isInTripsArr(trips, trip2))
 	assert.Equal(t, len(trips[2].TripRoutes), 3)
-	assert.Equal(t, trips[2].ID, trip3.ID)
+	assert.True(t, isInTripsArr(trips, trip3))
 }

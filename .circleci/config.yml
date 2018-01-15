@@ -43,6 +43,8 @@ jobs:
       - run: go get -u github.com/golang/dep/cmd/dep
       - run: dep ensure
       - run: go test -v ./...
+      - store_artifacts:
+          path: location_service
       # build and push Docker image
       - run: |
           TAG=0.1.$CIRCLE_BUILD_NUM
