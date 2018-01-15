@@ -43,8 +43,17 @@ jobs:
       - run: go get -u github.com/golang/dep/cmd/dep
       - run: dep ensure
       - run: go test -v ./...
+      - run: 
+          name: build binaries
+          command: |
+            make linux
+            mv location_service location_service_linux_${CIRCLE_BUILD_NUM}
+            make mac
+            mv location_service location_service_osx_${CIRCLE_BUILD_NUM}
       - store_artifacts:
-          path: location_service
+          path: location_service_linux_${CIRCLE_BUILD_NUM}
+      - store_artifacts:
+          path: location_service_osx_${CIRCLE_BUILD_NUM}
       # build and push Docker image
       - run: |
           TAG=0.1.$CIRCLE_BUILD_NUM
