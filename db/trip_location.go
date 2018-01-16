@@ -1,7 +1,6 @@
 package db
 
 import (
-	"fmt"
 	"time"
 
 	"github.com/jmoiron/sqlx"
@@ -42,8 +41,6 @@ func (tl *TripLocation) Save(db NamedExecer) error {
 func LatestTripLocation(q sqlx.Queryer, tripID int) (*TripLocation, error) {
 	var tl TripLocation
 	row := q.QueryRowx("select * from trip_locations where trip_id=? order by id desc limit 1", tripID)
-	cols, _ := row.Columns()
-	fmt.Println(cols)
 	err := row.StructScan(&tl)
 	return &tl, err
 }

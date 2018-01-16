@@ -26,6 +26,6 @@ func (loc *Location) Scan(src interface{}) error {
 	if err != nil {
 		return err
 	}
-	loc = &Location{*l}
+	loc.Location = *l
 	return nil
 }

@@ -138,24 +138,29 @@ func GetETAForTrip(q sqlx.Queryer, trip *db.Trip, clock Clock) error {
 	return handleCheckoutTrip(trip, currentLocation, clock)
 }
 
+func GetETAForActiveTrips() {
+	activeTrips, err := db.GetTripsByStatus(db.CurrentDB(), "active")
+	if err != nil {
+		log.Errorf("unable to get active trips - %s", err)
+	}
+	for _, t := range activeTrips {
+		go func(t *db.Trip) {
+			err := GetETAForTrip(db.CurrentDB(), t, clock)
+			if err != nil {
+				log.Errorf("Error processing ETA for Trip %d", t.ID)
+				log.Error(err)
+			}
+		}(t)
+	}
+}
+
 func StartETAServiceTimer(cancelChan chan bool) {
+	GetETAForActiveTrips()
 	ticker := time.NewTicker(2 * time.Minute)
 	for {
 		select {
 		case _ = <-ticker.C:
-			activeTrips, err := db.GetTripsByStatus(db.CurrentDB(), "active")
-			if err != nil {
-				log.Errorf("unable to get active trips - %s", err)
-			}
-			for _, t := range activeTrips {
-				go func(t *db.Trip) {
-					err := GetETAForTrip(db.CurrentDB(), t, clock)
-					if err != nil {
-						log.Errorf("Error processing ETA for Trip %d", t.ID)
-						log.Error(err)
-					}
-				}(t)
-			}
+			GetETAForActiveTrips()
 		case _ = <-cancelChan:
 			break
 		}
