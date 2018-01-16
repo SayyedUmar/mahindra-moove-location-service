@@ -46,16 +46,15 @@ jobs:
       - run: 
           name: build binaries
           command: |
+            mkdir /binaries
             make linux
-            mv location_service location_service_linux
+            mv location_service /binaries/location_service_linux
             make mac
-            mv location_service location_service_osx
+            mv location_service /binaries/location_service_osx
       - store_artifacts:
-          path: /go/src/github.com/MOOVE-Network/location_service/location_service_linux
-          destination: binaries
+          path: /binaries/location_service_linux
       - store_artifacts:
-          path: /go/src/github.com/MOOVE-Network/location_service/location_service_osx
-          prefix: binaries
+          path: /binaries/location_service_osx
       # build and push Docker image
       - run: |
           TAG=0.1.$CIRCLE_BUILD_NUM
