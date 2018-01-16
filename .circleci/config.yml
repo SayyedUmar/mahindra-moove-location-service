@@ -52,8 +52,10 @@ jobs:
             mv location_service location_service_osx
       - store_artifacts:
           path: /go/src/github.com/MOOVE-Network/location_service/location_service_linux
+          destination: binaries
       - store_artifacts:
           path: /go/src/github.com/MOOVE-Network/location_service/location_service_osx
+          prefix: binaries
       # build and push Docker image
       - run: |
           TAG=0.1.$CIRCLE_BUILD_NUM
