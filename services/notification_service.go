@@ -53,7 +53,7 @@ func CreateFCMNotificationService(apiKey string, topicPrefix string) (*FCMNotifi
 
 // SendNotification sends the given data via FCM
 func (ns *FCMNotificationService) SendNotification(receiverID string, data map[string]interface{}, receiverType string) error {
-	topic := fmt.Sprintf("%s_%s_%s", ns.topicPrefix, receiverType, receiverID)
+	topic := fmt.Sprintf("/topics/%s_%s_%s", ns.topicPrefix, receiverType, receiverID)
 	// TODO: Check if this message is compatible for iOS
 	msg := &fcm.Message{
 		To:               topic,
@@ -65,7 +65,7 @@ func (ns *FCMNotificationService) SendNotification(receiverID string, data map[s
 	if err != nil {
 		return err
 	}
-	if res.Success != 200 {
+	if res.Error != nil {
 		return errors.New("Sending notification failed")
 	}
 	return nil
