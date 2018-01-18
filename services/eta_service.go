@@ -19,7 +19,7 @@ func handleCheckinTrip(trip *db.Trip, currentLocation db.Location, clock Clock) 
 			return err
 		}
 		for _, tr := range trip.TripRoutes {
-			go NotifyTripRoute(&tr, &dm, ns)
+			go NotifyTripRoute(&tr, &dm, 0, ns)
 		}
 		return nil
 	}
@@ -40,7 +40,7 @@ func handleCheckinTrip(trip *db.Trip, currentLocation db.Location, clock Clock) 
 			}
 			offset += dm.Duration
 			lastDurationMetric = dm
-			go NotifyTripRoute(&tr, &dm, ns)
+			go NotifyTripRoute(&tr, &dm, offset, ns)
 		}
 		if tr.Status == "not_started" && offset > 0 {
 			startLoc := tr.ScheduledStartLocation
@@ -51,11 +51,11 @@ func handleCheckinTrip(trip *db.Trip, currentLocation db.Location, clock Clock) 
 			}
 			offset += dm.Duration
 			lastDurationMetric = dm
-			go NotifyTripRoute(&tr, &dm, ns)
+			go NotifyTripRoute(&tr, &dm, offset, ns)
 		}
 	}
 	for _, tr := range trsToBeNotified {
-		go NotifyTripRoute(&tr, &lastDurationMetric, ns)
+		go NotifyTripRoute(&tr, &lastDurationMetric, offset, ns)
 	}
 	return nil
 }
@@ -79,7 +79,7 @@ func handleCheckoutTrip(trip *db.Trip, currentLocation db.Location, clock Clock)
 			return err
 		}
 		for _, tr := range trip.TripRoutes {
-			go NotifyTripRoute(&tr, &dm, ns)
+			go NotifyTripRoute(&tr, &dm, 0, ns)
 		}
 		return nil
 	}
@@ -94,7 +94,7 @@ func handleCheckoutTrip(trip *db.Trip, currentLocation db.Location, clock Clock)
 				return err
 			}
 			offset += dm.Duration
-			go NotifyTripRoute(&tr, &dm, ns)
+			go NotifyTripRoute(&tr, &dm, offset, ns)
 		}
 
 		if tr.Status == "on_board" && offset > 0 {
@@ -105,7 +105,7 @@ func handleCheckoutTrip(trip *db.Trip, currentLocation db.Location, clock Clock)
 				return err
 			}
 			offset += dm.Duration
-			go NotifyTripRoute(&tr, &dm, ns)
+			go NotifyTripRoute(&tr, &dm, offset, ns)
 		}
 	}
 	return nil
