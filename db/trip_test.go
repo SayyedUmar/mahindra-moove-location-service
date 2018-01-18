@@ -6,6 +6,7 @@ import (
 
 	tst "github.com/MOOVE-Network/location_service/testutils"
 	"github.com/MOOVE-Network/location_service/utils"
+	"github.com/icrowley/fake"
 	"github.com/jmoiron/sqlx"
 	"github.com/stretchr/testify/assert"
 )
@@ -22,9 +23,24 @@ const HomeTwoLng float64 = 80.1999803
 const HomeThreeLat float64 = 12.9851054
 const HomeThreeLng float64 = 80.1983123
 
+func ensureDriver(tx *sqlx.Tx, driverID int) {
+	var dID int
+	row := tx.QueryRow("select 1 from drivers where id=?", driverID)
+	if row.Scan(&dID) != nil {
+		driversInsertQuery := "insert into drivers (id, created_at, updated_at) values(?,?,?)"
+		usersInsertQuery := `
+		insert into users (email, encrypted_password, uid, sign_in_count, created_at, updated_at, provider,  entity_id, entity_type) 
+					values(?    , ?                 , ?  , ?            , ?         , ?         , ?       ,  ?        , ?          )`
+
+		tx.MustExec(driversInsertQuery, driverID, time.Now(), time.Now())
+		email := fake.EmailAddress()
+		tx.MustExec(usersInsertQuery, email, fake.SimplePassword(), email, 0, time.Now(), time.Now(), "provider", driverID, "driver")
+	}
+}
+
 func createTrip(t *Trip, tx *sqlx.Tx) (*Trip, error) {
 	now := time.Now()
-
+	ensureDriver(tx, t.DriverID)
 	res := tx.MustExec(`insert into trips(trip_type, driver_id, vehicle_id, status, created_at, updated_at)
 				 values (?,?,?,?,?,?)`, t.TripType, t.DriverID, t.VehicleID, t.Status, now, now)
 	lastID, err := res.LastInsertId()
@@ -91,6 +107,7 @@ func TestGetTripByID(t *testing.T) {
 	}
 	assert.Equal(t, 23, trip.DriverID)
 	assert.Equal(t, 42, trip.VehicleID)
+	assert.True(t, trip.DriverUserID > 0)
 	assert.Equal(t, "active", trip.Status)
 }
 

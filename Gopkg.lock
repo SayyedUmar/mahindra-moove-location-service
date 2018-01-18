@@ -8,6 +8,12 @@
   version = "0.1.1"
 
 [[projects]]
+  branch = "master"
+  name = "github.com/corpix/uarand"
+  packages = ["."]
+  revision = "2b8494104d86337cdd41d0a49cbed8e4583c0ab4"
+
+[[projects]]
   name = "github.com/davecgh/go-spew"
   packages = ["spew"]
   revision = "346938d642f2ec3594ed81d874461961cd0faa76"
@@ -54,6 +60,12 @@
   packages = ["."]
   revision = "ea4d1f681babbce9545c9c5f3d5194a789c89f5b"
   version = "v1.2.0"
+
+[[projects]]
+  branch = "master"
+  name = "github.com/icrowley/fake"
+  packages = ["."]
+  revision = "e64cc2cf92049a299f359734c6ea76073f2a8b2c"
 
 [[projects]]
   branch = "master"
@@ -112,6 +124,6 @@
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "f518926cd13b11ee0acef6069515a30f4490765e6083a5dfec215693d4c2126e"
+  inputs-digest = "7a55e4f7f4a2d9a559c61d90e0ff760e41f5d6a7b0f75c664dd93e0ff5af8c6f"
   solver-name = "gps-cdcl"
   solver-version = 1

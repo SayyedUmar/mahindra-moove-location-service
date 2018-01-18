@@ -31,14 +31,26 @@ var tripRoutesForTripIDsQuery = `
 	join users u on u.entity_id=e.id and u.entity_type="Employee"
 	where tr.trip_id in (?) order by tr.trip_id, scheduled_route_order asc`
 
-var tripByIDQuery = "select id, trip_type, driver_id, vehicle_id, status from trips where id=?"
-var tripsByStatusQuery = "select id, trip_type, driver_id, vehicle_id, status from trips where status=?"
+var tripByIDQuery = `
+	select t.id, t.trip_type, t.driver_id, u.id as driver_user_id, t.vehicle_id, t.status 
+	from trips t 
+	join drivers d on d.id = t.driver_id
+	join users u on u.entity_id=d.id and u.entity_type="Driver"
+	where t.id=?`
+
+var tripsByStatusQuery = `
+	select t.id, t.trip_type, t.driver_id, u.id as driver_user_id, t.vehicle_id, t.status 
+	from trips t 
+	join drivers d on d.id = t.driver_id
+	join users u on u.entity_id=d.id and u.entity_type="Driver"
+	where t.status=?`
 
 // Trip structure maps to the trips table
 type Trip struct {
 	ID             int    `db:"id"`
 	TripType       int    `db:"trip_type"`
 	DriverID       int    `db:"driver_id"`
+	DriverUserID   int    `db:"driver_user_id"`
 	VehicleID      int    `db:"vehicle_id"`
 	Status         string `db:"status"`
 	TripRoutes     []TripRoute
