@@ -74,7 +74,7 @@ func (ns *FCMNotificationService) SendNotification(receiverID string, data map[s
 // NotifyTripRoute takes duration metrics for a trip route and sends a notification
 func NotifyTripRoute(tr *db.TripRoute, dm *DurationMetrics, ns NotificationService) {
 	data := make(map[string]interface{})
-	data["duration"] = dm.ArrivalTime.Sub(time.Now()).Seconds()
+	data["duration"] = int64(dm.ArrivalTime.Sub(time.Now()).Minutes())
 	data["push_type"] = "driver_location_update"
 	receiverID := strconv.Itoa(tr.EmployeeUserID)
 	err := ns.SendNotification(receiverID, data, "user")
