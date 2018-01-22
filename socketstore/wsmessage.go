@@ -6,16 +6,17 @@ import (
 )
 
 type WsMessage struct {
+	ID        string `json:"id"`
 	EventType string `json:"eventType"`
 }
 
-func MessageType(msg []byte) string {
+func WsMessageFromJSON(msg []byte) (WsMessage, error) {
 	var wsMsg WsMessage
 	buffer := bytes.NewBuffer(msg)
 	decoder := json.NewDecoder(buffer)
 	err := decoder.Decode(&wsMsg)
 	if err != nil {
-		return ""
+		return WsMessage{}, err
 	}
-	return wsMsg.EventType
+	return wsMsg, nil
 }

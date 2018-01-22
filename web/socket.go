@@ -1,6 +1,8 @@
 package web
 
 import (
+	"bytes"
+	"encoding/json"
 	"net/http"
 	"strconv"
 	"time"
@@ -33,12 +35,24 @@ func LocationSocket(w http.ResponseWriter, r *http.Request) {
 	go readMessages(client)
 }
 
+func acknowledge(wsMsg socketstore.WsMessage, sendChan chan<- []byte) {
+	buf := bytes.NewBuffer(nil)
+	enc := json.NewEncoder(buf)
+	err := enc.Encode(wsMsg)
+	if err != nil {
+		sendChan <- buf.Bytes()
+	} else {
+		log.Error(err)
+	}
+}
 func readMessages(client *Client) {
 	for {
 		message := <-client.Receive
-		switch socketstore.MessageType(message) {
+		wsMsg, _ := socketstore.WsMessageFromJSON(message)
+		switch wsMsg.EventType {
 		case "LOCATION":
 			log.Infof("got location %s ", message)
+			go acknowledge(wsMsg, client.Send)
 			locationUpdate, err := socketstore.LocationUpdateFromJSON(message)
 			if err != nil {
 				log.Warnf("Unable to decode location update message %s", string(message))
@@ -50,16 +64,21 @@ func readMessages(client *Client) {
 			client.hub.Send(strconv.Itoa(locationUpdate.TripID), message)
 			client.hub.Send(strconv.Itoa(client.ID), message)
 		case "HEARTBEAT":
+			go acknowledge(wsMsg, client.Send)
 			hb := &db.HeartBeat{UserID: client.ID, UpdatedAt: time.Now()}
 			hbMutex.Lock()
 			heartBeats[client.ID] = hb
 			hbMutex.Unlock()
 		case "SUBSCRIBE":
+			go acknowledge(wsMsg, client.Send)
 			subscription, err := socketstore.SubscribeEventFromJSON(message)
 			if err != nil {
 				log.Warnf("Unable to decode subscription %s", string(message))
 			}
 			hub.Subscribe(subscription.Topic, client)
+		case "GEOFENCE":
+			go acknowledge(wsMsg, client.Send)
+			log.Infof("Got GEOFENCE event %s\n", message)
 		default:
 			log.Warnf("Unknown message type detected %s", string(message))
 		}
