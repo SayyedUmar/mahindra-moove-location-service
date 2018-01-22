@@ -40,9 +40,9 @@ func acknowledge(wsMsg socketstore.WsMessage, sendChan chan<- []byte) {
 	enc := json.NewEncoder(buf)
 	err := enc.Encode(wsMsg)
 	if err != nil {
-		sendChan <- buf.Bytes()
+		log.Error("Error acknowledging ", err)
 	} else {
-		log.Error(err)
+		sendChan <- buf.Bytes()
 	}
 }
 func readMessages(client *Client) {

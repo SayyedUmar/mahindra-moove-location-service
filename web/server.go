@@ -1,10 +1,12 @@
 package web
 
 import (
+	"encoding/json"
 	"fmt"
 	"net/http"
 	"os"
 
+	"github.com/MOOVE-Network/location_service/version"
 	"github.com/fvbock/endless"
 	"github.com/gorilla/handlers"
 	"github.com/gorilla/mux"
@@ -18,6 +20,15 @@ func LogRequestsMiddleware(next http.HandlerFunc) http.HandlerFunc {
 	}
 }
 
+func EchoVersion(rw http.ResponseWriter, req *http.Request) {
+	enc := json.NewEncoder(rw)
+	err := enc.Encode(version.GetVersion())
+	if err != nil {
+		ErrorWithMessage(err.Error()).Respond(rw, 500)
+	}
+	rw.Header().Add("Content-Type", "application/json")
+}
+
 func SetupServer() {
 	port := os.Getenv("LOCATION_PORT")
 	if port == "" {
@@ -27,6 +38,7 @@ func SetupServer() {
 	router.HandleFunc("/api/v1/drivers/{id}/heart_beat", LogRequestsMiddleware(TokenAuth(WriteHeartBeat))).Methods("POST")
 	router.HandleFunc("/api/v2/drivers/{id}/update_current_location", LogRequestsMiddleware(TokenAuth(UpdateCurrentLocation))).Methods("POST")
 	router.HandleFunc("/api/v3/drivers/{id}/location", Auth(LocationSocket))
+	router.HandleFunc("/api/v3/version", EchoVersion)
 	log.Info("Starting ... ")
 	log.Infof("Listening on port %s ... ", port)
 	setupHeartBeatTimer()

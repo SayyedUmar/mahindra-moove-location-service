@@ -5,10 +5,10 @@ import "fmt"
 var Commit, Branch, State, TimeStamp string
 
 type Version struct {
-	Commit    string
-	Branch    string
-	State     string
-	TimeStamp string
+	Commit    string `json:"commit"`
+	Branch    string `json:"branch"`
+	State     string `json:"state"`
+	TimeStamp string `json:"timestamp"`
 }
 
 func PrintVersion() {
