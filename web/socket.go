@@ -45,6 +45,20 @@ func acknowledge(wsMsg socketstore.WsMessage, sendChan chan<- []byte) {
 		sendChan <- buf.Bytes()
 	}
 }
+
+type Location struct {
+	Lat float64 `json:"lat"`
+	Lng float64 `json:"lng"`
+}
+
+func parseLocation(msg []byte) (Location, error) {
+	var loc Location
+	err := json.Unmarshal(msg, &loc)
+	if err != nil {
+		return Location{}, err
+	}
+	return loc, nil
+}
 func readMessages(client *Client) {
 	for {
 		message := <-client.Receive
@@ -64,8 +78,13 @@ func readMessages(client *Client) {
 			client.hub.Send(strconv.Itoa(locationUpdate.TripID), message)
 			client.hub.Send(strconv.Itoa(client.ID), message)
 		case "HEARTBEAT":
-			go acknowledge(wsMsg, client.Send)
-			hb := &db.HeartBeat{UserID: client.ID, UpdatedAt: time.Now()}
+			loc, err := parseLocation(message)
+			var hb *db.HeartBeat
+			if err != nil {
+				hb = &db.HeartBeat{UserID: client.ID, UpdatedAt: time.Now()}
+			} else {
+				hb = &db.HeartBeat{UserID: client.ID, UpdatedAt: time.Now(), Lat: loc.Lat, Lng: loc.Lng}
+			}
 			hbMutex.Lock()
 			heartBeats[client.ID] = hb
 			hbMutex.Unlock()
