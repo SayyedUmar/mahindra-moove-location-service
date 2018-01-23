@@ -14,6 +14,7 @@ func handleCheckinTrip(trip *db.Trip, currentLocation db.Location, clock Clock) 
 	// TODO: Verify if driver_arrived should be one of the all checked in statuses
 	if trip.AllCheckedIn() {
 		endLocation := trip.TripRoutes[len(trip.TripRoutes)-1].ScheduledEndLocation
+		log.Infof("Requesting eta of trip %d from %s to %s with offset of %d mins\n", trip.ID, currentLocation.ToString(), endLocation.ToString(), 0)
 		dm, err := ds.GetDuration(currentLocation, endLocation, clock.Now())
 		if err != nil {
 			return err
@@ -34,6 +35,7 @@ func handleCheckinTrip(trip *db.Trip, currentLocation db.Location, clock Clock) 
 		if tr.Status == "not_started" && offset == 0 {
 			startLoc := currentLocation
 			endLoc := tr.ScheduledStartLocation
+			log.Infof("Requesting eta of trip %d from %s to %s with offset of %d mins\n", trip.ID, startLoc.ToString(), endLoc.ToString(), 0)
 			dm, err := ds.GetDuration(startLoc, endLoc, clock.Now())
 			if err != nil {
 				return err
@@ -45,6 +47,7 @@ func handleCheckinTrip(trip *db.Trip, currentLocation db.Location, clock Clock) 
 		if tr.Status == "not_started" && offset > 0 {
 			startLoc := tr.ScheduledStartLocation
 			endLoc := tr.ScheduledEndLocation
+			log.Infof("Requesting eta of trip %d from %s to %s with offset of %d mins\n", trip.ID, startLoc.ToString(), endLoc.ToString(), int64(offset.Minutes()))
 			dm, err := ds.GetDuration(startLoc, endLoc, clock.Now().Add(offset))
 			if err != nil {
 				return err
@@ -74,6 +77,7 @@ func handleCheckoutTrip(trip *db.Trip, currentLocation db.Location, clock Clock)
 		startLoc := currentLocation
 		// This needs to be only for the first employee
 		endLoc := trip.TripRoutes[0].ScheduledStartLocation
+		log.Infof("Requesting eta of trip %d from %s to %s with offset of %d mins\n", trip.ID, startLoc.ToString(), endLoc.ToString(), 0)
 		dm, err := ds.GetDuration(startLoc, endLoc, clock.Now())
 		if err != nil {
 			return err
@@ -89,6 +93,7 @@ func handleCheckoutTrip(trip *db.Trip, currentLocation db.Location, clock Clock)
 		if tr.Status == "on_board" && offset == 0 {
 			startLoc := currentLocation
 			endLoc := tr.ScheduledEndLocation
+			log.Infof("Requesting eta of trip %d from %s to %s with offset of %d mins\n", trip.ID, startLoc.ToString(), endLoc.ToString(), 0)
 			dm, err := ds.GetDuration(startLoc, endLoc, clock.Now())
 			if err != nil {
 				return err
@@ -100,6 +105,7 @@ func handleCheckoutTrip(trip *db.Trip, currentLocation db.Location, clock Clock)
 		if tr.Status == "on_board" && offset > 0 {
 			startLoc := tr.ScheduledStartLocation
 			endLoc := tr.ScheduledEndLocation
+			log.Infof("Requesting eta of trip %d from %s to %s with offset of %d mins\n", trip.ID, startLoc.ToString(), endLoc.ToString(), int(offset.Minutes()))
 			dm, err := ds.GetDuration(startLoc, endLoc, clock.Now().Add(offset))
 			if err != nil {
 				return err
