@@ -20,8 +20,9 @@ func handleCheckinTrip(trip *db.Trip, currentLocation db.Location, clock Clock) 
 			return err
 		}
 		for _, tr := range trip.TripRoutes {
-			NotifyTripRoute(&tr, &dm, 0, ns)
+			NotifyTripRouteToEmployee(&tr, &dm, 0, ns)
 		}
+		NotifyTripRouteToDriver(&trip.TripRoutes[0], &dm, 0, ns)
 		return nil
 	}
 	var offset time.Duration
@@ -41,7 +42,8 @@ func handleCheckinTrip(trip *db.Trip, currentLocation db.Location, clock Clock) 
 			if err != nil {
 				return err
 			}
-			NotifyTripRoute(&tr, &dm, offset, ns)
+			NotifyTripRouteToEmployee(&tr, &dm, offset, ns)
+			NotifyTripRouteToDriver(&tr, &dm, offset, ns)
 			offset += dm.Duration
 		} else if tr.Status == "not_started" && offset > 0 {
 			startLoc := previousEndLocation
@@ -51,7 +53,7 @@ func handleCheckinTrip(trip *db.Trip, currentLocation db.Location, clock Clock) 
 			if err != nil {
 				return err
 			}
-			NotifyTripRoute(&tr, &dm, offset, ns)
+			NotifyTripRouteToEmployee(&tr, &dm, offset, ns)
 			offset += dm.Duration
 		}
 	}
@@ -64,7 +66,7 @@ func handleCheckinTrip(trip *db.Trip, currentLocation db.Location, clock Clock) 
 			return err
 		}
 		for _, tr := range trsToBeNotified {
-			NotifyTripRoute(&tr, &dm, offset, ns)
+			NotifyTripRouteToEmployee(&tr, &dm, offset, ns)
 		}
 	}
 	return nil
@@ -90,7 +92,7 @@ func handleCheckoutTrip(trip *db.Trip, currentLocation db.Location, clock Clock)
 			return err
 		}
 		for _, tr := range trip.TripRoutes {
-			go NotifyTripRoute(&tr, &dm, 0, ns)
+			go NotifyTripRouteToEmployee(&tr, &dm, 0, ns)
 		}
 		return nil
 	}
@@ -106,7 +108,7 @@ func handleCheckoutTrip(trip *db.Trip, currentLocation db.Location, clock Clock)
 				return err
 			}
 			offset += dm.Duration
-			go NotifyTripRoute(&tr, &dm, offset, ns)
+			go NotifyTripRouteToEmployee(&tr, &dm, offset, ns)
 		}
 
 		if tr.Status == "on_board" && offset > 0 {
@@ -118,7 +120,7 @@ func handleCheckoutTrip(trip *db.Trip, currentLocation db.Location, clock Clock)
 				return err
 			}
 			offset += dm.Duration
-			go NotifyTripRoute(&tr, &dm, offset, ns)
+			go NotifyTripRouteToEmployee(&tr, &dm, offset, ns)
 		}
 	}
 	return nil

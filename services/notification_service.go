@@ -76,21 +76,34 @@ func (ns *FCMNotificationService) SendNotification(receiverID string, data map[s
 	return nil
 }
 
-// NotifyTripRoute takes duration metrics for a trip route and sends a notification
-func NotifyTripRoute(tr *db.TripRoute, dm *DurationMetrics, offset time.Duration, ns NotificationService) {
-	data := make(map[string]interface{})
-	data["duration"] = int64((dm.Duration + offset).Minutes())
-	data["push_type"] = "driver_location_update"
+// NotifyTripRouteToEmployee takes duration metrics for a trip route and sends a notification to the employee
+func NotifyTripRouteToEmployee(tr *db.TripRoute, dm *DurationMetrics, offset time.Duration, ns NotificationService) {
+	data := getPushNotificationData(dm, offset)
 	log.Debugf("notification data for trip %d \n", tr.TripID)
 	log.Debug(data)
 	empID := strconv.Itoa(tr.EmployeeUserID)
-	driverID := strconv.Itoa(tr.Trip.DriverUserID)
 	err := ns.SendNotification(empID, data, "user")
 	if err != nil {
 		log.Error("Unable to send notification ", err)
 	}
-	err = ns.SendNotification(driverID, data, "driver")
+}
+
+// NotifyTripRouteToDriver takes duration metrics for a trip route and sends a notification to the driver
+func NotifyTripRouteToDriver(tr *db.TripRoute, dm *DurationMetrics, offset time.Duration, ns NotificationService) {
+
+	data := getPushNotificationData(dm, offset)
+	log.Debugf("notification data for trip %d \n", tr.TripID)
+	log.Debug(data)
+	driverID := strconv.Itoa(tr.Trip.DriverUserID)
+	err := ns.SendNotification(driverID, data, "driver")
 	if err != nil {
 		log.Error("Unable to send notification ", err)
 	}
+}
+
+func getPushNotificationData(dm *DurationMetrics, offset time.Duration) map[string]interface{} {
+	data := make(map[string]interface{})
+	data["duration"] = int64((dm.Duration + offset).Minutes())
+	data["push_type"] = "driver_location_update"
+	return data
 }
