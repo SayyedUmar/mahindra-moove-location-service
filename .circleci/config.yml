@@ -42,7 +42,7 @@ jobs:
             echo Failed waiting for mysql && exit 1
       - run: go get -u github.com/golang/dep/cmd/dep
       - run: dep ensure
-      - run: go test -v ./...
+      - run: ./test.sh
       - run: 
           name: build binaries
           command: |
@@ -56,6 +56,9 @@ jobs:
       - store_artifacts:
           path: /go/src/github.com/MOOVE-Network/location_service/location_service_osx
           destination: location_service_osx
+      - store_artifacts:
+          path: /go/src/github.com/MOOVE-Network/location_service/coverage.html
+          destination: coverage.html
       # build and push Docker image
       - run: |
           TAG=0.1.$CIRCLE_BUILD_NUM
