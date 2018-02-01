@@ -166,7 +166,7 @@ func GetETAForActiveTrips() {
 
 func StartETAServiceTimer(cancelChan chan bool) {
 	GetETAForActiveTrips()
-	ticker := time.NewTicker(2 * time.Minute)
+	ticker := time.NewTicker(5 * time.Minute)
 	for {
 		select {
 		case _ = <-ticker.C:
