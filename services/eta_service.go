@@ -4,7 +4,6 @@ import (
 	"time"
 
 	"github.com/MOOVE-Network/location_service/db"
-	"github.com/jmoiron/sqlx"
 	log "github.com/sirupsen/logrus"
 )
 
@@ -12,6 +11,7 @@ func handleCheckinTrip(trip *db.Trip, currentLocation db.Location, clock Clock) 
 	ds := GetDurationService()
 	ns := GetNotificationService()
 	// TODO: Verify if driver_arrived should be one of the all checked in statuses
+	log.Info(trip)
 	if trip.AllCheckedIn() {
 		endLocation := trip.TripRoutes[len(trip.TripRoutes)-1].ScheduledEndLocation
 		log.Infof("Requesting eta of trip %d from %s to %s with offset of %d mins\n", trip.ID, currentLocation.ToString(), endLocation.ToString(), 0)
@@ -20,13 +20,13 @@ func handleCheckinTrip(trip *db.Trip, currentLocation db.Location, clock Clock) 
 			return err
 		}
 		for _, tr := range trip.TripRoutes {
-			go NotifyTripRoute(&tr, &dm, 0, ns)
+			NotifyTripRoute(&tr, &dm, 0, ns)
 		}
 		return nil
 	}
 	var offset time.Duration
 	var trsToBeNotified []db.TripRoute
-	lastDurationMetric := DurationMetrics{}
+	var previousEndLocation db.Location
 	for _, tr := range trip.TripRoutes {
 		if tr.Status == "on_board" {
 			// Notify them the last
@@ -35,30 +35,37 @@ func handleCheckinTrip(trip *db.Trip, currentLocation db.Location, clock Clock) 
 		if tr.Status == "not_started" && offset == 0 {
 			startLoc := currentLocation
 			endLoc := tr.ScheduledStartLocation
+			previousEndLocation = tr.ScheduledStartLocation
 			log.Infof("Requesting eta of trip %d from %s to %s with offset of %d mins\n", trip.ID, startLoc.ToString(), endLoc.ToString(), 0)
 			dm, err := ds.GetDuration(startLoc, endLoc, clock.Now())
 			if err != nil {
 				return err
 			}
+			NotifyTripRoute(&tr, &dm, offset, ns)
 			offset += dm.Duration
-			lastDurationMetric = dm
-			go NotifyTripRoute(&tr, &dm, offset, ns)
-		}
-		if tr.Status == "not_started" && offset > 0 {
-			startLoc := tr.ScheduledStartLocation
-			endLoc := tr.ScheduledEndLocation
+		} else if tr.Status == "not_started" && offset > 0 {
+			startLoc := previousEndLocation
+			endLoc := tr.ScheduledStartLocation
 			log.Infof("Requesting eta of trip %d from %s to %s with offset of %d mins\n", trip.ID, startLoc.ToString(), endLoc.ToString(), int64(offset.Minutes()))
 			dm, err := ds.GetDuration(startLoc, endLoc, clock.Now().Add(offset))
 			if err != nil {
 				return err
 			}
+			NotifyTripRoute(&tr, &dm, offset, ns)
 			offset += dm.Duration
-			lastDurationMetric = dm
-			go NotifyTripRoute(&tr, &dm, offset, ns)
 		}
 	}
-	for _, tr := range trsToBeNotified {
-		go NotifyTripRoute(&tr, &lastDurationMetric, offset, ns)
+	if len(trsToBeNotified) > 0 {
+		lastTr := trip.TripRoutes[len(trip.TripRoutes)-1]
+		startLoc := lastTr.ScheduledStartLocation
+		endLoc := lastTr.ScheduledEndLocation
+		dm, err := ds.GetDuration(startLoc, endLoc, clock.Now().Add(offset))
+		if err != nil {
+			return err
+		}
+		for _, tr := range trsToBeNotified {
+			NotifyTripRoute(&tr, &dm, offset, ns)
+		}
 	}
 	return nil
 }
@@ -129,15 +136,7 @@ func (rc realClock) Now() time.Time {
 
 var clock = realClock{}
 
-func GetETAForTrip(q sqlx.Queryer, trip *db.Trip, clock Clock) error {
-	if err := trip.LoadTripRoutes(q, false); err != nil {
-		return err
-	}
-	tl, err := db.LatestTripLocation(q, trip.ID)
-	if err != nil {
-		return err
-	}
-	currentLocation := tl.Location
+func GetETAForTrip(trip *db.Trip, currentLocation db.Location, clock Clock) error {
 	if trip.TripType == db.TripTypeCheckIn {
 		return handleCheckinTrip(trip, currentLocation, clock)
 	}
@@ -151,7 +150,12 @@ func GetETAForActiveTrips() {
 	}
 	for _, t := range activeTrips {
 		go func(t *db.Trip) {
-			err := GetETAForTrip(db.CurrentDB(), t, clock)
+			tl, err := db.LatestTripLocation(db.CurrentDB(), t.ID)
+			if err != nil {
+				log.Errorf("Error getting current location for Trip %d", t.ID)
+				log.Error(err)
+			}
+			err = GetETAForTrip(t, tl.Location, clock)
 			if err != nil {
 				log.Errorf("Error processing ETA for Trip %d", t.ID)
 				log.Error(err)

@@ -151,10 +151,10 @@ func (t *Trip) AllCheckedIn() bool {
 	for _, tr := range t.TripRoutes {
 		_, found := OnBoardStatuses[tr.Status]
 		if !found {
-			break
+			return false
 		}
-		allOnBoard = true
 	}
+	allOnBoard = true
 	if allOnBoard && t.Status != "canceled" {
 		return true
 	}

@@ -25,6 +25,11 @@ func InitNotificationService(apiKey string, topicPrefix string) {
 	notificationService = ns
 }
 
+// SetNotificationService sets current notification service
+func SetNotificationService(ns NotificationService) {
+	notificationService = ns
+}
+
 // GetNotificationService returns the current NotificationService
 // Please note that this can be nil
 func GetNotificationService() NotificationService {

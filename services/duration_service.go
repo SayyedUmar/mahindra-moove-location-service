@@ -23,6 +23,11 @@ func InitDurationService(apiKey string) {
 	durationService = gds
 }
 
+// SetDurationService sets the current duration service
+func SetDurationService(ds DurationService) {
+	durationService = ds
+}
+
 // GetDurationService returns the currently wrapped duration service
 // This can be nil
 func GetDurationService() DurationService {
