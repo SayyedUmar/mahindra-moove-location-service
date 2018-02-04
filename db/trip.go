@@ -90,7 +90,7 @@ func (t *Trip) LoadTripRoutes(db sqlx.Queryer, force bool) error {
 		if err != nil {
 			return err
 		}
-		tr.Trip = t
+		tr.Trip = *t
 		tripRoutes = append(tripRoutes, tr)
 	}
 	t.isRoutesLoaded = true

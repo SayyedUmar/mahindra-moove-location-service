@@ -170,6 +170,7 @@ func (mc mockClock) Now() time.Time {
 	return time.Date(2018, 01, 01, 9, 0, 0, 0, time.Local)
 }
 
+// #region checkin
 func simpleCheckinTrip() db.Trip {
 	return db.Trip{
 		ID:           42,
@@ -184,7 +185,7 @@ func simpleCheckinTrip() db.Trip {
 				ID:                     421,
 				TripID:                 42,
 				Status:                 "on_board",
-				Trip:                   &db.Trip{DriverUserID: 400},
+				Trip:                   db.Trip{DriverUserID: 400},
 				ScheduledRouteOrder:    1,
 				ScheduledStartLocation: db.Location{utils.Location{1, 1}},
 				ScheduledEndLocation:   db.Location{utils.Location{3, 3}},
@@ -207,7 +208,7 @@ func checkinTripNotAllBoard() db.Trip {
 				ID:                     421,
 				TripID:                 42,
 				Status:                 "on_board",
-				Trip:                   &db.Trip{DriverUserID: 400},
+				Trip:                   db.Trip{DriverUserID: 400},
 				ScheduledRouteOrder:    1,
 				ScheduledStartLocation: db.Location{utils.Location{1, 1}},
 				ScheduledEndLocation:   db.Location{utils.Location{3, 3}},
@@ -217,7 +218,7 @@ func checkinTripNotAllBoard() db.Trip {
 				ID:                     422,
 				TripID:                 42,
 				Status:                 "not_started",
-				Trip:                   &db.Trip{DriverUserID: 400},
+				Trip:                   db.Trip{DriverUserID: 400},
 				ScheduledRouteOrder:    1,
 				ScheduledStartLocation: db.Location{utils.Location{3, 3}},
 				ScheduledEndLocation:   db.Location{utils.Location{4, 4}},
@@ -225,6 +226,8 @@ func checkinTripNotAllBoard() db.Trip {
 		},
 	}
 }
+
+// #endregion
 
 func checkinTripNotAllBoardWithOffset() db.Trip {
 	return db.Trip{
@@ -240,7 +243,7 @@ func checkinTripNotAllBoardWithOffset() db.Trip {
 				ID:                     421,
 				TripID:                 42,
 				Status:                 "on_board",
-				Trip:                   &db.Trip{DriverUserID: 400},
+				Trip:                   db.Trip{DriverUserID: 400},
 				ScheduledRouteOrder:    1,
 				ScheduledStartLocation: db.Location{utils.Location{1, 1}},
 				ScheduledEndLocation:   db.Location{utils.Location{3, 3}},
@@ -250,7 +253,7 @@ func checkinTripNotAllBoardWithOffset() db.Trip {
 				ID:                     422,
 				TripID:                 42,
 				Status:                 "on_board",
-				Trip:                   &db.Trip{DriverUserID: 400},
+				Trip:                   db.Trip{DriverUserID: 400},
 				ScheduledRouteOrder:    1,
 				ScheduledStartLocation: db.Location{utils.Location{3, 3}},
 				ScheduledEndLocation:   db.Location{utils.Location{4, 4}},
@@ -260,7 +263,7 @@ func checkinTripNotAllBoardWithOffset() db.Trip {
 				ID:                     423,
 				TripID:                 42,
 				Status:                 "not_started",
-				Trip:                   &db.Trip{DriverUserID: 400},
+				Trip:                   db.Trip{DriverUserID: 400},
 				ScheduledRouteOrder:    1,
 				ScheduledStartLocation: db.Location{utils.Location{4, 4}},
 				ScheduledEndLocation:   db.Location{utils.Location{5, 5}},
@@ -283,7 +286,7 @@ func checkinTripNotAllBoardWithOffsetWithOneOnBoard() db.Trip {
 				ID:                     421,
 				TripID:                 42,
 				Status:                 "on_board",
-				Trip:                   &db.Trip{DriverUserID: 400},
+				Trip:                   db.Trip{DriverUserID: 400},
 				ScheduledRouteOrder:    1,
 				ScheduledStartLocation: db.Location{utils.Location{1, 1}},
 				ScheduledEndLocation:   db.Location{utils.Location{3, 3}},
@@ -293,7 +296,7 @@ func checkinTripNotAllBoardWithOffsetWithOneOnBoard() db.Trip {
 				ID:                     422,
 				TripID:                 42,
 				Status:                 "not_started",
-				Trip:                   &db.Trip{DriverUserID: 400},
+				Trip:                   db.Trip{DriverUserID: 400},
 				ScheduledRouteOrder:    1,
 				ScheduledStartLocation: db.Location{utils.Location{3, 3}},
 				ScheduledEndLocation:   db.Location{utils.Location{4, 4}},
@@ -303,7 +306,7 @@ func checkinTripNotAllBoardWithOffsetWithOneOnBoard() db.Trip {
 				ID:                     423,
 				TripID:                 42,
 				Status:                 "not_started",
-				Trip:                   &db.Trip{DriverUserID: 400},
+				Trip:                   db.Trip{DriverUserID: 400},
 				ScheduledRouteOrder:    1,
 				ScheduledStartLocation: db.Location{utils.Location{4, 4}},
 				ScheduledEndLocation:   db.Location{utils.Location{5, 5}},

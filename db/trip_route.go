@@ -18,7 +18,7 @@ type TripRoute struct {
 	ScheduledStartLocation Location `db:"scheduled_start_location"`
 	ScheduledEndLocation   Location `db:"scheduled_end_location"`
 	EmployeeUserID         int      `db:"employee_user_id"`
-	Trip                   *Trip
+	Trip                   Trip
 }
 
 // IsOnBoard is considered on board if he is on board or driver has arrived
