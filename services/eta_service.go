@@ -1,6 +1,7 @@
 package services
 
 import (
+	"fmt"
 	"time"
 
 	"github.com/MOOVE-Network/location_service/db"
@@ -139,6 +140,9 @@ func (rc realClock) Now() time.Time {
 var clock = realClock{}
 
 func GetETAForTrip(trip *db.Trip, currentLocation db.Location, clock Clock) error {
+	if len(trip.TripRoutes) < 1 {
+		return fmt.Errorf("The trip %d has no trip routes", trip.ID)
+	}
 	if trip.TripType == db.TripTypeCheckIn {
 		return handleCheckinTrip(trip, currentLocation, clock)
 	}
