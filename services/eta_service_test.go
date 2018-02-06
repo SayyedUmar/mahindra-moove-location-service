@@ -31,7 +31,7 @@ func TestGetETAForTripShould_NotifyETAForASimpleCheckinTrip(t *testing.T) {
 	mockDurationService.EXPECT().GetDuration(currentLocation, db.Location{utils.Location{3, 3}}, mockClock{}.Now()).Return(duration, nil)
 	data := make(map[string]interface{})
 	data["duration"] = int64(duration.Duration.Minutes())
-	data["push_type"] = "driver_location_update"
+	data["push_type"] = "driver_location_update_1"
 	userCall := mockNotificationService.EXPECT().SendNotification(strconv.Itoa(4212), data, "user")
 	mockNotificationService.EXPECT().SendNotification(strconv.Itoa(400), data, "driver").After(userCall)
 
@@ -61,14 +61,14 @@ func TestGetETAForTripShould_NotifyETAForACheckinTripWithEmpNotStarted(t *testin
 	durationCall1 := mockDurationService.EXPECT().GetDuration(currentLocation, db.Location{utils.Location{3, 3}}, mockClock{}.Now()).Return(duration, nil)
 	notificationData1 := make(map[string]interface{})
 	notificationData1["duration"] = int64(duration.Duration.Minutes())
-	notificationData1["push_type"] = "driver_location_update"
+	notificationData1["push_type"] = "driver_location_update_1"
 	userCall1 := mockNotificationService.EXPECT().SendNotification(strconv.Itoa(4223), notificationData1, "user")
 	mockNotificationService.EXPECT().SendNotification(strconv.Itoa(400), notificationData1, "driver").After(userCall1)
 
 	mockDurationService.EXPECT().GetDuration(db.Location{utils.Location{3, 3}}, db.Location{utils.Location{4, 4}}, mockClock{}.Now().Add(duration.Duration)).Return(duration, nil).After(durationCall1)
 	notificationData2 := make(map[string]interface{})
 	notificationData2["duration"] = int64((duration.Duration + duration.Duration).Minutes())
-	notificationData2["push_type"] = "driver_location_update"
+	notificationData2["push_type"] = "driver_location_update_1"
 	mockNotificationService.EXPECT().SendNotification(strconv.Itoa(4212), notificationData2, "user").After(userCall1)
 
 	err := services.GetETAForTrip(&trip, currentLocation, mockClock{})
@@ -97,7 +97,7 @@ func TestGetETAForTripShould_NotifyETAForACheckinTripWithOffset(t *testing.T) {
 	durationCall1 := mockDurationService.EXPECT().GetDuration(currentLocation, db.Location{utils.Location{4, 4}}, mockClock{}.Now()).Return(duration, nil)
 	notificationData1 := make(map[string]interface{})
 	notificationData1["duration"] = int64(duration.Duration.Minutes())
-	notificationData1["push_type"] = "driver_location_update"
+	notificationData1["push_type"] = "driver_location_update_1"
 	userCall1 := mockNotificationService.EXPECT().SendNotification(strconv.Itoa(4233), notificationData1, "user")
 	mockNotificationService.EXPECT().SendNotification(strconv.Itoa(400), notificationData1, "driver").After(userCall1)
 
@@ -105,12 +105,12 @@ func TestGetETAForTripShould_NotifyETAForACheckinTripWithOffset(t *testing.T) {
 
 	notificationData2 := make(map[string]interface{})
 	notificationData2["duration"] = int64((duration.Duration + duration.Duration).Minutes())
-	notificationData2["push_type"] = "driver_location_update"
+	notificationData2["push_type"] = "driver_location_update_1"
 	mockNotificationService.EXPECT().SendNotification(strconv.Itoa(4212), notificationData2, "user")
 
 	notificationData3 := make(map[string]interface{})
 	notificationData3["duration"] = int64((duration.Duration + duration.Duration).Minutes())
-	notificationData3["push_type"] = "driver_location_update"
+	notificationData3["push_type"] = "driver_location_update_1"
 	mockNotificationService.EXPECT().SendNotification(strconv.Itoa(4223), notificationData3, "user")
 
 	err := services.GetETAForTrip(&trip, currentLocation, mockClock{})
@@ -139,20 +139,20 @@ func TestGetETAForTripShould_NotifyETAForACheckinTripWithOneOnBoard(t *testing.T
 	durationCall1 := mockDurationService.EXPECT().GetDuration(currentLocation, db.Location{utils.Location{3, 3}}, mockClock{}.Now()).Return(duration, nil)
 	notificationData1 := make(map[string]interface{})
 	notificationData1["duration"] = int64(duration.Duration.Minutes())
-	notificationData1["push_type"] = "driver_location_update"
+	notificationData1["push_type"] = "driver_location_update_1"
 	userCall1 := mockNotificationService.EXPECT().SendNotification(strconv.Itoa(4223), notificationData1, "user")
 	mockNotificationService.EXPECT().SendNotification(strconv.Itoa(400), notificationData1, "driver").After(userCall1)
 
 	durationCall2 := mockDurationService.EXPECT().GetDuration(db.Location{utils.Location{3, 3}}, db.Location{utils.Location{4, 4}}, mockClock{}.Now().Add(duration.Duration)).Return(duration, nil).After(durationCall1)
 	notificationData2 := make(map[string]interface{})
 	notificationData2["duration"] = int64((duration.Duration + duration.Duration).Minutes())
-	notificationData2["push_type"] = "driver_location_update"
+	notificationData2["push_type"] = "driver_location_update_1"
 	mockNotificationService.EXPECT().SendNotification(strconv.Itoa(4233), notificationData2, "user")
 
 	mockDurationService.EXPECT().GetDuration(db.Location{utils.Location{4, 4}}, db.Location{utils.Location{5, 5}}, mockClock{}.Now().Add(duration.Duration*2)).Return(duration, nil).After(durationCall2)
 	notificationData3 := make(map[string]interface{})
 	notificationData3["duration"] = int64((duration.Duration * 3).Minutes())
-	notificationData3["push_type"] = "driver_location_update"
+	notificationData3["push_type"] = "driver_location_update_1"
 	mockNotificationService.EXPECT().SendNotification(strconv.Itoa(4212), notificationData3, "user")
 
 	err := services.GetETAForTrip(&trip, currentLocation, mockClock{})

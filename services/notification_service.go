@@ -104,6 +104,6 @@ func NotifyTripRouteToDriver(tr *db.TripRoute, dm *DurationMetrics, offset time.
 func getPushNotificationData(dm *DurationMetrics, offset time.Duration) map[string]interface{} {
 	data := make(map[string]interface{})
 	data["duration"] = int64((dm.Duration + offset).Minutes())
-	data["push_type"] = "driver_location_update"
+	data["push_type"] = "driver_location_update_1"
 	return data
 }
