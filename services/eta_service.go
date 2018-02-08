@@ -108,11 +108,9 @@ func handleCheckoutTrip(trip *db.Trip, currentLocation db.Location, clock Clock)
 			if err != nil {
 				return err
 			}
+			NotifyTripRouteToEmployee(&tr, &dm, offset, ns)
 			offset += dm.Duration
-			go NotifyTripRouteToEmployee(&tr, &dm, offset, ns)
-		}
-
-		if tr.Status == "on_board" && offset > 0 {
+		} else if tr.Status == "on_board" && offset > 0 {
 			startLoc := tr.ScheduledStartLocation
 			endLoc := tr.ScheduledEndLocation
 			log.Infof("Requesting eta of trip %d from %s to %s with offset of %d mins\n", trip.ID, startLoc.ToString(), endLoc.ToString(), int(offset.Minutes()))
@@ -120,8 +118,8 @@ func handleCheckoutTrip(trip *db.Trip, currentLocation db.Location, clock Clock)
 			if err != nil {
 				return err
 			}
+			NotifyTripRouteToEmployee(&tr, &dm, offset, ns)
 			offset += dm.Duration
-			go NotifyTripRouteToEmployee(&tr, &dm, offset, ns)
 		}
 	}
 	return nil
