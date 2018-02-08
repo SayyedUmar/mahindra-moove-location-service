@@ -35,7 +35,7 @@ func TestGetETAForTripShould_NotifyETAForASimpleCheckinTrip(t *testing.T) {
 	userCall := mockNotificationService.EXPECT().SendNotification(strconv.Itoa(4212), data, "user")
 	mockNotificationService.EXPECT().SendNotification(strconv.Itoa(400), data, "driver").After(userCall)
 
-	err := services.GetETAForTrip(&trip, currentLocation, mockClock{})
+	_, err := services.GetETAForTrip(&trip, currentLocation, mockClock{})
 	if err != nil {
 		t.Log("Error getting ETA for trip")
 		t.Log(err)
@@ -71,7 +71,7 @@ func TestGetETAForTripShould_NotifyETAForACheckinTripWithEmpNotStarted(t *testin
 	notificationData2["push_type"] = "driver_location_update_1"
 	mockNotificationService.EXPECT().SendNotification(strconv.Itoa(4212), notificationData2, "user").After(userCall1)
 
-	err := services.GetETAForTrip(&trip, currentLocation, mockClock{})
+	_, err := services.GetETAForTrip(&trip, currentLocation, mockClock{})
 	if err != nil {
 		t.Log("Error getting ETA for trip")
 		t.Log(err)
@@ -113,7 +113,7 @@ func TestGetETAForTripShould_NotifyETAForACheckinTripWithOffset(t *testing.T) {
 	notificationData3["push_type"] = "driver_location_update_1"
 	mockNotificationService.EXPECT().SendNotification(strconv.Itoa(4223), notificationData3, "user")
 
-	err := services.GetETAForTrip(&trip, currentLocation, mockClock{})
+	_, err := services.GetETAForTrip(&trip, currentLocation, mockClock{})
 	if err != nil {
 		t.Log("Error getting ETA for trip")
 		t.Log(err)
@@ -155,7 +155,7 @@ func TestGetETAForTripShould_NotifyETAForACheckinTripWithOneOnBoard(t *testing.T
 	notificationData3["push_type"] = "driver_location_update_1"
 	mockNotificationService.EXPECT().SendNotification(strconv.Itoa(4212), notificationData3, "user")
 
-	err := services.GetETAForTrip(&trip, currentLocation, mockClock{})
+	_, err := services.GetETAForTrip(&trip, currentLocation, mockClock{})
 	if err != nil {
 		t.Log("Error getting ETA for trip")
 		t.Log(err)

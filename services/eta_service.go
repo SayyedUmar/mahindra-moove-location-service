@@ -1,6 +1,7 @@
 package services
 
 import (
+	"encoding/json"
 	"fmt"
 	"time"
 
@@ -8,7 +9,49 @@ import (
 	log "github.com/sirupsen/logrus"
 )
 
-func handleCheckinTrip(trip *db.Trip, currentLocation db.Location, clock Clock) error {
+type NullTime struct {
+	Valid bool
+	Value time.Time
+}
+
+func (nt NullTime) MarshalJSON() ([]byte, error) {
+	if nt.Valid {
+		return json.Marshal(nt.Value)
+	}
+	return json.Marshal(nil)
+}
+
+func (nt NullTime) UnmarshalJSON(data []byte) error {
+	var val *time.Time
+	if err := json.Unmarshal(data, val); err != nil {
+		return err
+	}
+	if val != nil {
+		nt.Valid = true
+		nt.Value = *val
+	} else {
+		nt.Valid = false
+	}
+	return nil
+}
+
+func NotNullTime(t time.Time) NullTime {
+	return NullTime{Valid: true, Value: t}
+}
+
+type ETATripRoute struct {
+	ID          int      `json:"id"`
+	PickupTime  NullTime `json:"pickup_time"`
+	DropoffTime NullTime `json:"pickup_time"`
+}
+type ETAResponse struct {
+	ID         int            `json:"id"`
+	UpdatedAt  time.Time      `json:"updated_at"`
+	TripRoutes []ETATripRoute `json:"trip_routes"`
+}
+
+func handleCheckinTrip(trip *db.Trip, currentLocation db.Location, clock Clock) (*ETAResponse, error) {
+	etaResp := ETAResponse{ID: trip.ID, UpdatedAt: clock.Now()}
 	ds := GetDurationService()
 	ns := GetNotificationService()
 	// TODO: Verify if driver_arrived should be one of the all checked in statuses
@@ -18,13 +61,13 @@ func handleCheckinTrip(trip *db.Trip, currentLocation db.Location, clock Clock) 
 		log.Infof("Requesting eta of trip %d from %s to %s with offset of %d mins\n", trip.ID, currentLocation.ToString(), endLocation.ToString(), 0)
 		dm, err := ds.GetDuration(currentLocation, endLocation, clock.Now())
 		if err != nil {
-			return err
+			return nil, err
 		}
 		for _, tr := range trip.TripRoutes {
 			NotifyTripRouteToEmployee(&tr, &dm, 0, ns)
 		}
 		NotifyTripRouteToDriver(&trip.TripRoutes[0], &dm, 0, ns)
-		return nil
+		return nil, nil
 	}
 	var offset time.Duration
 	var trsToBeNotified []db.TripRoute
@@ -41,8 +84,9 @@ func handleCheckinTrip(trip *db.Trip, currentLocation db.Location, clock Clock) 
 			log.Infof("Requesting eta of trip %d from %s to %s with offset of %d mins\n", trip.ID, startLoc.ToString(), endLoc.ToString(), 0)
 			dm, err := ds.GetDuration(startLoc, endLoc, clock.Now())
 			if err != nil {
-				return err
+				return nil, err
 			}
+			etaResp.TripRoutes = append(etaResp.TripRoutes, ETATripRoute{ID: tr.ID, PickupTime: NotNullTime(clock.Now().Add(dm.Duration))})
 			NotifyTripRouteToEmployee(&tr, &dm, offset, ns)
 			NotifyTripRouteToDriver(&tr, &dm, offset, ns)
 			offset += dm.Duration
@@ -52,8 +96,9 @@ func handleCheckinTrip(trip *db.Trip, currentLocation db.Location, clock Clock) 
 			log.Infof("Requesting eta of trip %d from %s to %s with offset of %d mins\n", trip.ID, startLoc.ToString(), endLoc.ToString(), int64(offset.Minutes()))
 			dm, err := ds.GetDuration(startLoc, endLoc, clock.Now().Add(offset))
 			if err != nil {
-				return err
+				return nil, err
 			}
+			etaResp.TripRoutes = append(etaResp.TripRoutes, ETATripRoute{ID: tr.ID, PickupTime: NotNullTime(clock.Now().Add(dm.Duration).Add(offset))})
 			NotifyTripRouteToEmployee(&tr, &dm, offset, ns)
 			offset += dm.Duration
 		}
@@ -64,16 +109,18 @@ func handleCheckinTrip(trip *db.Trip, currentLocation db.Location, clock Clock) 
 		endLoc := lastTr.ScheduledEndLocation
 		dm, err := ds.GetDuration(startLoc, endLoc, clock.Now().Add(offset))
 		if err != nil {
-			return err
+			return nil, err
 		}
 		for _, tr := range trsToBeNotified {
+			etaResp.TripRoutes = append(etaResp.TripRoutes, ETATripRoute{ID: tr.ID, DropoffTime: NotNullTime(clock.Now().Add(dm.Duration).Add(offset))})
 			NotifyTripRouteToEmployee(&tr, &dm, offset, ns)
 		}
 	}
-	return nil
+	return &etaResp, nil
 }
 
-func handleCheckoutTrip(trip *db.Trip, currentLocation db.Location, clock Clock) error {
+func handleCheckoutTrip(trip *db.Trip, currentLocation db.Location, clock Clock) (*ETAResponse, error) {
+	etaResp := ETAResponse{ID: trip.ID, UpdatedAt: clock.Now()}
 	ds := GetDurationService()
 	ns := GetNotificationService()
 	tripNotStarted := true
@@ -90,12 +137,13 @@ func handleCheckoutTrip(trip *db.Trip, currentLocation db.Location, clock Clock)
 		log.Infof("Requesting eta of trip %d from %s to %s with offset of %d mins\n", trip.ID, startLoc.ToString(), endLoc.ToString(), 0)
 		dm, err := ds.GetDuration(startLoc, endLoc, clock.Now())
 		if err != nil {
-			return err
+			return nil, err
 		}
 		for _, tr := range trip.TripRoutes {
+			etaResp.TripRoutes = append(etaResp.TripRoutes, ETATripRoute{ID: tr.ID, PickupTime: NotNullTime(clock.Now().Add(dm.Duration))})
 			go NotifyTripRouteToEmployee(&tr, &dm, 0, ns)
 		}
-		return nil
+		return &etaResp, nil
 	}
 
 	for _, tr := range trip.TripRoutes {
@@ -106,8 +154,9 @@ func handleCheckoutTrip(trip *db.Trip, currentLocation db.Location, clock Clock)
 			log.Infof("Requesting eta of trip %d from %s to %s with offset of %d mins\n", trip.ID, startLoc.ToString(), endLoc.ToString(), 0)
 			dm, err := ds.GetDuration(startLoc, endLoc, clock.Now())
 			if err != nil {
-				return err
+				return nil, err
 			}
+			etaResp.TripRoutes = append(etaResp.TripRoutes, ETATripRoute{ID: tr.ID, DropoffTime: NotNullTime(clock.Now().Add(dm.Duration).Add(offset))})
 			NotifyTripRouteToEmployee(&tr, &dm, offset, ns)
 			offset += dm.Duration
 		} else if tr.Status == "on_board" && offset > 0 {
@@ -116,30 +165,31 @@ func handleCheckoutTrip(trip *db.Trip, currentLocation db.Location, clock Clock)
 			log.Infof("Requesting eta of trip %d from %s to %s with offset of %d mins\n", trip.ID, startLoc.ToString(), endLoc.ToString(), int(offset.Minutes()))
 			dm, err := ds.GetDuration(startLoc, endLoc, clock.Now().Add(offset))
 			if err != nil {
-				return err
+				return nil, err
 			}
+			etaResp.TripRoutes = append(etaResp.TripRoutes, ETATripRoute{ID: tr.ID, DropoffTime: NotNullTime(clock.Now().Add(dm.Duration).Add(offset))})
 			NotifyTripRouteToEmployee(&tr, &dm, offset, ns)
 			offset += dm.Duration
 		}
 	}
-	return nil
+	return &etaResp, nil
 }
 
 type Clock interface {
 	Now() time.Time
 }
-type realClock struct {
+type RealClock struct {
 }
 
-func (rc realClock) Now() time.Time {
+func (rc RealClock) Now() time.Time {
 	return time.Now()
 }
 
-var clock = realClock{}
+var clock = RealClock{}
 
-func GetETAForTrip(trip *db.Trip, currentLocation db.Location, clock Clock) error {
+func GetETAForTrip(trip *db.Trip, currentLocation db.Location, clock Clock) (*ETAResponse, error) {
 	if len(trip.TripRoutes) < 1 {
-		return fmt.Errorf("The trip %d has no trip routes", trip.ID)
+		return nil, fmt.Errorf("The trip %d has no trip routes", trip.ID)
 	}
 	if trip.TripType == db.TripTypeCheckIn {
 		return handleCheckinTrip(trip, currentLocation, clock)
@@ -159,7 +209,7 @@ func GetETAForActiveTrips() {
 				log.Errorf("Error getting current location for Trip %d", t.ID)
 				log.Error(err)
 			}
-			err = GetETAForTrip(t, tl.Location, clock)
+			_, err = GetETAForTrip(t, tl.Location, clock)
 			if err != nil {
 				log.Errorf("Error processing ETA for Trip %d", t.ID)
 				log.Error(err)
