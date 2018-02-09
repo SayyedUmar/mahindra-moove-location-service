@@ -29,12 +29,14 @@ func ensureDriver(tx *sqlx.Tx, driverID int) {
 	if row.Scan(&dID) != nil {
 		driversInsertQuery := "insert into drivers (id, created_at, updated_at) values(?,?,?)"
 		usersInsertQuery := `
-		insert into users (email, encrypted_password, uid, sign_in_count, created_at, updated_at, provider,  entity_id, entity_type) 
-					values(?    , ?                 , ?  , ?            , ?         , ?         , ?       ,  ?        , ?          )`
+		insert into users (f_name, l_name, email, encrypted_password, uid, sign_in_count, created_at, updated_at, provider,  entity_id, entity_type) 
+					values(?, 		?,		?    , ?                 , ?  , ?            , ?         , ?         , ?       ,  ?        , ?          )`
 
 		tx.MustExec(driversInsertQuery, driverID, time.Now(), time.Now())
 		email := fake.EmailAddress()
-		tx.MustExec(usersInsertQuery, email, fake.SimplePassword(), email, 0, time.Now(), time.Now(), "provider", driverID, "driver")
+		fName := fake.FirstName()
+		lName := fake.LastName()
+		tx.MustExec(usersInsertQuery, fName, lName, email, fake.SimplePassword(), email, 0, time.Now(), time.Now(), "provider", driverID, "driver")
 	}
 }
 
@@ -101,10 +103,8 @@ func TestGetTripByID(t *testing.T) {
 		DriverID:  23,
 		VehicleID: 42,
 		Status:    "active"}, tx)
-	if err != nil {
-		t.Log(err)
-		t.FailNow()
-	}
+	tst.FailNowOnErr(t, err)
+
 	assert.Equal(t, 23, trip.DriverID)
 	assert.Equal(t, 42, trip.VehicleID)
 	assert.True(t, trip.DriverUserID > 0)
@@ -116,10 +116,8 @@ func TestGetTripByIDLoadRoutes(t *testing.T) {
 	defer tx.Rollback()
 
 	trip, err := createTripWithRoutes(tx, 23, 42)
-	if err != nil {
-		t.Log(err)
-		t.FailNow()
-	}
+	tst.FailNowOnErr(t, err)
+
 	assert.Equal(t, 3, len(trip.TripRoutes))
 	assert.False(t, trip.AllCheckedIn())
 }
