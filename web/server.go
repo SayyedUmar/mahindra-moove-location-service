@@ -40,7 +40,7 @@ func SetupServer() {
 	router.Handle("/metrics", promhttp.Handler())
 	router.HandleFunc("/api/v1/drivers/{id}/heart_beat", LogRequestsMiddleware(TokenAuth(WriteHeartBeat))).Methods("POST")
 	router.HandleFunc("/api/v2/drivers/{id}/update_current_location", LogRequestsMiddleware(TokenAuth(UpdateCurrentLocation))).Methods("POST")
-	router.HandleFunc("/api/v3/trips/{id}/eta", LogRequestsMiddleware(TokenAuth(GetTripETA))).Methods("GET")
+	router.HandleFunc("/api/v3/trips/{id}/eta", LogRequestsMiddleware(GetTripETA)).Methods("GET")
 	prometheus.InstrumentHandlerFunc("socket", Auth(LocationSocket))
 	router.HandleFunc("/api/v3/version", EchoVersion)
 	log.Info("Starting ... ")
