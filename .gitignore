@@ -4,3 +4,4 @@ vendor
 .DS_Store
 coverage.txt
 coverage.html
+db/debug.test

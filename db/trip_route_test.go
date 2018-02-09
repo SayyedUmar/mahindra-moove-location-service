@@ -1,8 +1,12 @@
 package db
 
 import (
+	"testing"
 	"time"
 
+	"github.com/stretchr/testify/assert"
+
+	tst "github.com/MOOVE-Network/location_service/testutils"
 	"github.com/jmoiron/sqlx"
 )
 
@@ -40,4 +44,71 @@ func createEmployeeTrip(tx *sqlx.Tx, employeeID int) int {
 		panic(err)
 	}
 	return int(etID)
+}
+
+func TestIsNotStarted(t *testing.T) {
+	tx := createTx(t)
+	defer tx.Rollback()
+	trip, err := createTripWithRoutes(tx, 23, 42, "not_started", "driver_arrived", "on_board")
+	tst.FailNowOnErr(t, err)
+
+	trip1, err := createTripWithRoutes(tx, 23, 42, "missed", "cancelled", "completed")
+	tst.FailNowOnErr(t, err)
+
+	trips, err := GetTripsByStatus(tx, "active")
+	tst.FailNowOnErr(t, err)
+
+	assert.True(t, isInTripsArr(trips, trip))
+	assert.True(t, isInTripsArr(trips, trip1))
+	assert.Equal(t, 3, len(trips[0].TripRoutes))
+	assert.Equal(t, 3, len(trips[1].TripRoutes))
+
+	assert.True(t, trips[0].TripRoutes[0].IsNotStarted())
+	assert.False(t, trips[0].TripRoutes[1].IsNotStarted())
+	assert.False(t, trips[0].TripRoutes[2].IsNotStarted())
+	assert.False(t, trips[1].TripRoutes[0].IsNotStarted())
+	assert.False(t, trips[1].TripRoutes[1].IsNotStarted())
+	assert.False(t, trips[1].TripRoutes[2].IsNotStarted())
+}
+
+func TestIsTripRouteNotStarted(t *testing.T) {
+	tx := createTx(t)
+	defer tx.Rollback()
+	trip, err := createTripWithRoutes(tx, 23, 42, "not_started", "driver_arrived", "on_board")
+	tst.FailNowOnErr(t, err)
+
+	trip1, err := createTripWithRoutes(tx, 23, 42, "missed", "cancelled", "completed")
+	tst.FailNowOnErr(t, err)
+
+	trips, err := GetTripsByStatus(tx, "active")
+	tst.FailNowOnErr(t, err)
+
+	assert.True(t, isInTripsArr(trips, trip))
+	assert.True(t, isInTripsArr(trips, trip1))
+	assert.Equal(t, 3, len(trips[0].TripRoutes))
+	assert.Equal(t, 3, len(trips[1].TripRoutes))
+
+	isNotStarted, err := IsTripRouteNotStarted(tx, trips[0].TripRoutes[0].ID)
+	tst.FailNowOnErr(t, err)
+	assert.True(t, isNotStarted)
+
+	isNotStarted, err = IsTripRouteNotStarted(tx, trips[0].TripRoutes[1].ID)
+	tst.FailNowOnErr(t, err)
+	assert.False(t, isNotStarted)
+
+	isNotStarted, err = IsTripRouteNotStarted(tx, trips[0].TripRoutes[2].ID)
+	tst.FailNowOnErr(t, err)
+	assert.False(t, isNotStarted)
+
+	isNotStarted, err = IsTripRouteNotStarted(tx, trips[1].TripRoutes[0].ID)
+	tst.FailNowOnErr(t, err)
+	assert.False(t, isNotStarted)
+
+	isNotStarted, err = IsTripRouteNotStarted(tx, trips[1].TripRoutes[1].ID)
+	tst.FailNowOnErr(t, err)
+	assert.False(t, isNotStarted)
+
+	isNotStarted, err = IsTripRouteNotStarted(tx, trips[1].TripRoutes[2].ID)
+	tst.FailNowOnErr(t, err)
+	assert.False(t, isNotStarted)
 }
