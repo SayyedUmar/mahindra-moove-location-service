@@ -43,6 +43,7 @@ type ETATripRoute struct {
 	ID             int      `json:"id"`
 	PickupTime     NullTime `json:"pickup_time"`
 	DropoffTime    NullTime `json:"dropoff_time"`
+	ETAInMinutes   float64  `json:"eta_in_minutes"`
 	EmployeeUserID int      `json:"employee_user_id"`
 }
 type ETAResponse struct {
@@ -65,10 +66,16 @@ func handleCheckinTrip(trip *db.Trip, currentLocation db.Location, clock Clock) 
 			return nil, err
 		}
 		for _, tr := range trip.TripRoutes {
+			etaResp.TripRoutes = append(etaResp.TripRoutes, ETATripRoute{
+				ID:             tr.ID,
+				PickupTime:     NotNullTime(clock.Now().Add(dm.Duration)),
+				ETAInMinutes:   dm.Duration.Minutes(),
+				EmployeeUserID: tr.EmployeeUserID,
+			})
 			NotifyTripRouteToEmployee(&tr, &dm, 0, ns)
 		}
 		NotifyTripRouteToDriver(&trip.TripRoutes[0], &dm, 0, ns)
-		return nil, nil
+		return &etaResp, nil
 	}
 	var offset time.Duration
 	var trsToBeNotified []db.TripRoute
@@ -90,6 +97,7 @@ func handleCheckinTrip(trip *db.Trip, currentLocation db.Location, clock Clock) 
 			etaResp.TripRoutes = append(etaResp.TripRoutes, ETATripRoute{
 				ID:             tr.ID,
 				PickupTime:     NotNullTime(clock.Now().Add(dm.Duration)),
+				ETAInMinutes:   dm.Duration.Minutes(),
 				EmployeeUserID: tr.EmployeeUserID,
 			})
 			NotifyTripRouteToEmployee(&tr, &dm, offset, ns)
@@ -106,6 +114,7 @@ func handleCheckinTrip(trip *db.Trip, currentLocation db.Location, clock Clock) 
 			etaResp.TripRoutes = append(etaResp.TripRoutes, ETATripRoute{
 				ID:             tr.ID,
 				PickupTime:     NotNullTime(clock.Now().Add(dm.Duration).Add(offset)),
+				ETAInMinutes:   (dm.Duration + offset).Minutes(),
 				EmployeeUserID: tr.EmployeeUserID,
 			})
 			NotifyTripRouteToEmployee(&tr, &dm, offset, ns)
@@ -124,6 +133,7 @@ func handleCheckinTrip(trip *db.Trip, currentLocation db.Location, clock Clock) 
 			etaResp.TripRoutes = append(etaResp.TripRoutes, ETATripRoute{
 				ID:             tr.ID,
 				DropoffTime:    NotNullTime(clock.Now().Add(dm.Duration).Add(offset)),
+				ETAInMinutes:   (dm.Duration + offset).Minutes(),
 				EmployeeUserID: tr.EmployeeUserID,
 			})
 			NotifyTripRouteToEmployee(&tr, &dm, offset, ns)
@@ -156,6 +166,7 @@ func handleCheckoutTrip(trip *db.Trip, currentLocation db.Location, clock Clock)
 			etaResp.TripRoutes = append(etaResp.TripRoutes, ETATripRoute{
 				ID:             tr.ID,
 				PickupTime:     NotNullTime(clock.Now().Add(dm.Duration)),
+				ETAInMinutes:   dm.Duration.Minutes(),
 				EmployeeUserID: tr.EmployeeUserID,
 			})
 			go NotifyTripRouteToEmployee(&tr, &dm, 0, ns)
@@ -176,6 +187,7 @@ func handleCheckoutTrip(trip *db.Trip, currentLocation db.Location, clock Clock)
 			etaResp.TripRoutes = append(etaResp.TripRoutes, ETATripRoute{
 				ID:             tr.ID,
 				DropoffTime:    NotNullTime(clock.Now().Add(dm.Duration).Add(offset)),
+				ETAInMinutes:   (dm.Duration + offset).Minutes(),
 				EmployeeUserID: tr.EmployeeUserID,
 			})
 			NotifyTripRouteToEmployee(&tr, &dm, offset, ns)
@@ -191,6 +203,7 @@ func handleCheckoutTrip(trip *db.Trip, currentLocation db.Location, clock Clock)
 			etaResp.TripRoutes = append(etaResp.TripRoutes, ETATripRoute{
 				ID:             tr.ID,
 				DropoffTime:    NotNullTime(clock.Now().Add(dm.Duration).Add(offset)),
+				ETAInMinutes:   (dm.Duration + offset).Minutes(),
 				EmployeeUserID: tr.EmployeeUserID,
 			})
 			NotifyTripRouteToEmployee(&tr, &dm, offset, ns)
