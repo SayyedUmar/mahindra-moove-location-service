@@ -10,6 +10,8 @@ import (
 	"github.com/fvbock/endless"
 	"github.com/gorilla/handlers"
 	"github.com/gorilla/mux"
+	"github.com/prometheus/client_golang/prometheus"
+	"github.com/prometheus/client_golang/prometheus/promhttp"
 	log "github.com/sirupsen/logrus"
 )
 
@@ -35,9 +37,11 @@ func SetupServer() {
 		port = "4343"
 	}
 	router := mux.NewRouter()
+	router.Handle("/metrics", promhttp.Handler())
 	router.HandleFunc("/api/v1/drivers/{id}/heart_beat", LogRequestsMiddleware(TokenAuth(WriteHeartBeat))).Methods("POST")
 	router.HandleFunc("/api/v2/drivers/{id}/update_current_location", LogRequestsMiddleware(TokenAuth(UpdateCurrentLocation))).Methods("POST")
-	router.HandleFunc("/api/v3/drivers/{id}/location", Auth(LocationSocket))
+	router.HandleFunc("/api/v3/trips/{id}/eta", LogRequestsMiddleware(GetTripETA)).Methods("GET")
+	prometheus.InstrumentHandlerFunc("socket", Auth(LocationSocket))
 	router.HandleFunc("/api/v3/version", EchoVersion)
 	log.Info("Starting ... ")
 	log.Infof("Listening on port %s ... ", port)
