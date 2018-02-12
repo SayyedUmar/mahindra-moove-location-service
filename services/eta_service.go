@@ -209,6 +209,7 @@ func handleCheckoutTrip(trip *db.Trip, currentLocation db.Location, clock Clock)
 				DropoffTime:    NotNullTime(clock.Now().Add(dm.Duration).Add(offset)),
 				ETAInMinutes:   (dm.Duration + offset).Minutes(),
 				EmployeeUserID: tr.EmployeeUserID,
+				Status:         tr.Status,
 			})
 			NotifyTripRouteToEmployee(&tr, &dm, offset, ns)
 			offset += dm.Duration
@@ -225,6 +226,7 @@ func handleCheckoutTrip(trip *db.Trip, currentLocation db.Location, clock Clock)
 				DropoffTime:    NotNullTime(clock.Now().Add(dm.Duration).Add(offset)),
 				ETAInMinutes:   (dm.Duration + offset).Minutes(),
 				EmployeeUserID: tr.EmployeeUserID,
+				Status:         tr.Status,
 			})
 			NotifyTripRouteToEmployee(&tr, &dm, offset, ns)
 			offset += dm.Duration
