@@ -36,9 +36,15 @@ func LocationSocket(w http.ResponseWriter, r *http.Request) {
 }
 
 func acknowledge(wsMsg socketstore.WsMessage, sendChan chan<- []byte) {
+	defer func() {
+		if x := recover(); x != nil {
+			log.Error("Could not send on closed channel")
+		}
+	}()
 	buf := bytes.NewBuffer(nil)
 	enc := json.NewEncoder(buf)
 	err := enc.Encode(wsMsg)
+
 	if err != nil {
 		log.Error("Error acknowledging ", err)
 	} else {
