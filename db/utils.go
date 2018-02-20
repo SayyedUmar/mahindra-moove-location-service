@@ -22,3 +22,8 @@ type RebindQueryer interface {
 	sqlx.Queryer
 	Rebind(string) string
 }
+
+type Selectable interface {
+	RebindQueryer
+	Select(interface{}, string, ...interface{}) error
+}

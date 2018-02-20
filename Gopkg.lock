@@ -92,6 +92,12 @@
   revision = "3379e5993990b1f927fc8db926485e6f6becf2d2"
 
 [[projects]]
+  name = "github.com/joho/godotenv"
+  packages = [".","autoload"]
+  revision = "a79fa1e548e2c689c241d10173efd51e5d689d5b"
+  version = "v1.2.0"
+
+[[projects]]
   name = "github.com/matttproud/golang_protobuf_extensions"
   packages = ["pbutil"]
   revision = "3247c84500bff8d9fb6d579d800f20b3e091582c"
@@ -178,6 +184,6 @@
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "616b5893d5a972b9f9c46851d2028b160db8dee4070aaa890c6694b78949dfbc"
+  inputs-digest = "a61c857f37bcd5ef1f4fa3570477fae0386ad557bf789245889b9a59601cd38e"
   solver-name = "gps-cdcl"
   solver-version = 1

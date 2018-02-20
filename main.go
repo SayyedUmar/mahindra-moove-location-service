@@ -9,6 +9,7 @@ import (
 	"github.com/MOOVE-Network/location_service/services"
 	"github.com/MOOVE-Network/location_service/version"
 	"github.com/MOOVE-Network/location_service/web"
+	_ "github.com/joho/godotenv/autoload"
 	log "github.com/sirupsen/logrus"
 	"github.com/stvp/rollbar"
 )
