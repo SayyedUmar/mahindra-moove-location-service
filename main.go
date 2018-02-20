@@ -10,6 +10,7 @@ import (
 	"github.com/MOOVE-Network/location_service/version"
 	"github.com/MOOVE-Network/location_service/web"
 	log "github.com/sirupsen/logrus"
+	"github.com/stvp/rollbar"
 )
 
 func init() {
@@ -20,6 +21,8 @@ func init() {
 
 func main() {
 	version.PrintVersion()
+	setupRollbar()
+	defer rollbar.Wait()
 	conn := db.InitSQLConnection()
 	db.SetActiveDB(conn)
 	defer closeConn(conn)
@@ -45,5 +48,13 @@ func closeConn(closable io.Closer) {
 	err := closable.Close()
 	if err != nil {
 		log.Panic(err)
+	}
+}
+
+func setupRollbar() {
+	rollBarToken := os.Getenv("ROLLBAR_TOKEN")
+	if rollBarToken != "" {
+		rollbar.Token = rollBarToken
+		rollbar.Environment = "production"
 	}
 }

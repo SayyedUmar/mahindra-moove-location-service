@@ -6,6 +6,8 @@ import (
 	"net/http"
 	"os"
 
+	"github.com/stvp/rollbar"
+
 	"github.com/MOOVE-Network/location_service/version"
 	"github.com/fvbock/endless"
 	"github.com/gorilla/handlers"
@@ -30,6 +32,16 @@ func EchoVersion(rw http.ResponseWriter, req *http.Request) {
 	rw.Header().Add("Content-Type", "application/json")
 }
 
+type RollbarLogger struct {
+}
+
+func (r *RollbarLogger) Println(args ...interface{}) {
+	if rollbarEnabled() {
+		rollbar.Message(rollbar.ERR, fmt.Sprintf("%v", args))
+	}
+	log.Error(args)
+}
+
 func SetupServer() {
 	port := os.Getenv("LOCATION_PORT")
 	if port == "" {
@@ -50,9 +62,14 @@ func SetupServer() {
 	go hub.Run()
 
 	handler := handlers.LoggingHandler(os.Stdout, router)
+	withRecovery := handlers.RecoveryHandler(handlers.RecoveryLogger(&RollbarLogger{}), handlers.PrintRecoveryStack(true))(handler)
 
-	err := endless.ListenAndServe(fmt.Sprintf(":%s", port), handler)
+	err := endless.ListenAndServe(fmt.Sprintf(":%s", port), withRecovery)
 	if err != nil {
 		log.Error(err)
 	}
+}
+
+func rollbarEnabled() bool {
+	return os.Getenv("ROLLBAR_TOKEN") != ""
 }

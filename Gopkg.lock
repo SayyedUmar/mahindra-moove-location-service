@@ -140,6 +140,12 @@
   version = "v1.1.4"
 
 [[projects]]
+  name = "github.com/stvp/rollbar"
+  packages = ["."]
+  revision = "b20261800d8cda3be14dcef0d1a8320779bba61a"
+  version = "v0.5.1"
+
+[[projects]]
   branch = "master"
   name = "golang.org/x/crypto"
   packages = ["bcrypt","blowfish","pbkdf2","ssh/terminal"]
@@ -172,6 +178,6 @@
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "e151e460285b2e11ad24860c6237808f73924bd46c1bc7900bd6b8d70c5d4c23"
+  inputs-digest = "616b5893d5a972b9f9c46851d2028b160db8dee4070aaa890c6694b78949dfbc"
   solver-name = "gps-cdcl"
   solver-version = 1
