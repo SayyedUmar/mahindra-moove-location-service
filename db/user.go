@@ -1,10 +1,12 @@
 package db
 
+import "database/sql"
+
 type User struct {
-	ID         int     `db:"id"`
-	FirstName  string  `db:"f_name"`
-	MiddleName *string `db:"m_name"`
-	LastName   string  `db:"l_name"`
-	EntityType string  `db:"entity_type"`
-	EntityID   int     `db:"entity_id"`
+	ID         int            `db:"id"`
+	FirstName  sql.NullString `db:"f_name"`
+	MiddleName sql.NullString `db:"m_name"`
+	LastName   sql.NullString `db:"l_name"`
+	EntityType sql.NullString `db:"entity_type"`
+	EntityID   sql.NullInt64  `db:"entity_id"`
 }

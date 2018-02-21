@@ -1,6 +1,7 @@
 package db
 
 import (
+	"database/sql"
 	"testing"
 	"time"
 
@@ -24,8 +25,11 @@ func createDriver(tx *sqlx.Tx, status string) (*Driver, error) {
 	}
 
 	driver := Driver{
-		ID:     int(driverID),
-		Status: status,
+		ID: int(driverID),
+		Status: sql.NullString{
+			String: status,
+			Valid:  true,
+		},
 	}
 
 	email := fake.EmailAddress()
@@ -38,11 +42,23 @@ func createDriver(tx *sqlx.Tx, status string) (*Driver, error) {
 	}
 
 	user := User{
-		ID:         int(userID),
-		FirstName:  fName,
-		LastName:   lName,
-		EntityID:   driver.ID,
-		EntityType: "Driver",
+		ID: int(userID),
+		FirstName: sql.NullString{
+			String: fName,
+			Valid:  true,
+		},
+		LastName: sql.NullString{
+			String: lName,
+			Valid:  true,
+		},
+		EntityID: sql.NullInt64{
+			Int64: int64(driver.ID),
+			Valid: true,
+		},
+		EntityType: sql.NullString{
+			String: "Driver",
+			Valid:  true,
+		},
 	}
 
 	driver.User = user
@@ -57,6 +73,31 @@ func TestGetDriverByID(t *testing.T) {
 	tst.FailNowOnErr(t, err)
 
 	driver1, err := GetDriverByID(tx, driver.ID)
+	tst.FailNowOnErr(t, err)
+
+	assert.Equal(t, driver.ID, driver1.ID)
+	assert.Equal(t, driver.Status, driver1.Status)
+	assert.Equal(t, driver.User.ID, driver1.User.ID)
+	assert.Equal(t, driver.User.FirstName, driver1.User.FirstName)
+	assert.Equal(t, driver.User.MiddleName, driver1.User.MiddleName)
+	assert.Equal(t, driver.User.LastName, driver1.User.LastName)
+	assert.Equal(t, driver.User.EntityID, driver1.User.EntityID)
+	assert.Equal(t, driver.User.EntityType, driver1.User.EntityType)
+}
+
+func TestGetDriverByTripID(t *testing.T) {
+	tx := createTx(t)
+	defer tx.Rollback()
+
+	driver, err := createDriver(tx, "on_duty")
+	tst.FailNowOnErr(t, err)
+
+	trip, err := createTrip(&Trip{
+		DriverID: driver.ID,
+	}, tx)
+	tst.FailNowOnErr(t, err)
+
+	driver1, err := GetDriverByTripID(tx, trip.ID)
 	tst.FailNowOnErr(t, err)
 
 	assert.Equal(t, driver.ID, driver1.ID)

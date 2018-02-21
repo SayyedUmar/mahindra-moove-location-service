@@ -1,6 +1,7 @@
 package db
 
 import (
+	"database/sql"
 	"fmt"
 
 	"github.com/jmoiron/sqlx"
@@ -17,19 +18,21 @@ var OnBoardStatuses = map[string]bool{
 
 // TripRoute represents the database structure of TripRoute
 type TripRoute struct {
-	ID                     int      `db:"id"`
-	TripID                 int      `db:"trip_id"`
-	Status                 string   `db:"status"`
-	ScheduledRouteOrder    int      `db:"scheduled_route_order"`
-	ScheduledStartLocation Location `db:"scheduled_start_location"`
-	ScheduledEndLocation   Location `db:"scheduled_end_location"`
-	EmployeeUserID         int      `db:"employee_user_id"`
+	ID                     int            `db:"id"`
+	TripID                 int            `db:"trip_id"`
+	Status                 string         `db:"status"`
+	ScheduledRouteOrder    int            `db:"scheduled_route_order"`
+	ScheduledStartLocation Location       `db:"scheduled_start_location"`
+	ScheduledEndLocation   Location       `db:"scheduled_end_location"`
+	EmployeeUserID         int            `db:"employee_user_id"`
+	BusStopName            sql.NullString `db:"bus_stop_name"`
 	Trip                   Trip
 }
 
 var tripRoutesByIDQuery = `
 	select tr.id, tr.trip_id, tr.status, u.id as employee_user_id,
-	tr.scheduled_route_order, tr.scheduled_start_location, tr.scheduled_end_location
+	tr.scheduled_route_order, tr.scheduled_start_location, tr.scheduled_end_location,
+	tr.bus_stop_name
 	from trip_routes tr
 	join employee_trips et on et.id = tr.employee_trip_id
 	join employees e on e.id = et.employee_id
