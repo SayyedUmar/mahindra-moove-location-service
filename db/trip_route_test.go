@@ -52,23 +52,26 @@ func TestIsNotStarted(t *testing.T) {
 	trip, err := createTripWithRoutes(tx, 23, 42, "not_started", "driver_arrived", "on_board")
 	tst.FailNowOnErr(t, err)
 
-	trip1, err := createTripWithRoutes(tx, 23, 42, "missed", "cancelled", "completed")
+	trip1, err := GetTripByID(tx, trip.ID)
 	tst.FailNowOnErr(t, err)
 
-	trips, err := GetTripsByStatus(tx, "active")
+	assert.Equal(t, trip.ID, trip1.ID)
+	assert.Equal(t, 3, len(trip1.TripRoutes))
+	assert.True(t, trip1.TripRoutes[0].IsNotStarted())
+	assert.False(t, trip1.TripRoutes[1].IsNotStarted())
+	assert.False(t, trip1.TripRoutes[2].IsNotStarted())
+
+	trip, err = createTripWithRoutes(tx, 23, 42, "missed", "cancelled", "completed")
 	tst.FailNowOnErr(t, err)
 
-	assert.True(t, isInTripsArr(trips, trip))
-	assert.True(t, isInTripsArr(trips, trip1))
-	assert.Equal(t, 3, len(trips[0].TripRoutes))
-	assert.Equal(t, 3, len(trips[1].TripRoutes))
+	trip1, err = GetTripByID(tx, trip.ID)
+	tst.FailNowOnErr(t, err)
 
-	assert.True(t, trips[0].TripRoutes[0].IsNotStarted())
-	assert.False(t, trips[0].TripRoutes[1].IsNotStarted())
-	assert.False(t, trips[0].TripRoutes[2].IsNotStarted())
-	assert.False(t, trips[1].TripRoutes[0].IsNotStarted())
-	assert.False(t, trips[1].TripRoutes[1].IsNotStarted())
-	assert.False(t, trips[1].TripRoutes[2].IsNotStarted())
+	assert.Equal(t, trip.ID, trip1.ID)
+	assert.Equal(t, 3, len(trip1.TripRoutes))
+	assert.False(t, trip1.TripRoutes[0].IsNotStarted())
+	assert.False(t, trip1.TripRoutes[1].IsNotStarted())
+	assert.False(t, trip1.TripRoutes[2].IsNotStarted())
 }
 
 func TestIsTripRouteNotStarted(t *testing.T) {
@@ -77,38 +80,42 @@ func TestIsTripRouteNotStarted(t *testing.T) {
 	trip, err := createTripWithRoutes(tx, 23, 42, "not_started", "driver_arrived", "on_board")
 	tst.FailNowOnErr(t, err)
 
-	trip1, err := createTripWithRoutes(tx, 23, 42, "missed", "cancelled", "completed")
+	trip1, err := GetTripByID(tx, trip.ID)
 	tst.FailNowOnErr(t, err)
 
-	trips, err := GetTripsByStatus(tx, "active")
-	tst.FailNowOnErr(t, err)
+	assert.Equal(t, trip.ID, trip1.ID)
+	assert.Equal(t, 3, len(trip1.TripRoutes))
 
-	assert.True(t, isInTripsArr(trips, trip))
-	assert.True(t, isInTripsArr(trips, trip1))
-	assert.Equal(t, 3, len(trips[0].TripRoutes))
-	assert.Equal(t, 3, len(trips[1].TripRoutes))
-
-	isNotStarted, err := IsTripRouteNotStarted(tx, trips[0].TripRoutes[0].ID)
+	isNotStarted, err := IsTripRouteNotStarted(tx, trip1.TripRoutes[0].ID)
 	tst.FailNowOnErr(t, err)
 	assert.True(t, isNotStarted)
 
-	isNotStarted, err = IsTripRouteNotStarted(tx, trips[0].TripRoutes[1].ID)
+	isNotStarted, err = IsTripRouteNotStarted(tx, trip1.TripRoutes[1].ID)
 	tst.FailNowOnErr(t, err)
 	assert.False(t, isNotStarted)
 
-	isNotStarted, err = IsTripRouteNotStarted(tx, trips[0].TripRoutes[2].ID)
+	isNotStarted, err = IsTripRouteNotStarted(tx, trip1.TripRoutes[2].ID)
 	tst.FailNowOnErr(t, err)
 	assert.False(t, isNotStarted)
 
-	isNotStarted, err = IsTripRouteNotStarted(tx, trips[1].TripRoutes[0].ID)
+	trip, err = createTripWithRoutes(tx, 23, 42, "missed", "cancelled", "completed")
+	tst.FailNowOnErr(t, err)
+
+	trip1, err = GetTripByID(tx, trip.ID)
+	tst.FailNowOnErr(t, err)
+
+	assert.Equal(t, trip.ID, trip1.ID)
+	assert.Equal(t, 3, len(trip1.TripRoutes))
+
+	isNotStarted, err = IsTripRouteNotStarted(tx, trip1.TripRoutes[0].ID)
 	tst.FailNowOnErr(t, err)
 	assert.False(t, isNotStarted)
 
-	isNotStarted, err = IsTripRouteNotStarted(tx, trips[1].TripRoutes[1].ID)
+	isNotStarted, err = IsTripRouteNotStarted(tx, trip1.TripRoutes[1].ID)
 	tst.FailNowOnErr(t, err)
 	assert.False(t, isNotStarted)
 
-	isNotStarted, err = IsTripRouteNotStarted(tx, trips[1].TripRoutes[2].ID)
+	isNotStarted, err = IsTripRouteNotStarted(tx, trip1.TripRoutes[2].ID)
 	tst.FailNowOnErr(t, err)
 	assert.False(t, isNotStarted)
 }
