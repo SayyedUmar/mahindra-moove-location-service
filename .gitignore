@@ -5,3 +5,4 @@ vendor
 coverage.txt
 coverage.html
 db/debug.test
+.env

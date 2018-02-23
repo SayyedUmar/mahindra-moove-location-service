@@ -81,3 +81,40 @@ func TestLatestTripLocation(t *testing.T) {
 	tst.FailNowOnErr(t, err)
 	assert.Equal(t, tl.Speed, "33")
 }
+func TestGetTripLocationsByTrip(t *testing.T) {
+	tx := createTx(t)
+	defer tx.Rollback()
+	trip, err := createTripWithRoutes(tx, 23, 42)
+	tst.FailNowOnErr(t, err)
+	tl1 := TripLocation{
+		TripID:    trip.ID,
+		Location:  Location{utils.Location{Lat: TarkaLabsLat, Lng: TarkaLabsLng}},
+		Time:      time.Now().Add(-3 * time.Minute),
+		Speed:     "20",
+		Distance:  0,
+		CreatedAt: time.Now(),
+		UpdatedAt: time.Now(),
+	}
+	time.Sleep(200 * time.Millisecond)
+	tl2 := TripLocation{
+		TripID:    trip.ID,
+		Location:  Location{utils.Location{Lat: TarkaLabsLat, Lng: TarkaLabsLng}},
+		Time:      time.Now(),
+		Speed:     "33",
+		Distance:  0,
+		CreatedAt: time.Now(),
+		UpdatedAt: time.Now(),
+	}
+	insertStmt := InsertTripLocationStatement(tx)
+
+	err = tl1.Save(insertStmt)
+	tst.FailNowOnErr(t, err)
+	err = tl2.Save(insertStmt)
+	tst.FailNowOnErr(t, err)
+
+	tls, err := GetTripLocationsByTrip(tx, trip.ID)
+	tst.FailNowOnErr(t, err)
+	assert.Equal(t, len(tls), 2)
+	assert.Equal(t, tls[0].Speed, "20")
+	assert.Equal(t, tls[1].Speed, "33")
+}

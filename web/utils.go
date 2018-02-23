@@ -2,8 +2,9 @@ package web
 
 import (
 	"encoding/json"
-	log "github.com/sirupsen/logrus"
 	"net/http"
+
+	log "github.com/sirupsen/logrus"
 )
 
 type Error struct {
@@ -15,6 +16,7 @@ func ErrorWithMessage(msg string) *Error {
 }
 
 func (e *Error) Respond(w http.ResponseWriter, statusCode int) {
+	log.Error(e.Message)
 	w.WriteHeader(statusCode)
 	encoder := json.NewEncoder(w)
 	err := encoder.Encode(e)
