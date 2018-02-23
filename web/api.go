@@ -8,6 +8,8 @@ import (
 	"sync"
 	"time"
 
+	"github.com/MOOVE-Network/location_service/socketstore"
+
 	"github.com/MOOVE-Network/location_service/services"
 
 	"github.com/MOOVE-Network/location_service/db"
@@ -20,6 +22,8 @@ var hbMutex = &sync.Mutex{}
 var heartBeats = make(map[int]*db.HeartBeat)
 var tlMutex = &sync.Mutex{}
 var tripLocations []db.TripLocation
+var gfMutex = &sync.Mutex{}
+var gfEvents []socketstore.GeofenceEvent
 
 func GetTripETA(w http.ResponseWriter, req *http.Request) {
 	vars := mux.Vars(req)
@@ -128,4 +132,80 @@ func setupTripLocationTimer() {
 			}
 		}
 	}()
+}
+
+func setupGeofenceTimer() {
+	ticker := time.NewTicker(time.Second * 5)
+	go func() {
+		for _ = range ticker.C {
+			var gfEvents []socketstore.GeofenceEvent
+			tlMutex.Lock()
+			for _, gfe := range gfEvents {
+				gfEvents = append(gfEvents, gfe)
+			}
+			gfEvents = nil
+			tlMutex.Unlock()
+			processGeofenceEvents(gfEvents)
+		}
+	}()
+}
+
+func processGeofenceEvents(gfEvents []socketstore.GeofenceEvent) {
+	//Map which can hold list of geofence events per tripId.
+	//This is for db query optimization.
+	//With this we will fetch trip only one for list of geofence events.
+	gfEventMap := make(map[int][]socketstore.GeofenceEvent)
+
+	//grouping geofence events based on tripId
+	for _, geofenceEvent := range gfEvents {
+		tripID := geofenceEvent.TripID
+		if tripID > 0 {
+			val, ok := gfEventMap[tripID]
+			if !ok {
+				//giving capacity as 2 because we get two events per geofence.
+				val = make([]socketstore.GeofenceEvent, 0, 2)
+			}
+			gfEventMap[tripID] = append(val, geofenceEvent)
+		}
+	}
+
+	for tripID, events := range gfEventMap {
+		trip, err := db.GetTripByID(db.CurrentDB(), tripID)
+		if err != nil {
+			log.Error("Unable to get trip for tripId", tripID)
+			log.Error(err)
+			continue
+		}
+
+		for _, gfEvent := range events {
+			//We send Notification only for Dwell event and for Wider Geofence.
+			if gfEvent.IsDwellEvent() && gfEvent.IsForWiderGeofence() {
+				driver, err := db.GetDriverByID(db.CurrentDB(), trip.DriverID)
+				if err != nil {
+					log.Error("Unable to get driver for tripId", tripID)
+					log.Error(err)
+					continue
+				}
+				if gfEvent.IsForEmployeeLocation() {
+					for _, tripRoute := range trip.TripRoutes {
+						if tripRoute.ID == gfEvent.TripRouteID && tripRoute.IsNotStarted() {
+							services.SendDriverArrivingNotification(tripID, tripRoute.EmployeeUserID, driver)
+						}
+					}
+				} else if gfEvent.IsForSite() {
+					for _, tripRoute := range trip.TripRoutes {
+						if tripRoute.IsNotStarted() {
+							services.SendDriverArrivingNotification(tripID, tripRoute.EmployeeUserID, driver)
+						}
+					}
+				} else if gfEvent.IsForNodalPoint() {
+					for _, tripRoute := range trip.TripRoutes {
+						if tripRoute.BusStopName.Valid && tripRoute.BusStopName.String == gfEvent.BusStopName && tripRoute.IsNotStarted() {
+							services.SendDriverArrivingNotification(tripID, tripRoute.EmployeeUserID, driver)
+						}
+					}
+				}
+			}
+		}
+	}
 }
