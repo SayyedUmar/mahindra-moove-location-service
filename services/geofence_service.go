@@ -9,7 +9,7 @@ import (
 )
 
 //SendDriverArrivingNotification sends driver arriving notification to employee.
-func SendDriverArrivingNotification(tripID int, employeeID int, driver *db.Driver) {
+func SendDriverArrivingNotification(tripID int, employeeID int, driver *db.Driver) error {
 	logger.Infoln("Sending notification to trip:", tripID, " employeeID:", employeeID)
 	data := make(map[string]interface{})
 	data["push_type"] = "driver_arriving"
@@ -21,5 +21,6 @@ func SendDriverArrivingNotification(tripID int, employeeID int, driver *db.Drive
 		data["driver_name"] = driver.User.LastName.String
 	}
 	data["employee_trip_id"] = strconv.Itoa(tripID)
-	notificationService.SendNotification(strconv.Itoa(employeeID), data, "user")
+	err := notificationService.SendNotification(strconv.Itoa(employeeID), data, "user")
+	return err
 }
