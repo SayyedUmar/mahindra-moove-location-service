@@ -13,7 +13,13 @@ func SendDriverArrivingNotification(tripID int, employeeID int, driver *db.Drive
 	logger.Infoln("Sending notification to trip:", tripID, " employeeID:", employeeID)
 	data := make(map[string]interface{})
 	data["push_type"] = "driver_arriving"
-	data["driver_name"] = fmt.Sprintf("%s %s", driver.User.FirstName.String, driver.User.LastName.String)
+	if driver.User.FirstName.Valid && driver.User.LastName.Valid {
+		data["driver_name"] = fmt.Sprintf("%s %s", driver.User.FirstName.String, driver.User.LastName.String)
+	} else if driver.User.FirstName.Valid {
+		data["driver_name"] = driver.User.FirstName.String
+	} else if driver.User.LastName.Valid {
+		data["driver_name"] = driver.User.LastName.String
+	}
 	data["employee_trip_id"] = strconv.Itoa(tripID)
 	notificationService.SendNotification(strconv.Itoa(employeeID), data, "user")
 }

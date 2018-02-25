@@ -1,9 +1,64 @@
-package services
+package services_test
 
 import (
+	"database/sql"
+	"strconv"
 	"testing"
+
+	"github.com/MOOVE-Network/location_service/db"
+	"github.com/MOOVE-Network/location_service/services"
+	"github.com/MOOVE-Network/location_service/services/mocks"
+
+	"github.com/golang/mock/gomock"
 )
 
 func TestSendDriverArrivingNotification(t *testing.T) {
-	
+	// setup Mocks
+	mockController := gomock.NewController(t)
+	defer mockController.Finish()
+
+	mockNotificationService := mocks.NewMockNotificationService(mockController)
+	services.SetNotificationService(mockNotificationService)
+
+	tripID := 123
+	employeeID := 789
+	driver := db.Driver{
+		User: db.User{
+			FirstName: sql.NullString{
+				Valid:  true,
+				String: "Kalpesh",
+			},
+
+			LastName: sql.NullString{
+				Valid:  true,
+				String: "Patel",
+			},
+		},
+	}
+
+	notificationMap := make(map[string]interface{})
+	notificationMap["push_type"] = "driver_arriving"
+	notificationMap["employee_trip_id"] = strconv.Itoa(tripID)
+	notificationMap["driver_name"] = "Kalpesh Patel"
+
+	mockNotificationService.EXPECT().SendNotification(strconv.Itoa(employeeID), notificationMap, "user").Times(1)
+	services.SendDriverArrivingNotification(tripID, employeeID, &driver)
+
+	driver.User.FirstName.String = "Rahul"
+	driver.User.LastName.String = "Patel"
+
+	notificationMap["driver_name"] = "Rahul Patel"
+	mockNotificationService.EXPECT().SendNotification(strconv.Itoa(employeeID), notificationMap, "user").Times(1)
+	services.SendDriverArrivingNotification(tripID, employeeID, &driver)
+
+	driver.User.LastName.Valid = false
+	notificationMap["driver_name"] = "Rahul"
+	mockNotificationService.EXPECT().SendNotification(strconv.Itoa(employeeID), notificationMap, "user").Times(1)
+	services.SendDriverArrivingNotification(tripID, employeeID, &driver)
+
+	driver.User.LastName.Valid = true
+	driver.User.FirstName.Valid = false
+	notificationMap["driver_name"] = "Patel"
+	mockNotificationService.EXPECT().SendNotification(strconv.Itoa(employeeID), notificationMap, "user").Times(1)
+	services.SendDriverArrivingNotification(tripID, employeeID, &driver)
 }
