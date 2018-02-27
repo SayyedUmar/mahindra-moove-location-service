@@ -64,22 +64,3 @@ func (c *OSRMClient) Match(locations []utils.Location, timestamps []time.Time) (
 	matchResp.calculateTotalMileage()
 	return &matchResp, nil
 }
-
-type MatchResponse struct {
-	Code      string  `json:"code"`
-	Matchings []Route `json:"matchings"`
-	Distance  float64 `json:"distance"`
-}
-
-func (mr *MatchResponse) calculateTotalMileage() {
-	for _, r := range mr.Matchings {
-		mr.Distance += r.Distance
-	}
-}
-
-type Route struct {
-	Distance   float64 `json:"distance"`
-	Duration   float64 `json:"duration"`
-	Geometry   string  `json:"geometry"`
-	Confidence float64 `json:"confidence"`
-}

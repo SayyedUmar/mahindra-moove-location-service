@@ -56,6 +56,10 @@ func GetTripETA(w http.ResponseWriter, req *http.Request) {
 }
 
 func TripSummary(w http.ResponseWriter, r *http.Request) {
+	useGoogle := false
+	if r.URL.Query().Get("use_google") != "" {
+		useGoogle = true
+	}
 	w.Header().Add("Content-Type", "application/json")
 	trip, err := getTrip(r)
 	if err != nil {
@@ -73,7 +77,13 @@ func TripSummary(w http.ResponseWriter, r *http.Request) {
 		locs = append(locs, tl.Location.Location)
 		timestamps = append(timestamps, tl.Time)
 	}
-	client := services.NewOSRMClient(getOSRMURL())
+	var client services.RoadsService
+	if !useGoogle {
+		client = services.NewOSRMClient(getOSRMURL())
+	} else {
+		client = services.GetGoogleRoadsService()
+	}
+
 	resp, err := client.Match(locs, timestamps)
 	if err != nil {
 		ErrorWithMessage(fmt.Sprintf("Unable to get matching for trip %d, %s", trip.ID, err.Error())).Respond(w, 500)
