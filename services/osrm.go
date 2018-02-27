@@ -42,6 +42,8 @@ func (c *OSRMClient) Match(locations []utils.Location, timestamps []time.Time) (
 
 	query := osrmUrl.Query()
 	query.Add("overview", "full")
+	query.Add("gaps", "ignore")
+	query.Add("tidy", "true")
 	query.Add("timestamps", timestampsString)
 	osrmUrl.RawQuery = query.Encode()
 
