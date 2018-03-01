@@ -104,6 +104,18 @@
   version = "v1.0.0"
 
 [[projects]]
+  name = "github.com/paulmach/go.geo"
+  packages = ["."]
+  revision = "e8994de4ca767ad1e416ce5e185f83538f0661a8"
+  version = "v0.1"
+
+[[projects]]
+  name = "github.com/paulmach/go.geojson"
+  packages = ["."]
+  revision = "aa3713dea4327980f5891ac781c6f1a45ea75c0f"
+  version = "v1.3.1"
+
+[[projects]]
   name = "github.com/pmezard/go-difflib"
   packages = ["difflib"]
   revision = "792786c7400a136282c1664665ae0a8db921c6c2"
@@ -184,6 +196,6 @@
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "a61c857f37bcd5ef1f4fa3570477fae0386ad557bf789245889b9a59601cd38e"
+  inputs-digest = "f559ecfba0a7fb9bbcb145c214428aa6353a0a774693f87b6c5f1e6010557e19"
   solver-name = "gps-cdcl"
   solver-version = 1

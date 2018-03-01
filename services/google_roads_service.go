@@ -4,6 +4,7 @@ import (
 	"context"
 	"errors"
 	"io/ioutil"
+	"math"
 	"os"
 	"strconv"
 	"strings"
@@ -48,10 +49,18 @@ func MakeGoogleRoadsService(apiKey string) (*GoogleRoadsService, error) {
 
 func (rs *GoogleRoadsService) snapToRoads(points []utils.Location) (*Route, error) {
 	var latLngs []maps.LatLng
+	ps := geo.NewPointSet()
 	for _, loc := range points {
-		latLngs = append(latLngs, LocationToLatLngs(loc))
+		ps.Push(geo.NewPointFromLatLng(loc.Lat, loc.Lng))
 	}
-	// log.Infof("requesting with latlngs %v", latLngs)
+	path := &geo.Path{*ps}
+	for i, pt := range path.Points() {
+		log.Infof("Lat : %f, Lng: %f, Direction: %f", pt.Lat(), pt.Lng(), path.DirectionAt(i))
+		if math.Abs(path.DirectionAt(i)) < 1.7 {
+			latLngs = append(latLngs, maps.LatLng{Lat: pt.Lat(), Lng: pt.Lng()})
+		}
+	}
+
 	strRequest := maps.SnapToRoadRequest{
 		Path:        latLngs,
 		Interpolate: true,
@@ -67,7 +76,7 @@ func (rs *GoogleRoadsService) snapToRoads(points []utils.Location) (*Route, erro
 		pts = pts.Push(geo.NewPointFromLatLng(pt.Location.Lat, pt.Location.Lng))
 	}
 	// log.Infof("found points %v ", pts)
-	path := &geo.Path{PointSet: *pts}
+	path = &geo.Path{PointSet: *pts}
 
 	encodedString := path.Encode()
 	route := Route{
