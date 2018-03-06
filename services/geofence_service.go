@@ -10,7 +10,7 @@ import (
 
 //SendDriverArrivingNotification sends driver arriving notification to employee.
 func SendDriverArrivingNotification(tripID int, employeeID int, driver *db.Driver) error {
-	logger.Infoln("Sending notification to trip:", tripID, " employeeID:", employeeID)
+	logger.Infof("Sending notification to trip %d, employeeID %d and driver %+v", tripID, employeeID, driver)
 	data := make(map[string]interface{})
 	data["push_type"] = "driver_arriving"
 	if driver.User.FirstName.Valid && driver.User.LastName.Valid {

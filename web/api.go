@@ -100,6 +100,7 @@ func setupTripLocationTimer() {
 }
 
 func setupGeofenceTimer() {
+	log.Infoln("started geofence timer")
 	ticker := time.NewTicker(time.Second * 5)
 	go func() {
 		for _ = range ticker.C {
@@ -110,6 +111,7 @@ func setupGeofenceTimer() {
 			}
 			gfEvents = nil
 			tlMutex.Unlock()
+			log.Infof("Processing events %+v", gfEvents)
 			processGeofenceEvents(gfEvents)
 		}
 	}()
@@ -134,36 +136,43 @@ func processGeofenceEvents(gfEvents []socketstore.GeofenceEvent) {
 		}
 	}
 
+	log.Infof("events Map %+v", gfEventMap)
+
 	for tripID, events := range gfEventMap {
 		trip, err := db.GetTripByID(db.CurrentDB(), tripID)
 		if err != nil {
-			log.Error("Unable to get trip for tripId", tripID)
+			log.Errorf("Unable to get trip for tripId: %d", tripID)
 			log.Error(err)
 			continue
 		}
+		log.Infof("for trip Id %d, found trip %+v", tripID, trip)
 
 		for _, gfEvent := range events {
 			//We send Notification only for Dwell event and for Wider Geofence.
 			if gfEvent.IsDwellEvent() && gfEvent.IsForWiderGeofence() {
 				driver, err := db.GetDriverByID(db.CurrentDB(), trip.DriverID)
 				if err != nil {
-					log.Error("Unable to get driver for tripId", tripID)
+					log.Errorf("Unable to get driver for tripId: %d", tripID)
 					log.Error(err)
 					continue
 				}
+				log.Infof("for driver Id %d, found driver %+v", trip.DriverID, driver)
 				if gfEvent.IsForEmployeeLocation() {
+					log.Info("Checking tripRoute for employee location")
 					for _, tripRoute := range trip.TripRoutes {
 						if tripRoute.ID == gfEvent.TripRouteID && tripRoute.IsNotStarted() {
 							services.SendDriverArrivingNotification(tripID, tripRoute.EmployeeUserID, driver)
 						}
 					}
 				} else if gfEvent.IsForSite() {
+					log.Info("Checking tripRoute for site")
 					for _, tripRoute := range trip.TripRoutes {
 						if tripRoute.IsNotStarted() {
 							services.SendDriverArrivingNotification(tripID, tripRoute.EmployeeUserID, driver)
 						}
 					}
 				} else if gfEvent.IsForNodalPoint() {
+					log.Info("Checking tripRoute for nodal point")
 					for _, tripRoute := range trip.TripRoutes {
 						if tripRoute.BusStopName.Valid && tripRoute.BusStopName.String == gfEvent.BusStopName && tripRoute.IsNotStarted() {
 							services.SendDriverArrivingNotification(tripID, tripRoute.EmployeeUserID, driver)
