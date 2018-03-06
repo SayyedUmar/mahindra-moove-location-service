@@ -52,20 +52,31 @@ func TestSendDriverArrivingNotification(t *testing.T) {
 	driver.User.FirstName.String = "Rahul"
 	driver.User.LastName.String = "Patel"
 
+	//Driver with valid first and last names.
 	notificationMap["driver_name"] = "Rahul Patel"
 	mockNotificationService.EXPECT().SendNotification(strconv.Itoa(employeeID), notificationMap, "user").Times(1).Return(nil)
 	err = services.SendDriverArrivingNotification(tripID, employeeID, &driver)
 	tst.FailNowOnErr(t, err)
 
+	//Driver with nil last name.
 	driver.User.LastName.Valid = false
 	notificationMap["driver_name"] = "Rahul"
 	mockNotificationService.EXPECT().SendNotification(strconv.Itoa(employeeID), notificationMap, "user").Times(1).Return(nil)
 	err = services.SendDriverArrivingNotification(tripID, employeeID, &driver)
 	tst.FailNowOnErr(t, err)
 
+	//Driver with nil first name.
 	driver.User.LastName.Valid = true
 	driver.User.FirstName.Valid = false
 	notificationMap["driver_name"] = "Patel"
+	mockNotificationService.EXPECT().SendNotification(strconv.Itoa(employeeID), notificationMap, "user").Times(1).Return(nil)
+	err = services.SendDriverArrivingNotification(tripID, employeeID, &driver)
+	tst.FailNowOnErr(t, err)
+
+	//Driver with nil first and last names.
+	driver.User.LastName.Valid = false
+	driver.User.FirstName.Valid = false
+	delete(notificationMap, "driver_name")
 	mockNotificationService.EXPECT().SendNotification(strconv.Itoa(employeeID), notificationMap, "user").Times(1).Return(nil)
 	err = services.SendDriverArrivingNotification(tripID, employeeID, &driver)
 	tst.FailNowOnErr(t, err)
