@@ -9,10 +9,19 @@ rewrite {
 	r /api/v2/drivers/(.*)/update_current_location
 	to /fast/api/v2/drivers/{1}/update_current_location
 }
+rewrite {
+	r /api/v3/drivers/(.*)/location
+	to /fast/api/v3/drivers/{1}/location
+}
+rewrite {
+	r /api/v3/trips/(.*)/summary
+	to /fast/api/v3/trips/{1}/summary
+}
 
 proxy / localhost:3000 {
   except /fast
 }
 proxy /fast localhost:4343 {
 	without /fast
+        websocket
 }
