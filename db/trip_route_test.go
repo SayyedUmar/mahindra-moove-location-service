@@ -7,6 +7,7 @@ import (
 	"github.com/stretchr/testify/assert"
 
 	tst "github.com/MOOVE-Network/location_service/testutils"
+	"github.com/MOOVE-Network/location_service/utils"
 	"github.com/jmoiron/sqlx"
 )
 
@@ -118,4 +119,60 @@ func TestIsTripRouteNotStarted(t *testing.T) {
 	isNotStarted, err = IsTripRouteNotStarted(tx, trip1.TripRoutes[2].ID)
 	tst.FailNowOnErr(t, err)
 	assert.False(t, isNotStarted)
+}
+
+func TestUpdateDriverArrivedGeofenceInfo(t *testing.T) {
+	tx := createTx(t)
+	defer tx.Rollback()
+	trip, err := createTripWithRoutes(tx, 23, 42, "not_started", "driver_arrived", "on_board")
+	tst.FailNowOnErr(t, err)
+
+	location := Location{utils.Location{Lat: 12.0, Lng: 79.0}}
+	now := time.Now()
+
+	for _, tr := range trip.TripRoutes {
+		err = tr.UpdateDriverArrivedGeofenceInfo(tx, location, now)
+		tst.FailNowOnErr(t, err)
+	}
+
+	type Temp struct {
+		GeofenceDriverArrivedDate     time.Time `db:"geofence_driver_arrived_date"`
+		GeofenceDriverArrivedLocation Location  `db:"geofence_driver_arrived_location"`
+	}
+	for _, tr := range trip.TripRoutes {
+		var temp Temp
+
+		row := tx.QueryRowx("SELECT geofence_driver_arrived_date, geofence_driver_arrived_location FROM trip_routes where id = ?", tr.ID)
+		row.StructScan(&temp)
+		assert.EqualValues(t, location, temp.GeofenceDriverArrivedLocation)
+		assert.Equal(t, now.Unix(), temp.GeofenceDriverArrivedDate.Unix())
+	}
+}
+
+func TestUpdateCompletedGeofenceInfo(t *testing.T) {
+	tx := createTx(t)
+	defer tx.Rollback()
+	trip, err := createTripWithRoutes(tx, 23, 42, "not_started", "driver_arrived", "on_board")
+	tst.FailNowOnErr(t, err)
+
+	location := Location{utils.Location{Lat: 12.0, Lng: 79.0}}
+	now := time.Now()
+
+	for _, tr := range trip.TripRoutes {
+		err = tr.UpdateCompletedGeofenceInfo(tx, location, now)
+		tst.FailNowOnErr(t, err)
+	}
+
+	type Temp struct {
+		GeofenceCompletiedDate     time.Time `db:"geofence_completed_date"`
+		GeofenceCompletiedLocation Location  `db:"geofence_completed_location"`
+	}
+	for _, tr := range trip.TripRoutes {
+		var temp Temp
+
+		row := tx.QueryRowx("SELECT geofence_completed_date, geofence_completed_location FROM trip_routes where id = ?", tr.ID)
+		row.StructScan(&temp)
+		assert.EqualValues(t, location, temp.GeofenceCompletiedLocation)
+		assert.Equal(t, now.Unix(), temp.GeofenceCompletiedDate.Unix())
+	}
 }

@@ -3,8 +3,10 @@ package db
 import (
 	"database/sql"
 	"fmt"
+	"time"
 
 	"github.com/jmoiron/sqlx"
+	log "github.com/sirupsen/logrus"
 )
 
 // OnBoardStatuses contains of list of statuses
@@ -29,7 +31,7 @@ type TripRoute struct {
 	Trip                   Trip
 }
 
-var tripRoutesByIDQuery = `
+const tripRoutesByIDQuery = `
 	select tr.id, tr.trip_id, tr.status, u.id as employee_user_id,
 	tr.scheduled_route_order, tr.scheduled_start_location, tr.scheduled_end_location,
 	tr.bus_stop_name
@@ -38,6 +40,15 @@ var tripRoutesByIDQuery = `
 	join employees e on e.id = et.employee_id
 	join users u on u.entity_id=e.id and u.entity_type="Employee"
 	where tr.id=?`
+
+const updateGeofenceDriverArriveQuery = `
+	update trip_routes set geofence_driver_arrived_date=?,
+	geofence_driver_arrived_location=? where id=?
+`
+const updateGeofenceCompletedQuery = `
+	update trip_routes set geofence_completed_date=?,
+	geofence_completed_location=? where id=?
+`
 
 // IsOnBoard is considered on board if he is on board or driver has arrived
 func (tr *TripRoute) IsOnBoard() bool {
@@ -73,4 +84,24 @@ func getTripRouteByID(db sqlx.Queryer, id int) (*TripRoute, error) {
 	}
 
 	return &tr, nil
+}
+
+func (tr *TripRoute) UpdateDriverArrivedGeofenceInfo(db sqlx.Execer, location Location, time time.Time) error {
+	currentLocation, err := location.ToYaml()
+	if err != nil {
+		log.Errorf("Can not convert location to yaml %+v", location)
+		return err
+	}
+	_, err = db.Exec(updateGeofenceDriverArriveQuery, time, currentLocation, tr.ID)
+	return err
+}
+
+func (tr *TripRoute) UpdateCompletedGeofenceInfo(db *sqlx.Tx, location Location, time time.Time) error {
+	currentLocation, err := location.ToYaml()
+	if err != nil {
+		log.Errorf("Can not convert location to yaml %+v", location)
+		return err
+	}
+	_, err = db.Exec(updateGeofenceCompletedQuery, time, currentLocation, tr.ID)
+	return err
 }
