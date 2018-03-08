@@ -12,6 +12,7 @@ import (
 	"github.com/MOOVE-Network/location_service/socketstore"
 	"github.com/gorilla/websocket"
 	log "github.com/sirupsen/logrus"
+	null "gopkg.in/guregu/null.v3"
 )
 
 var upgrader = websocket.Upgrader{
@@ -85,7 +86,9 @@ func readMessages(client *Client) {
 			}
 
 			dlMutex.Lock()
-			driverLocations = append(driverLocations, locationUpdate.ToDriverLocation())
+			dl := locationUpdate.ToDriverLocation()
+			dl.UserID = null.StringFrom(strconv.Itoa(client.ID))
+			driverLocations = append(driverLocations, dl)
 			dlMutex.Unlock()
 
 			client.hub.Send(strconv.Itoa(locationUpdate.TripID), message)
