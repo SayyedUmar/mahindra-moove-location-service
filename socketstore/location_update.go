@@ -6,14 +6,17 @@ import (
 	"strconv"
 	"time"
 
+	"gopkg.in/guregu/null.v3"
+
 	"github.com/MOOVE-Network/location_service/db"
+	"github.com/MOOVE-Network/location_service/models"
 	"github.com/MOOVE-Network/location_service/utils"
 )
 
 // LocationUpdate maps location updates to Redis
 type LocationUpdate struct {
 	TripID      int `json:"tripId"`
-	DriverID    int
+	UserID      string
 	Lat         float64
 	Lng         float64
 	Distance    int
@@ -43,5 +46,19 @@ func (lu *LocationUpdate) ToTripLocation() db.TripLocation {
 		Distance:  lu.Distance,
 		CreatedAt: time.Now(),
 		UpdatedAt: time.Now(),
+	}
+
+}
+
+func (lu *LocationUpdate) ToDriverLocation() models.DriverLocation {
+	return models.DriverLocation{
+		RecordedAt: lu.Timestamp,
+		TripID:     null.IntFrom(int64(lu.TripID)),
+		UserID:     null.StringFrom(lu.UserID),
+		Location:   models.Point{Lat: lu.Lat, Lng: lu.Lng},
+		Distance:   lu.Distance,
+		Speed:      lu.Speed,
+		Accuracy:   lu.Accuracy,
+		CreatedAt:  time.Now(),
 	}
 }

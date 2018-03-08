@@ -60,6 +60,7 @@ func SetupServer() {
 	log.Infof("Listening on port %s ... ", port)
 	setupHeartBeatTimer()
 	setupTripLocationTimer()
+	setupDriverLocationTimer()
 	go hub.Run()
 
 	handler := handlers.LoggingHandler(os.Stdout, router)

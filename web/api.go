@@ -8,6 +8,7 @@ import (
 
 	"github.com/MOOVE-Network/location_service/db"
 	"github.com/MOOVE-Network/location_service/identity"
+	"github.com/MOOVE-Network/location_service/models"
 	log "github.com/sirupsen/logrus"
 )
 
@@ -15,6 +16,9 @@ var hbMutex = &sync.Mutex{}
 var heartBeats = make(map[int]*db.HeartBeat)
 var tlMutex = &sync.Mutex{}
 var tripLocations []db.TripLocation
+
+var dlMutex = &sync.Mutex{}
+var driverLocations []models.DriverLocation
 
 func WriteHeartBeat(w http.ResponseWriter, req *http.Request) {
 	ident := req.Context().Value("identity").(*identity.Identity)
@@ -90,6 +94,32 @@ func setupTripLocationTimer() {
 			if err != nil {
 				log.Error("Unable to save trip location")
 				log.Error(err)
+			}
+		}
+	}()
+}
+
+func setupDriverLocationTimer() {
+	ticker := time.NewTicker(time.Second * 5)
+	go func() {
+		stmt, err := models.DriverLocationPrepareInsertStmt(models.CurrentDB())
+		if err != nil {
+			log.Errorf("Unable to prepare insert statement for driver location %s ", err)
+			panic(err)
+		}
+		for _ = range ticker.C {
+			var dls []models.DriverLocation
+			dlMutex.Lock()
+			for _, dl := range driverLocations {
+				dls = append(dls, dl)
+			}
+			driverLocations = nil
+			dlMutex.Unlock()
+			for _, driverLocation := range dls {
+				err := driverLocation.Insert(stmt, models.CurrentDB())
+				if err != nil {
+					log.Errorf("Unable to save DriverLocation location - %s", err)
+				}
 			}
 		}
 	}()

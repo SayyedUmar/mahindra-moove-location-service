@@ -6,6 +6,7 @@ import (
 	"os/signal"
 
 	"github.com/MOOVE-Network/location_service/db"
+	"github.com/MOOVE-Network/location_service/models"
 	"github.com/MOOVE-Network/location_service/services"
 	"github.com/MOOVE-Network/location_service/version"
 	"github.com/MOOVE-Network/location_service/web"
@@ -27,6 +28,11 @@ func main() {
 	conn := db.InitSQLConnection()
 	db.SetActiveDB(conn)
 	defer closeConn(conn)
+
+	pgConn := models.InitSQLConnection()
+	models.SetActiveDB(pgConn)
+	defer closeConn(pgConn)
+	models.RunMigrations()
 
 	services.InitDurationService(os.Getenv("LOCATION_MAPS_API_KEY"))
 	services.InitGoogleRoadsService(os.Getenv("LOCATION_MAPS_API_KEY"))
