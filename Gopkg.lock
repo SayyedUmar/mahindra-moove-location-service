@@ -98,6 +98,12 @@
   version = "v1.2.0"
 
 [[projects]]
+  branch = "master"
+  name = "github.com/lib/pq"
+  packages = [".","oid"]
+  revision = "88edab0803230a3898347e77b474f8c1820a1f20"
+
+[[projects]]
   name = "github.com/matttproud/golang_protobuf_extensions"
   packages = ["pbutil"]
   revision = "3247c84500bff8d9fb6d579d800f20b3e091582c"
@@ -188,6 +194,12 @@
   revision = "7bc07438db8f569e75a2d2ca1be64fde336962f5"
 
 [[projects]]
+  name = "gopkg.in/guregu/null.v3"
+  packages = ["."]
+  revision = "e81d6d8d57747b34d7c5fe0d20ebf57692f04ea9"
+  version = "v3.3.0"
+
+[[projects]]
   branch = "v2"
   name = "gopkg.in/yaml.v2"
   packages = ["."]
@@ -196,6 +208,6 @@
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "f559ecfba0a7fb9bbcb145c214428aa6353a0a774693f87b6c5f1e6010557e19"
+  inputs-digest = "bf9d5fada364afc5fc80d20c942193536f975bd7a0701ac4ad12a086a29d6fcf"
   solver-name = "gps-cdcl"
   solver-version = 1

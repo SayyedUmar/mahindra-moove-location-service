@@ -12,6 +12,7 @@ import (
 	"github.com/MOOVE-Network/location_service/socketstore"
 	"github.com/gorilla/websocket"
 	log "github.com/sirupsen/logrus"
+	null "gopkg.in/guregu/null.v3"
 )
 
 var upgrader = websocket.Upgrader{
@@ -78,9 +79,18 @@ func readMessages(client *Client) {
 				log.Warnf("Unable to decode location update message %s", string(message))
 				continue
 			}
-			tlMutex.Lock()
-			tripLocations = append(tripLocations, locationUpdate.ToTripLocation())
-			tlMutex.Unlock()
+			if locationUpdate.TripID != 0 {
+				tlMutex.Lock()
+				tripLocations = append(tripLocations, locationUpdate.ToTripLocation())
+				tlMutex.Unlock()
+			}
+
+			dlMutex.Lock()
+			dl := locationUpdate.ToDriverLocation()
+			dl.UserID = null.StringFrom(strconv.Itoa(client.ID))
+			driverLocations = append(driverLocations, dl)
+			dlMutex.Unlock()
+
 			client.hub.Send(strconv.Itoa(locationUpdate.TripID), message)
 			client.hub.Send(strconv.Itoa(client.ID), message)
 		case "HEARTBEAT":

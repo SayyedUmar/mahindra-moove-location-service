@@ -33,6 +33,7 @@ $ docker build -t moove/location_service:latest .
 This service currently needs the following environment variables 
 
 * `LOCATION_DATABASE_URL`. It needs to be a connection string to the `mysql` server like so `user:pass@server:port/database`. Sometimes if the server name contains hyphens (`-`) as in the case of RDS, you might have to wrap the connection string like so `user:pass@tcp(server:port)/database`.
+* `LOCATION_PG_DATABASE_URL`. It needs to be a connection string to the `postgres` server like so `user:pass@server:port/database?sslmode=disable`.
 * `LOCATION_MAPS_API_KEY` is the google maps API key that is required
 * `FCM_API_KEY` is the API Key to Firebase Cloud Messaging service
 * `FCM_TOPIC_PREFIX` is the topic prefix used for messages sent with this service
