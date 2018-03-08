@@ -116,7 +116,7 @@ func setupDriverLocationTimer() {
 			driverLocations = nil
 			dlMutex.Unlock()
 			for _, driverLocation := range dls {
-				err := driverLocation.Insert(stmt, models.CurrentDB())
+				err := driverLocation.Insert(stmt)
 				if err != nil {
 					log.Errorf("Unable to save DriverLocation location - %s", err)
 				}
