@@ -50,6 +50,11 @@ const updateGeofenceCompletedQuery = `
 	geofence_completed_location=? where id=?
 `
 
+// IsMissedOrCanceled is returns true if employee has canceled the trip or didn't show up for pickup. false otherwise.
+func (tr *TripRoute) IsMissedOrCanceled() bool {
+	return tr.Status == "canceled" || tr.Status == "missed"
+}
+
 // IsOnBoard is considered on board if he is on board or driver has arrived
 func (tr *TripRoute) IsOnBoard() bool {
 	return tr.Status == "on_board" || tr.Status == "driver_arrived"

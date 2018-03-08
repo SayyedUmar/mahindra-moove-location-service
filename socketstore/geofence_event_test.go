@@ -108,3 +108,12 @@ func TestGeofenceTypes(t *testing.T) {
 	assert.False(t, geofenceEvent.IsForWiderGeofence())
 	assert.True(t, geofenceEvent.IsForNarrowGeofence())
 }
+
+func TestGetLocation(t *testing.T) {
+	geofenceEvent := createGeofenceEvent("GEOFENCE_ENTER", "SITE", "Wider")
+	geofenceEvent.Lat = 13.0
+	geofenceEvent.Lng = 79.0
+	location := geofenceEvent.GetLocation()
+	assert.Equal(t, geofenceEvent.Lat, location.Lat)
+	assert.Equal(t, geofenceEvent.Lng, location.Lng)
+}

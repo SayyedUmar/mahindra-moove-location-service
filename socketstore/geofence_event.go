@@ -4,6 +4,9 @@ import (
 	"bytes"
 	"encoding/json"
 	"time"
+
+	"github.com/MOOVE-Network/location_service/db"
+	"github.com/MOOVE-Network/location_service/utils"
 )
 
 type GeofenceEvent struct {
@@ -66,4 +69,9 @@ func (ge *GeofenceEvent) IsForNarrowGeofence() bool {
 //On Mobile side radius of geofence is 1500 meters
 func (ge *GeofenceEvent) IsForWiderGeofence() bool {
 	return ge.GeofenceType == "Wider"
+}
+
+//GetLocation wraps Lat and Lng from GeofenceEvent to db.Location model
+func (ge *GeofenceEvent) GetLocation() db.Location {
+	return db.Location{Location: utils.Location{Lat: ge.Lat, Lng: ge.Lng}}
 }
