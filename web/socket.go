@@ -78,9 +78,16 @@ func readMessages(client *Client) {
 				log.Warnf("Unable to decode location update message %s", string(message))
 				continue
 			}
-			tlMutex.Lock()
-			tripLocations = append(tripLocations, locationUpdate.ToTripLocation())
-			tlMutex.Unlock()
+			if locationUpdate.TripID != 0 {
+				tlMutex.Lock()
+				tripLocations = append(tripLocations, locationUpdate.ToTripLocation())
+				tlMutex.Unlock()
+			}
+
+			dlMutex.Lock()
+			driverLocations = append(driverLocations, locationUpdate.ToDriverLocation())
+			dlMutex.Unlock()
+
 			client.hub.Send(strconv.Itoa(locationUpdate.TripID), message)
 			client.hub.Send(strconv.Itoa(client.ID), message)
 		case "HEARTBEAT":
