@@ -134,15 +134,13 @@ func setupGeofenceTimer() {
 	ticker := time.NewTicker(time.Second * 5)
 	go func() {
 		for _ = range ticker.C {
-			var gfEvents []socketstore.GeofenceEvent
+			var tempGfEvents []socketstore.GeofenceEvent
 			tlMutex.Lock()
-			for _, gfe := range gfEvents {
-				gfEvents = append(gfEvents, gfe)
-			}
+			tempGfEvents = append(tempGfEvents, gfEvents...)
 			gfEvents = nil
 			tlMutex.Unlock()
-			log.Infof("Processing events %+v", gfEvents)
-			processGeofenceEvents(gfEvents)
+			log.Infof("Processing events %+v", tempGfEvents)
+			processGeofenceEvents(tempGfEvents)
 		}
 	}()
 }
