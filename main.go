@@ -7,6 +7,7 @@ import (
 
 	"github.com/MOOVE-Network/location_service/db"
 	"github.com/MOOVE-Network/location_service/models"
+	"github.com/MOOVE-Network/location_service/redis"
 	"github.com/MOOVE-Network/location_service/services"
 	"github.com/MOOVE-Network/location_service/version"
 	"github.com/MOOVE-Network/location_service/web"
@@ -33,6 +34,10 @@ func main() {
 	models.SetActiveDB(pgConn)
 	defer closeConn(pgConn)
 	models.RunMigrations()
+
+	redisClient := redis.SetupRedis()
+	redis.SetClient(redisClient)
+	defer closeConn(redisClient)
 
 	services.InitDurationService(os.Getenv("LOCATION_MAPS_API_KEY"))
 	services.InitGoogleRoadsService(os.Getenv("LOCATION_MAPS_API_KEY"))

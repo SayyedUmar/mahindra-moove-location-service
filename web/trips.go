@@ -9,6 +9,7 @@ import (
 	"strconv"
 	"time"
 
+	"github.com/MOOVE-Network/location_service/redis"
 	"github.com/MOOVE-Network/location_service/services"
 	"github.com/MOOVE-Network/location_service/utils"
 	"github.com/gorilla/mux"
@@ -17,16 +18,23 @@ import (
 	"github.com/MOOVE-Network/location_service/db"
 )
 
-func getTrip(req *http.Request) (*db.Trip, error) {
-
+func getTripID(req *http.Request) (int, error) {
 	vars := mux.Vars(req)
 	id, found := vars["id"]
 	if !found {
-		return nil, errors.New("Unable to find param id")
+		return 0, errors.New("Unable to find param id")
 	}
 	idInt, err := strconv.Atoi(id)
 	if err != nil {
-		return nil, fmt.Errorf("Driver id is not an integer. got %s as driverID", id)
+		log.Errorf("Driver id is not an integer. got %s as driverID", id)
+	}
+	return idInt, err
+}
+
+func getTrip(req *http.Request) (*db.Trip, error) {
+	idInt, err := getTripID(req)
+	if err != nil {
+		return nil, fmt.Errorf("Invalid driver id in paramters %v - %s", mux.Vars(req), err)
 	}
 	return db.GetTripByID(db.CurrentDB(), idInt)
 }
@@ -64,7 +72,28 @@ func TripSummary(w http.ResponseWriter, r *http.Request) {
 	if r.URL.Query().Get("use_passthrough") != "" {
 		usePassThrough = true
 	}
+	tripID, err := getTripID(r)
+	if err != nil {
+		ErrorWithMessage("Unable to get trip id").Respond(w, 422)
+	}
+
+	method := "osrm"
+	if useGoogle {
+		method = "google"
+	}
+	if usePassThrough {
+		method = "passthrough"
+	}
+	redisClient := redis.GetClient()
+	cacheKey := fmt.Sprintf("tripsummary-%d-%s", tripID, method)
+
 	w.Header().Add("Content-Type", "application/json")
+	cachedValue := redisClient.Get(cacheKey).Val()
+
+	if cachedValue != "" {
+		w.Write([]byte(cachedValue))
+		return
+	}
 	trip, err := getTrip(r)
 	if err != nil {
 		ErrorWithMessage(fmt.Sprintf("Unable to find trip %s", err.Error())).Respond(w, 404)
@@ -75,6 +104,7 @@ func TripSummary(w http.ResponseWriter, r *http.Request) {
 		ErrorWithMessage(fmt.Sprintf("Unable to get locations for trip %s", err.Error())).Respond(w, 404)
 		return
 	}
+
 	var locs []utils.Location
 	var timestamps []time.Time
 	for _, tl := range tripLocations {
@@ -95,12 +125,16 @@ func TripSummary(w http.ResponseWriter, r *http.Request) {
 		ErrorWithMessage(fmt.Sprintf("Unable to get matching for trip %d, %s", trip.ID, err.Error())).Respond(w, 500)
 		return
 	}
-	encoder := json.NewEncoder(w)
-	err = encoder.Encode(resp)
+	encodedJson, err := json.Marshal(resp)
 	if err != nil {
 		ErrorWithMessage(fmt.Sprintf("Unable to encode match response for trip %d, %s", trip.ID, err.Error())).Respond(w, 500)
 		return
 	}
+	if redisClient.Set(cacheKey, encodedJson, 0).Err() != nil {
+		log.Error("Could not cache response")
+	}
+
+	w.Write(encodedJson)
 }
 
 func getOSRMURL() string {

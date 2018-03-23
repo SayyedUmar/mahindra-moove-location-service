@@ -1,4 +1,3 @@
 #!/usr/bin/env bash
-echo "" > coverage.tmp
-echo 'mode: atomic' > coverage.txt && go list ./... | grep -v vendor | xargs -n1 -I{} sh -c 'go test -covermode=atomic -coverprofile=coverage.tmp {} && tail -n +2 coverage.tmp >> coverage.txt' && rm coverage.tmp
-go tool cover -html=coverage.txt -o coverage.html
+go test -coverprofile=coverage.out ./...
+go tool cover -html=coverage.out -o coverage.html
