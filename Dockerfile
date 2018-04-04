@@ -1,4 +1,4 @@
-FROM golang:1.9.2 as builder
+FROM golang:1.10 as builder
 WORKDIR /go/src/github.com/MOOVE-Network/location_service
 RUN go get -u github.com/golang/dep/cmd/dep
 COPY . .

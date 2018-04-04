@@ -6,3 +6,4 @@ coverage.txt
 coverage.html
 db/debug.test
 .env
+coverage.out
