@@ -18,7 +18,9 @@ type exit struct{ code int }
 
 func TestMain(m *testing.M) {
 	defer handleExit()
-	os.Setenv("LOCATION_PG_DATABASE_URL", "postgres://localhost/location_service_test?sslmode=disable")
+	if os.Getenv("LOCATION_PG_DATABASE_URL") == "" {
+		os.Setenv("LOCATION_PG_DATABASE_URL", "postgres://localhost/location_service_test?sslmode=disable")
+	}
 	db := InitSQLConnection()
 	SetActiveDB(db)
 	RunMigrations()
