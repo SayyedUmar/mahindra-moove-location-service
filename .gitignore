@@ -7,3 +7,4 @@ coverage.html
 db/debug.test
 .env
 coverage.out
+.vscode/launch.json

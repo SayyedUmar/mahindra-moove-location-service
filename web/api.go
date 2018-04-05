@@ -190,14 +190,7 @@ func sendDriverArrivingNotification(trip *db.Trip, events []socketstore.Geofence
 				continue
 			}
 			log.Infof("for driver Id %d, found driver %+v", trip.DriverID, driver)
-			if gfEvent.IsForEmployeeLocation() {
-				log.Info("Checking tripRoute for employee location")
-				for _, tripRoute := range trip.TripRoutes {
-					if tripRoute.ID == gfEvent.TripRouteID && tripRoute.IsNotStarted() {
-						services.SendDriverArrivingNotification(trip.ID, tripRoute.EmployeeUserID, driver)
-					}
-				}
-			} else if gfEvent.IsForSite() {
+			if gfEvent.IsForSite() {
 				log.Info("Checking tripRoute for site")
 				for _, tripRoute := range trip.TripRoutes {
 					if tripRoute.IsNotStarted() {
@@ -207,8 +200,10 @@ func sendDriverArrivingNotification(trip *db.Trip, events []socketstore.Geofence
 			} else if gfEvent.IsForNodalPoint() {
 				log.Info("Checking tripRoute for nodal point")
 				for _, tripRoute := range trip.TripRoutes {
-					if tripRoute.BusStopName.Valid && tripRoute.BusStopName.String == gfEvent.BusStopName && tripRoute.IsNotStarted() {
-						services.SendDriverArrivingNotification(trip.ID, tripRoute.EmployeeUserID, driver)
+					for _, tripRouteID := range gfEvent.TripRouteIDs {
+						if tripRoute.ID == tripRouteID && tripRoute.IsNotStarted() {
+							services.SendDriverArrivingNotification(trip.ID, tripRoute.EmployeeUserID, driver)
+						}
 					}
 				}
 			}
@@ -226,17 +221,7 @@ func updateGeofenceInfoInTripRoutes(trip *db.Trip, events []socketstore.Geofence
 	}()
 	for _, gfEvent := range events {
 		if gfEvent.IsDwellEvent() && gfEvent.IsForNarrowGeofence() {
-			if gfEvent.IsForEmployeeLocation() {
-				for _, tripRoute := range trip.TripRoutes {
-					if tripRoute.ID == gfEvent.TripRouteID {
-						if trip.IsCheckIn() {
-							tripRoute.UpdateDriverArrivedGeofenceInfo(tx, gfEvent.GetLocation(), gfEvent.Timestamp)
-						} else {
-							tripRoute.UpdateCompletedGeofenceInfo(tx, gfEvent.GetLocation(), gfEvent.Timestamp)
-						}
-					}
-				}
-			} else if gfEvent.IsForSite() {
+			if gfEvent.IsForSite() {
 				for _, tripRoute := range trip.TripRoutes {
 					if trip.IsCheckIn() {
 						tripRoute.UpdateCompletedGeofenceInfo(tx, gfEvent.GetLocation(), gfEvent.Timestamp)
@@ -246,11 +231,13 @@ func updateGeofenceInfoInTripRoutes(trip *db.Trip, events []socketstore.Geofence
 				}
 			} else if gfEvent.IsForNodalPoint() {
 				for _, tripRoute := range trip.TripRoutes {
-					if tripRoute.BusStopName.Valid && tripRoute.BusStopName.String == gfEvent.BusStopName {
-						if trip.IsCheckIn() {
-							tripRoute.UpdateDriverArrivedGeofenceInfo(tx, gfEvent.GetLocation(), gfEvent.Timestamp)
-						} else {
-							tripRoute.UpdateCompletedGeofenceInfo(tx, gfEvent.GetLocation(), gfEvent.Timestamp)
+					for _, tripRouteID := range gfEvent.TripRouteIDs {
+						if tripRoute.ID == tripRouteID {
+							if trip.IsCheckIn() {
+								tripRoute.UpdateDriverArrivedGeofenceInfo(tx, gfEvent.GetLocation(), gfEvent.Timestamp)
+							} else {
+								tripRoute.UpdateCompletedGeofenceInfo(tx, gfEvent.GetLocation(), gfEvent.Timestamp)
+							}
 						}
 					}
 				}

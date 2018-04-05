@@ -15,8 +15,7 @@ type GeofenceEvent struct {
 	LocationType   string
 	TripID         int
 	SiteID         int
-	TripRouteID    int
-	BusStopName    string
+	TripRouteIDs   []int
 	Lat            float64
 	Lng            float64
 	Speed          float32
@@ -42,11 +41,6 @@ func GeofenceEventFromJSON(msg []byte) (*GeofenceEvent, error) {
 //IsDwellEvent returns true if the event is Dwell type otherwise returns false.
 func (ge *GeofenceEvent) IsDwellEvent() bool {
 	return ge.TransitionType == "GEOFENCE_DWELL"
-}
-
-//IsForEmployeeLocation returns true if the event is for Employee home location otherwise returns false.
-func (ge *GeofenceEvent) IsForEmployeeLocation() bool {
-	return ge.LocationType == "EMPLOYEE_HOME"
 }
 
 //IsForNodalPoint returns true if the event is for Nodal Bus stop location otherwise returns false.

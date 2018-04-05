@@ -32,8 +32,7 @@ func TestGeofenceEventFromJSON(t *testing.T) {
 			"unixSeconds":%d,
 			"tripId":36521,
 			"siteId":2,
-			"tripRouteId":442671,
-			"busStopName":"bus stop 1"
+			"tripRouteIds":[442671, 442671]
 		}
 	`, currentTime.Unix()))
 	geofenceEvent, err := GeofenceEventFromJSON(geofenceJSONEvent)
@@ -49,7 +48,7 @@ func TestGeofenceEventFromJSON(t *testing.T) {
 	assert.Equal(t, currentTime.Unix(), geofenceEvent.UnixSeconds)
 	assert.Equal(t, 36521, geofenceEvent.TripID)
 	assert.Equal(t, 2, geofenceEvent.SiteID)
-	assert.Equal(t, 442671, geofenceEvent.TripRouteID)
+	assert.Equal(t, []int{442671, 442671}, geofenceEvent.TripRouteIDs)
 	//Don't know how to test time.
 	// assert.Equal(t, currentTime.Second(), geofenceEvent.Timestamp.Second())
 
@@ -66,11 +65,10 @@ func TestGeofenceEventFromJSON(t *testing.T) {
 			"unixSeconds":%d,
 			"tripId":36521,
 			"siteId":2,
-			"tripRouteId":442671,
-			"busStopName":1
+			"tripRouteIds":442671,
 		}
 	`, currentTime.Unix()))
-	//Giving wrong busStopName type
+	//Giving wrong tripRouteIds type
 	geofenceEvent, err = GeofenceEventFromJSON(geofenceJSONEvent)
 	assert.Error(t, err)
 	assert.Nil(t, geofenceEvent)
@@ -87,15 +85,12 @@ func TestGeofenceEvent_IsDwellEvent(t *testing.T) {
 
 func TestGeofenceEventLocationTypes(t *testing.T) {
 	geofenceEvent := createGeofenceEvent("GEOFENCE_ENTER", "SITE", "")
-	assert.False(t, geofenceEvent.IsForEmployeeLocation())
 	assert.True(t, geofenceEvent.IsForSite())
 	assert.False(t, geofenceEvent.IsForNodalPoint())
 	geofenceEvent = createGeofenceEvent("GEOFENCE_DWELL", "NODAL_POINT", "")
-	assert.False(t, geofenceEvent.IsForEmployeeLocation())
 	assert.False(t, geofenceEvent.IsForSite())
 	assert.True(t, geofenceEvent.IsForNodalPoint())
 	geofenceEvent = createGeofenceEvent("GEOFENCE_EXIT", "EMPLOYEE_HOME", "")
-	assert.True(t, geofenceEvent.IsForEmployeeLocation())
 	assert.False(t, geofenceEvent.IsForSite())
 	assert.False(t, geofenceEvent.IsForNodalPoint())
 }
