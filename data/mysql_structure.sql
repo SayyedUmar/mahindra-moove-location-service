@@ -1125,6 +1125,8 @@ CREATE TABLE `trip_routes` (
   `geofence_completed_location` text DEFAULT NULL,
   `move_to_next_step_date` datetime DEFAULT NULL,
   `move_to_next_step_location` text DEFAULT NULL,
+  `pick_up_time` datetime DEFAULT NULL,
+  `drop_off_time` datetime DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `index_trip_routes_on_employee_trip_id` (`employee_trip_id`) USING BTREE,
   KEY `index_trip_routes_on_trip_id` (`trip_id`) USING BTREE,
@@ -1380,4 +1382,4 @@ CREATE TABLE `zones` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-04-04 13:38:06
+-- Dump completed on 2018-04-05 12:38:44
