@@ -16,6 +16,7 @@ jobs:
           - MYSQL_DATABASE=moove_test
       - image: circleci/postgres
         environment:
+          - POSTGRES_USER: ubuntu
           - POSTGRES_DB: location_service_test
 
     #### TEMPLATE_NOTE: go expects specific checkout path representing url
@@ -24,6 +25,8 @@ jobs:
     ####   /go/src/bitbucket.org/circleci/go-tool
     working_directory: /go/src/github.com/MOOVE-Network/location_service
     steps:
+      environment:
+        LOCATION_PG_DATABASE_URL: postgres://ubuntu@localhost:5432/location_service_test?sslmode=disable
       - checkout
       - setup_remote_docker:
           docker_layer_caching: true
