@@ -1,5 +1,9 @@
 package db
 
+import (
+	"github.com/jmoiron/sqlx"
+)
+
 // OnBoardStatuses contains of list of statuses
 // when employees are either on board or have been cancelled
 var OnBoardStatuses = map[string]bool{
@@ -18,10 +22,19 @@ type TripRoute struct {
 	ScheduledStartLocation Location `db:"scheduled_start_location"`
 	ScheduledEndLocation   Location `db:"scheduled_end_location"`
 	EmployeeUserID         int      `db:"employee_user_id"`
+	PickUpTime             NullTime `db:"pick_up_time"`
+	DropOffTime            NullTime `db:"drop_off_time"`
 	Trip                   Trip
 }
 
 // IsOnBoard is considered on board if he is on board or driver has arrived
 func (tr *TripRoute) IsOnBoard() bool {
 	return tr.Status == "on_board" || tr.Status == "driver_arrived"
+}
+
+func SaveEta(db sqlx.Execer, trId int, pickUpTime NullTime, dropOffTime NullTime) error {
+	_, err := db.Exec(`update trip_routes
+							set pick_up_time=?, drop_off_time=?
+							where id=?`, pickUpTime.Value, dropOffTime.Value, trId)
+	return err
 }
