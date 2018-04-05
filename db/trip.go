@@ -15,7 +15,7 @@ const (
 
 var tripRoutesForTripQuery = `
 	select tr.id, tr.trip_id, tr.status, u.id as employee_user_id,
-	tr.scheduled_route_order, tr.scheduled_start_location, tr.scheduled_end_location
+	tr.scheduled_route_order, tr.scheduled_start_location, tr.scheduled_end_location,
 	tr.pick_up_time, tr.drop_off_time
 	from trip_routes tr
 	join employee_trips et on et.id = tr.employee_trip_id
@@ -25,7 +25,7 @@ var tripRoutesForTripQuery = `
 
 var tripRoutesForTripIDsQuery = `
 	select tr.id, tr.trip_id, tr.status, u.id as employee_user_id,
-	tr.scheduled_route_order, tr.scheduled_start_location, tr.scheduled_end_location
+	tr.scheduled_route_order, tr.scheduled_start_location, tr.scheduled_end_location,
 	tr.pick_up_time, tr.drop_off_time
 	from trip_routes tr
 	join employee_trips et on et.id = tr.employee_trip_id
