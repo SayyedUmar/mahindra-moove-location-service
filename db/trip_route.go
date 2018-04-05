@@ -28,6 +28,8 @@ type TripRoute struct {
 	ScheduledEndLocation   Location       `db:"scheduled_end_location"`
 	EmployeeUserID         int            `db:"employee_user_id"`
 	BusStopName            sql.NullString `db:"bus_stop_name"`
+	PickUpTime             NullTime       `db:"pick_up_time"`
+	DropOffTime            NullTime       `db:"drop_off_time"`
 	Trip                   Trip
 }
 
@@ -108,5 +110,12 @@ func (tr *TripRoute) UpdateCompletedGeofenceInfo(db *sqlx.Tx, location Location,
 		return err
 	}
 	_, err = db.Exec(updateGeofenceCompletedQuery, time, currentLocation, tr.ID)
+	return err
+}
+
+func SaveEta(db sqlx.Execer, trId int, pickUpTime NullTime, dropOffTime NullTime) error {
+	_, err := db.Exec(`update trip_routes
+							set pick_up_time=?, drop_off_time=?
+							where id=?`, pickUpTime.Value, dropOffTime.Value, trId)
 	return err
 }

@@ -125,6 +125,10 @@ func TripSummary(w http.ResponseWriter, r *http.Request) {
 		ErrorWithMessage(fmt.Sprintf("Unable to get matching for trip %d, %s", trip.ID, err.Error())).Respond(w, 500)
 		return
 	}
+	err = trip.SetActualMileage(db.CurrentDB(), int(resp.Distance))
+	if err != nil {
+		log.Errorf("Unable to set acutal mileage for trip %d - %f", trip.ID, resp.Distance)
+	}
 	encodedJson, err := json.Marshal(resp)
 	if err != nil {
 		ErrorWithMessage(fmt.Sprintf("Unable to encode match response for trip %d, %s", trip.ID, err.Error())).Respond(w, 500)

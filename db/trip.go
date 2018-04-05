@@ -16,7 +16,7 @@ const (
 var tripRoutesForTripQuery = `
 	select tr.id, tr.trip_id, tr.status, u.id as employee_user_id,
 	tr.scheduled_route_order, tr.scheduled_start_location, tr.scheduled_end_location,
-	tr.bus_stop_name
+	tr.bus_stop_name, tr.pick_up_time, tr.drop_off_time
 	from trip_routes tr
 	join employee_trips et on et.id = tr.employee_trip_id
 	join employees e on e.id = et.employee_id
@@ -26,7 +26,7 @@ var tripRoutesForTripQuery = `
 var tripRoutesForTripIDsQuery = `
 	select tr.id, tr.trip_id, tr.status, u.id as employee_user_id,
 	tr.scheduled_route_order, tr.scheduled_start_location, tr.scheduled_end_location,
-	tr.bus_stop_name
+	tr.bus_stop_name, tr.pick_up_time, tr.drop_off_time
 	from trip_routes tr
 	join employee_trips et on et.id = tr.employee_trip_id
 	join employees e on e.id = et.employee_id
@@ -47,6 +47,10 @@ var tripsByStatusQuery = `
 	join users u on u.entity_id=d.id and u.entity_type="Driver"
 	where t.status=?`
 
+var updateActualMileageStmt = `
+	update trips set actual_mileage=? where id=?
+`
+
 // Trip structure maps to the trips table
 type Trip struct {
 	ID             int    `db:"id"`
@@ -55,6 +59,7 @@ type Trip struct {
 	DriverUserID   int    `db:"driver_user_id"`
 	VehicleID      int    `db:"vehicle_id"`
 	Status         string `db:"status"`
+	ActualMileage  int    `db:"actual_mileage"`
 	TripRoutes     []TripRoute
 	isRoutesLoaded bool
 }
@@ -74,6 +79,11 @@ func GetTripByID(db sqlx.Queryer, id int) (*Trip, error) {
 		return nil, err
 	}
 	return &t, nil
+}
+
+func (t *Trip) SetActualMileage(db sqlx.Execer, mileage int) error {
+	_, err := db.Exec(updateActualMileageStmt, mileage, t.ID)
+	return err
 }
 
 // LoadTripRoutes loads / refreshes the trip routes for a given trip

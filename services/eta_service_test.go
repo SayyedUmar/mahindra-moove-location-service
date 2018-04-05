@@ -11,8 +11,12 @@ import (
 	"github.com/MOOVE-Network/location_service/services/mocks"
 	"github.com/MOOVE-Network/location_service/utils"
 	"github.com/golang/mock/gomock"
+	log "github.com/sirupsen/logrus"
 )
 
+func init() {
+	log.SetLevel(log.DebugLevel)
+}
 func TestGetETAForTripShould_NotifyETAForASimpleCheckinTrip(t *testing.T) {
 	// setup Mocks
 	mockController := gomock.NewController(t)
@@ -219,7 +223,7 @@ func checkinTripNotAllBoard() db.Trip {
 				TripID:                 42,
 				Status:                 "not_started",
 				Trip:                   db.Trip{DriverUserID: 400},
-				ScheduledRouteOrder:    1,
+				ScheduledRouteOrder:    2,
 				ScheduledStartLocation: db.Location{utils.Location{3, 3}},
 				ScheduledEndLocation:   db.Location{utils.Location{4, 4}},
 			},
@@ -254,7 +258,7 @@ func checkinTripNotAllBoardWithOffset() db.Trip {
 				TripID:                 42,
 				Status:                 "on_board",
 				Trip:                   db.Trip{DriverUserID: 400},
-				ScheduledRouteOrder:    1,
+				ScheduledRouteOrder:    2,
 				ScheduledStartLocation: db.Location{utils.Location{3, 3}},
 				ScheduledEndLocation:   db.Location{utils.Location{4, 4}},
 			},
@@ -264,7 +268,7 @@ func checkinTripNotAllBoardWithOffset() db.Trip {
 				TripID:                 42,
 				Status:                 "not_started",
 				Trip:                   db.Trip{DriverUserID: 400},
-				ScheduledRouteOrder:    1,
+				ScheduledRouteOrder:    3,
 				ScheduledStartLocation: db.Location{utils.Location{4, 4}},
 				ScheduledEndLocation:   db.Location{utils.Location{5, 5}},
 			},
@@ -297,7 +301,7 @@ func checkinTripNotAllBoardWithOffsetWithOneOnBoard() db.Trip {
 				TripID:                 42,
 				Status:                 "not_started",
 				Trip:                   db.Trip{DriverUserID: 400},
-				ScheduledRouteOrder:    1,
+				ScheduledRouteOrder:    2,
 				ScheduledStartLocation: db.Location{utils.Location{3, 3}},
 				ScheduledEndLocation:   db.Location{utils.Location{4, 4}},
 			},
@@ -307,7 +311,7 @@ func checkinTripNotAllBoardWithOffsetWithOneOnBoard() db.Trip {
 				TripID:                 42,
 				Status:                 "not_started",
 				Trip:                   db.Trip{DriverUserID: 400},
-				ScheduledRouteOrder:    1,
+				ScheduledRouteOrder:    3,
 				ScheduledStartLocation: db.Location{utils.Location{4, 4}},
 				ScheduledEndLocation:   db.Location{utils.Location{5, 5}},
 			},
