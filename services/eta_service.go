@@ -102,11 +102,12 @@ func handleCheckinTrip(trip *db.Trip, currentLocation db.Location, clock Clock) 
 			dm, ok := etaBusMap[tr.ScheduledRouteOrder]
 			if !ok {
 				log.Infof("Requesting eta of trip %d from %s to %s with offset of %d mins\n", trip.ID, startLoc.ToString(), endLoc.ToString(), 0)
-				dm, err := ds.GetDuration(startLoc, endLoc, clock.Now())
+				dmLocal, err := ds.GetDuration(startLoc, endLoc, clock.Now())
 				if err != nil {
 					return nil, err
 				}
-				etaBusMap[tr.ScheduledRouteOrder] = dm
+				etaBusMap[tr.ScheduledRouteOrder] = dmLocal
+				dm = dmLocal
 			}
 			etaResp.TripRoutes = append(etaResp.TripRoutes, ETATripRoute{
 				ID:             tr.ID,
@@ -124,11 +125,12 @@ func handleCheckinTrip(trip *db.Trip, currentLocation db.Location, clock Clock) 
 			dm, ok := etaBusMap[tr.ScheduledRouteOrder]
 			if !ok {
 				log.Infof("Requesting eta of trip %d from %s to %s with offset of %d mins\n", trip.ID, startLoc.ToString(), endLoc.ToString(), int64(offset.Minutes()))
-				dm, err := ds.GetDuration(startLoc, endLoc, clock.Now().Add(offset))
+				dmLocal, err := ds.GetDuration(startLoc, endLoc, clock.Now().Add(offset))
 				if err != nil {
 					return nil, err
 				}
-				etaBusMap[tr.ScheduledRouteOrder] = dm
+				etaBusMap[tr.ScheduledRouteOrder] = dmLocal
+				dm = dmLocal
 			}
 			etaResp.TripRoutes = append(etaResp.TripRoutes, ETATripRoute{
 				ID:             tr.ID,
@@ -212,11 +214,12 @@ func handleCheckoutTrip(trip *db.Trip, currentLocation db.Location, clock Clock)
 			dm, ok := etaBusMap[tr.ScheduledRouteOrder]
 			if !ok {
 				log.Infof("Requesting eta of trip %d from %s to %s with offset of %d mins\n", trip.ID, startLoc.ToString(), endLoc.ToString(), 0)
-				dm, err := ds.GetDuration(startLoc, endLoc, clock.Now())
+				dmLocal, err := ds.GetDuration(startLoc, endLoc, clock.Now())
 				if err != nil {
 					return nil, err
 				}
-				etaBusMap[tr.ScheduledRouteOrder] = dm
+				etaBusMap[tr.ScheduledRouteOrder] = dmLocal
+				dm = dmLocal
 			}
 			etaResp.TripRoutes = append(etaResp.TripRoutes, ETATripRoute{
 				ID:             tr.ID,
@@ -233,11 +236,12 @@ func handleCheckoutTrip(trip *db.Trip, currentLocation db.Location, clock Clock)
 			dm, ok := etaBusMap[tr.ScheduledRouteOrder]
 			if !ok {
 				log.Infof("Requesting eta of trip %d from %s to %s with offset of %d mins\n", trip.ID, startLoc.ToString(), endLoc.ToString(), int(offset.Minutes()))
-				dm, err := ds.GetDuration(startLoc, endLoc, clock.Now().Add(offset))
+				dmLocal, err := ds.GetDuration(startLoc, endLoc, clock.Now().Add(offset))
 				if err != nil {
 					return nil, err
 				}
-				etaBusMap[tr.ScheduledRouteOrder] = dm
+				etaBusMap[tr.ScheduledRouteOrder] = dmLocal
+				dm = dmLocal
 			}
 			etaResp.TripRoutes = append(etaResp.TripRoutes, ETATripRoute{
 				ID:             tr.ID,
