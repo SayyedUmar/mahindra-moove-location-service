@@ -7,6 +7,7 @@ import (
 
 	"github.com/jmoiron/sqlx"
 	log "github.com/sirupsen/logrus"
+	null "gopkg.in/guregu/null.v3"
 )
 
 // OnBoardStatuses contains of list of statuses
@@ -28,8 +29,8 @@ type TripRoute struct {
 	ScheduledEndLocation   Location       `db:"scheduled_end_location"`
 	EmployeeUserID         int            `db:"employee_user_id"`
 	BusStopName            sql.NullString `db:"bus_stop_name"`
-	PickUpTime             NullTime       `db:"pick_up_time"`
-	DropOffTime            NullTime       `db:"drop_off_time"`
+	PickUpTime             null.Time      `db:"pick_up_time"`
+	DropOffTime            null.Time      `db:"drop_off_time"`
 	Trip                   Trip
 }
 
