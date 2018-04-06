@@ -2,6 +2,7 @@ package db
 
 import (
 	"github.com/jmoiron/sqlx"
+	null "gopkg.in/guregu/null.v3"
 )
 
 // OnBoardStatuses contains of list of statuses
@@ -15,15 +16,15 @@ var OnBoardStatuses = map[string]bool{
 
 // TripRoute represents the database structure of TripRoute
 type TripRoute struct {
-	ID                     int      `db:"id"`
-	TripID                 int      `db:"trip_id"`
-	Status                 string   `db:"status"`
-	ScheduledRouteOrder    int      `db:"scheduled_route_order"`
-	ScheduledStartLocation Location `db:"scheduled_start_location"`
-	ScheduledEndLocation   Location `db:"scheduled_end_location"`
-	EmployeeUserID         int      `db:"employee_user_id"`
-	PickUpTime             NullTime `db:"pick_up_time"`
-	DropOffTime            NullTime `db:"drop_off_time"`
+	ID                     int       `db:"id"`
+	TripID                 int       `db:"trip_id"`
+	Status                 string    `db:"status"`
+	ScheduledRouteOrder    int       `db:"scheduled_route_order"`
+	ScheduledStartLocation Location  `db:"scheduled_start_location"`
+	ScheduledEndLocation   Location  `db:"scheduled_end_location"`
+	EmployeeUserID         int       `db:"employee_user_id"`
+	PickUpTime             null.Time `db:"pick_up_time"`
+	DropOffTime            null.Time `db:"drop_off_time"`
 	Trip                   Trip
 }
 
