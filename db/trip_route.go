@@ -33,9 +33,9 @@ func (tr *TripRoute) IsOnBoard() bool {
 	return tr.Status == "on_board" || tr.Status == "driver_arrived"
 }
 
-func SaveEta(db sqlx.Execer, trId int, pickUpTime NullTime, dropOffTime NullTime) error {
+func SaveEta(db sqlx.Execer, trId int, pickUpTime null.Time, dropOffTime null.Time) error {
 	_, err := db.Exec(`update trip_routes
 							set pick_up_time=?, drop_off_time=?
-							where id=?`, pickUpTime.Value, dropOffTime.Value, trId)
+							where id=?`, pickUpTime, dropOffTime, trId)
 	return err
 }

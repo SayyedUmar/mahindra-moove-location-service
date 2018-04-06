@@ -6,19 +6,20 @@ import (
 
 	"github.com/MOOVE-Network/location_service/db"
 	log "github.com/sirupsen/logrus"
+	null "gopkg.in/guregu/null.v3"
 )
 
-func NotNullTime(t time.Time) db.NullTime {
-	return db.NullTime{Valid: true, Value: t}
+func NotNullTime(t time.Time) null.Time {
+	return null.NewTime(t, true)
 }
 
 type ETATripRoute struct {
-	ID             int         `json:"id"`
-	PickupTime     db.NullTime `json:"pickup_time"`
-	DropoffTime    db.NullTime `json:"dropoff_time"`
-	ETAInMinutes   float64     `json:"eta_in_minutes"`
-	EmployeeUserID int         `json:"employee_user_id"`
-	Status         string      `json:"status"`
+	ID             int       `json:"id"`
+	PickupTime     null.Time `json:"pickup_time"`
+	DropoffTime    null.Time `json:"dropoff_time"`
+	ETAInMinutes   float64   `json:"eta_in_minutes"`
+	EmployeeUserID int       `json:"employee_user_id"`
+	Status         string    `json:"status"`
 }
 type ETAResponse struct {
 	ID         int            `json:"id"`
