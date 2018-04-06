@@ -114,6 +114,14 @@ func readMessages(client *Client) {
 		case "GEOFENCE":
 			go acknowledge(wsMsg, client.Send)
 			log.Infof("Got GEOFENCE event %s\n", message)
+			gfEvent, err := socketstore.GeofenceEventFromJSON(message)
+			if err != nil {
+				log.Warnf("Unable to decode geofence update message %s", string(message))
+				continue
+			}
+			gfMutex.Lock()
+			gfEvents = append(gfEvents, *gfEvent)
+			gfMutex.Unlock()
 		default:
 			log.Warnf("Unknown message type detected %s", string(message))
 		}

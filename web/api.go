@@ -9,6 +9,8 @@ import (
 	"github.com/MOOVE-Network/location_service/db"
 	"github.com/MOOVE-Network/location_service/identity"
 	"github.com/MOOVE-Network/location_service/models"
+	"github.com/MOOVE-Network/location_service/services"
+	"github.com/MOOVE-Network/location_service/socketstore"
 	log "github.com/sirupsen/logrus"
 )
 
@@ -16,6 +18,8 @@ var hbMutex = &sync.Mutex{}
 var heartBeats = make(map[int]*db.HeartBeat)
 var tlMutex = &sync.Mutex{}
 var tripLocations []db.TripLocation
+var gfMutex = &sync.Mutex{}
+var gfEvents []socketstore.GeofenceEvent
 
 var dlMutex = &sync.Mutex{}
 var driverLocations []models.DriverLocation
@@ -123,4 +127,121 @@ func setupDriverLocationTimer() {
 			}
 		}
 	}()
+}
+
+func setupGeofenceTimer() {
+	log.Infoln("started geofence timer")
+	ticker := time.NewTicker(time.Second * 5)
+	go func() {
+		for _ = range ticker.C {
+			var tempGfEvents []socketstore.GeofenceEvent
+			tlMutex.Lock()
+			tempGfEvents = append(tempGfEvents, gfEvents...)
+			gfEvents = nil
+			tlMutex.Unlock()
+			log.Infof("Processing events %+v", tempGfEvents)
+			processGeofenceEvents(tempGfEvents)
+		}
+	}()
+}
+
+func processGeofenceEvents(gfEvents []socketstore.GeofenceEvent) {
+	//Map which can hold list of geofence events per tripId.
+	//This is for db query optimization.
+	//With this we will fetch trip only one for list of geofence events.
+	gfEventMap := make(map[int][]socketstore.GeofenceEvent)
+
+	//grouping geofence events based on tripId
+	for _, geofenceEvent := range gfEvents {
+		tripID := geofenceEvent.TripID
+		if tripID > 0 {
+			val, ok := gfEventMap[tripID]
+			if !ok {
+				//giving capacity as 2 because we get two events per geofence.
+				val = make([]socketstore.GeofenceEvent, 0, 2)
+			}
+			gfEventMap[tripID] = append(val, geofenceEvent)
+		}
+	}
+
+	log.Infof("events Map %+v", gfEventMap)
+
+	for tripID, events := range gfEventMap {
+		trip, err := db.GetTripByID(db.CurrentDB(), tripID)
+		if err != nil {
+			log.Errorf("Unable to get trip for tripId: %d", tripID)
+			log.Error(err)
+			continue
+		}
+		log.Infof("for trip Id %d, found trip %+v", tripID, trip)
+		sendDriverArrivingNotification(trip, events)
+		updateGeofenceInfoInTripRoutes(trip, events)
+	}
+}
+
+func sendDriverArrivingNotification(trip *db.Trip, events []socketstore.GeofenceEvent) {
+	for _, gfEvent := range events {
+		//We send Notification only for Dwell event and for Wider Geofence.
+		if gfEvent.IsDwellEvent() && gfEvent.IsForWiderGeofence() {
+			driver, err := db.GetDriverByID(db.CurrentDB(), trip.DriverID)
+			if err != nil {
+				log.Errorf("Unable to get driver for tripId: %d", trip.ID)
+				log.Error(err)
+				continue
+			}
+			log.Infof("for driver Id %d, found driver %+v", trip.DriverID, driver)
+			if gfEvent.IsForSite() {
+				log.Info("Checking tripRoute for site")
+				for _, tripRoute := range trip.TripRoutes {
+					if tripRoute.IsNotStarted() {
+						services.SendDriverArrivingNotification(trip.ID, tripRoute.EmployeeUserID, driver)
+					}
+				}
+			} else if gfEvent.IsForNodalPoint() {
+				log.Info("Checking tripRoute for nodal point")
+				for _, tripRoute := range trip.TripRoutes {
+					for _, tripRouteID := range gfEvent.TripRouteIDs {
+						if tripRoute.ID == tripRouteID && tripRoute.IsNotStarted() {
+							services.SendDriverArrivingNotification(trip.ID, tripRoute.EmployeeUserID, driver)
+						}
+					}
+				}
+			}
+		}
+	}
+}
+
+func updateGeofenceInfoInTripRoutes(trip *db.Trip, events []socketstore.GeofenceEvent) {
+	tx := db.CurrentDB().MustBegin()
+	defer func() {
+		err := tx.Commit()
+		if err != nil {
+			log.Panic(err)
+		}
+	}()
+	for _, gfEvent := range events {
+		if gfEvent.IsDwellEvent() && gfEvent.IsForNarrowGeofence() {
+			if gfEvent.IsForSite() {
+				for _, tripRoute := range trip.TripRoutes {
+					if trip.IsCheckIn() {
+						tripRoute.UpdateCompletedGeofenceInfo(tx, gfEvent.GetLocation(), gfEvent.Timestamp)
+					} else {
+						tripRoute.UpdateDriverArrivedGeofenceInfo(tx, gfEvent.GetLocation(), gfEvent.Timestamp)
+					}
+				}
+			} else if gfEvent.IsForNodalPoint() {
+				for _, tripRoute := range trip.TripRoutes {
+					for _, tripRouteID := range gfEvent.TripRouteIDs {
+						if tripRoute.ID == tripRouteID {
+							if trip.IsCheckIn() {
+								tripRoute.UpdateDriverArrivedGeofenceInfo(tx, gfEvent.GetLocation(), gfEvent.Timestamp)
+							} else {
+								tripRoute.UpdateCompletedGeofenceInfo(tx, gfEvent.GetLocation(), gfEvent.Timestamp)
+							}
+						}
+					}
+				}
+			}
+		}
+	}
 }
