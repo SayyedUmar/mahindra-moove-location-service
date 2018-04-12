@@ -26,7 +26,7 @@ func getTripID(req *http.Request) (int, error) {
 	}
 	idInt, err := strconv.Atoi(id)
 	if err != nil {
-		log.Errorf("Driver id is not an integer. got %s as driverID", id)
+		log.Errorf("Trip id is not an integer. got %s as trip Id", id)
 	}
 	return idInt, err
 }
