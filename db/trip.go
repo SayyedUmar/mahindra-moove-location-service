@@ -3,6 +3,8 @@ package db
 import (
 	"fmt"
 
+	"gopkg.in/guregu/null.v3"
+
 	"github.com/jmoiron/sqlx"
 )
 
@@ -34,14 +36,14 @@ var tripRoutesForTripIDsQuery = `
 	where tr.trip_id in (?) order by tr.trip_id, scheduled_route_order asc`
 
 var tripByIDQuery = `
-	select t.id, t.trip_type, t.driver_id, u.id as driver_user_id, t.vehicle_id, t.status 
+	select t.id, t.trip_type, t.driver_id, u.id as driver_user_id, t.vehicle_id, t.status, t.scheduled_date 
 	from trips t 
 	join drivers d on d.id = t.driver_id
 	join users u on u.entity_id=d.id and u.entity_type="Driver"
 	where t.id=?`
 
 var tripsByStatusQuery = `
-	select t.id, t.trip_type, t.driver_id, u.id as driver_user_id, t.vehicle_id, t.status 
+	select t.id, t.trip_type, t.driver_id, u.id as driver_user_id, t.vehicle_id, t.status, t.scheduled_date 
 	from trips t 
 	join drivers d on d.id = t.driver_id
 	join users u on u.entity_id=d.id and u.entity_type="Driver"
@@ -53,15 +55,16 @@ var updateActualMileageStmt = `
 
 // Trip structure maps to the trips table
 type Trip struct {
-	ID             int    `db:"id"`
-	TripType       int    `db:"trip_type"`
-	DriverID       int    `db:"driver_id"`
-	DriverUserID   int    `db:"driver_user_id"`
-	VehicleID      int    `db:"vehicle_id"`
-	Status         string `db:"status"`
-	ActualMileage  int    `db:"actual_mileage"`
-	TripRoutes     []TripRoute
-	isRoutesLoaded bool
+	ID                 int       `db:"id"`
+	TripType           int       `db:"trip_type"`
+	DriverID           int       `db:"driver_id"`
+	DriverUserID       int       `db:"driver_user_id"`
+	VehicleID          int       `db:"vehicle_id"`
+	Status             string    `db:"status"`
+	ActualMileage      int       `db:"actual_mileage"`
+	ScheduledStartDate null.Time `db:"scheduled_date"`
+	TripRoutes         []TripRoute
+	isRoutesLoaded     bool
 }
 
 // GetTripByID returns a trip if found otherwise returns an error

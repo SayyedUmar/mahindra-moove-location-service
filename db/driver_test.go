@@ -8,6 +8,7 @@ import (
 	"github.com/stretchr/testify/assert"
 
 	tst "github.com/MOOVE-Network/location_service/testutils"
+	"github.com/MOOVE-Network/location_service/utils"
 	"github.com/icrowley/fake"
 	"github.com/jmoiron/sqlx"
 )
@@ -109,3 +110,24 @@ func TestGetDriverByTripID(t *testing.T) {
 	assert.Equal(t, driver.User.EntityID, driver1.User.EntityID)
 	assert.Equal(t, driver.User.EntityType, driver1.User.EntityType)
 }
+
+// func TestGetDriverLocation(t *testing.T) {
+// 	tx := createTx(t)
+// 	defer tx.Rollback()
+
+// 	driver, err := createDriver(tx, "on_duty")
+// 	tst.FailNowOnErr(t, err)
+
+// 	location := Location{
+// 		utils.Location{
+// 			Lat: HomeOneLat,
+// 			Lng: HomeOneLng,
+// 		},
+// 	}
+// 	tx.Exec("update users set current_location = ? where id = ?", location, driver.User.ID)
+
+// 	driverLocation, err := DriverLocation(tx, driver.User.ID)
+// 	tst.FailNowOnErr(t, err)
+
+// 	assert.Equal(t, location, driverLocation)
+// }

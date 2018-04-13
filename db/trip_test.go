@@ -4,6 +4,8 @@ import (
 	"testing"
 	"time"
 
+	"gopkg.in/guregu/null.v3"
+
 	tst "github.com/MOOVE-Network/location_service/testutils"
 	"github.com/MOOVE-Network/location_service/utils"
 	"github.com/icrowley/fake"
@@ -43,8 +45,8 @@ func ensureDriver(tx *sqlx.Tx, driverID int) {
 func createTrip(t *Trip, tx *sqlx.Tx) (*Trip, error) {
 	now := time.Now()
 	ensureDriver(tx, t.DriverID)
-	res := tx.MustExec(`insert into trips(trip_type, driver_id, vehicle_id, status, created_at, updated_at)
-				 values (?,?,?,?,?,?)`, t.TripType, t.DriverID, t.VehicleID, t.Status, now, now)
+	res := tx.MustExec(`insert into trips(trip_type, driver_id, vehicle_id, status, scheduled_date, created_at, updated_at)
+				 values (?,?,?,?,?,?,?)`, t.TripType, t.DriverID, t.VehicleID, t.Status, t.ScheduledStartDate, now, now)
 	lastID, err := res.LastInsertId()
 	if err != nil {
 		return nil, err
@@ -99,16 +101,21 @@ func createTripWithRoutes(tx *sqlx.Tx, driverID, vehicleID int, status ...string
 func TestGetTripByID(t *testing.T) {
 	tx := createTx(t)
 	defer tx.Rollback()
+	currentTime := time.Now().Round(time.Second) //Rounding since time gets rounded to nearest second during insert. don't know why.
 	trip, err := createTrip(&Trip{TripType: TripTypeCheckIn,
-		DriverID:  23,
-		VehicleID: 42,
-		Status:    "active"}, tx)
+		DriverID:           23,
+		VehicleID:          42,
+		Status:             "active",
+		ScheduledStartDate: null.TimeFrom(currentTime),
+	}, tx)
 	tst.FailNowOnErr(t, err)
 
 	assert.Equal(t, 23, trip.DriverID)
 	assert.Equal(t, 42, trip.VehicleID)
 	assert.True(t, trip.DriverUserID > 0)
 	assert.Equal(t, "active", trip.Status)
+	assert.True(t, trip.ScheduledStartDate.Valid)
+	assert.Equal(t, currentTime.Unix(), trip.ScheduledStartDate.Time.Unix())
 }
 
 func TestGetTripByIDLoadRoutes(t *testing.T) {
@@ -164,4 +171,24 @@ func TestGetTripsByStatus(t *testing.T) {
 	assert.True(t, isInTripsArr(trips, trip2))
 	assert.Equal(t, len(trips[2].TripRoutes), 3)
 	assert.True(t, isInTripsArr(trips, trip3))
+}
+
+func TestGetTripsByStatusFillsScheduledStartDate(t *testing.T) {
+	tx := createTx(t)
+	defer tx.Rollback()
+	currentTime := time.Now().Round(time.Second) //Rounding since time gets rounded to nearest second during insert. don't know why.
+	_, err := createTrip(&Trip{TripType: TripTypeCheckIn,
+		DriverID:           23,
+		VehicleID:          42,
+		Status:             "active",
+		ScheduledStartDate: null.TimeFrom(currentTime),
+	}, tx)
+	tst.FailNowOnErr(t, err)
+	trips, err := GetTripsByStatus(tx, "active")
+	tst.FailNowOnErr(t, err)
+
+	assert.Equal(t, 1, len(trips))
+	assert.Equal(t, "active", trips[0].Status)
+	assert.True(t, trips[0].ScheduledStartDate.Valid)
+	assert.Equal(t, currentTime.Unix(), trips[0].ScheduledStartDate.Time.Unix())
 }

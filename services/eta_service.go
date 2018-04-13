@@ -2,6 +2,7 @@ package services
 
 import (
 	"fmt"
+	"strconv"
 	"time"
 
 	"github.com/MOOVE-Network/location_service/db"
@@ -277,6 +278,53 @@ func GetETAForActiveTrips() {
 	}
 }
 
+func GetETAForAssignedTrip() {
+	assignedTrips, err := db.GetTripsByStatus(db.CurrentDB(), "assigned")
+	if err != nil {
+		log.Errorf("unable to get assigned trips - %s", err)
+	}
+	for _, t := range assignedTrips {
+		go func(t *db.Trip) {
+			if len(t.TripRoutes) == 0 {
+				log.Infof("zero trip routes in trip - %d", t.ID)
+				return
+			}
+			if !t.ScheduledStartDate.Valid {
+				log.Errorf("No scheduled start time for trip - %d, can't notify driver about when to start trip", t.DriverID)
+				log.Error(err)
+				return
+			}
+
+			lastLocation, err := db.DriverLocation(db.CurrentDB(), t.DriverUserID)
+			if err != nil {
+				log.Errorf("Error getting last locaction for driver - %d", t.DriverID)
+				log.Error(err)
+				return
+			}
+			ds := GetDurationService()
+			dm, err := ds.GetDuration(*lastLocation, t.TripRoutes[0].ScheduledStartLocation, clock.Now())
+			if err != nil {
+				log.Errorf("Error getting duration for trip - %d with start location as %v and stop location as %v", t.ID, lastLocation, t.TripRoutes[0].ScheduledStartLocation)
+				log.Error(err)
+				return
+			}
+
+			if clock.Now().Add(dm.Duration).Add(time.Duration(time.Minute * 20)).After(t.ScheduledStartDate.Time) {
+				ns := GetNotificationService()
+				data := make(map[string]interface{})
+				data["push_type"] = "driver_should_start_trip"
+				data["trip_id"] = t.ID
+				err := ns.SendNotification(strconv.Itoa(t.DriverUserID), data, "driver")
+				if err != nil {
+					log.Errorf("Error while sending notification to start trip - %d", t.ID)
+					log.Error(err)
+					return
+				}
+			}
+		}(t)
+	}
+}
+
 func StartETAServiceTimer(cancelChan chan bool) {
 	GetETAForActiveTrips()
 	ticker := time.NewTicker(5 * time.Minute)
@@ -284,6 +332,7 @@ func StartETAServiceTimer(cancelChan chan bool) {
 		select {
 		case _ = <-ticker.C:
 			GetETAForActiveTrips()
+			GetETAForAssignedTrip()
 		case _ = <-cancelChan:
 			break
 		}
