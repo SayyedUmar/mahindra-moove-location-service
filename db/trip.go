@@ -5,6 +5,8 @@ import (
 
 	"gopkg.in/guregu/null.v3"
 
+	"time"
+
 	"github.com/jmoiron/sqlx"
 )
 
@@ -51,6 +53,10 @@ var tripsByStatusQuery = `
 
 var updateActualMileageStmt = `
 	update trips set actual_mileage=? where id=?
+`
+
+var updateDriverShouldStartTripTimeAndLocationStmt = `
+	update trips set driver_should_start_trip_time=?, driver_should_start_trip_location=? where id=?
 `
 
 // Trip structure maps to the trips table
@@ -174,4 +180,11 @@ func (t *Trip) AllCheckedIn() bool {
 		return true
 	}
 	return false
+}
+
+//UpdateDriverShouldStartTripTimeAndLocation updates driver_should_start_trip_time and driver_should_start_trip_location
+//for a given trip t.
+func (t *Trip) UpdateDriverShouldStartTripTimeAndLocation(db sqlx.Execer, scheduledTime time.Time, location Location) error {
+	_, err := db.Exec(updateDriverShouldStartTripTimeAndLocationStmt, scheduledTime, location, t.ID)
+	return err
 }

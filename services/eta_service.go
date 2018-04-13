@@ -310,10 +310,18 @@ func GetETAForAssignedTrip() {
 			}
 
 			if clock.Now().Add(dm.Duration).Add(time.Duration(time.Minute * 20)).After(t.ScheduledStartDate.Time) {
+				newStartTime := t.ScheduledStartDate.Time.Add(-dm.Duration)
+				err = t.UpdateDriverShouldStartTripTimeAndLocation(db.CurrentDB(), newStartTime, *lastLocation)
+				if err != nil {
+					log.Errorf("Error updating driver should start info in trips table for trip - %d with time as %v and location as %v", t.ID, newStartTime, lastLocation)
+					log.Error(err)
+					return
+				}
 				ns := GetNotificationService()
 				data := make(map[string]interface{})
 				data["push_type"] = "driver_should_start_trip"
 				data["trip_id"] = t.ID
+				data["driver_should_start_trip_time"] = newStartTime.Unix()
 				err := ns.SendNotification(strconv.Itoa(t.DriverUserID), data, "driver")
 				if err != nil {
 					log.Errorf("Error while sending notification to start trip - %d", t.ID)

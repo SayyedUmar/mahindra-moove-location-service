@@ -192,3 +192,39 @@ func TestGetTripsByStatusFillsScheduledStartDate(t *testing.T) {
 	assert.True(t, trips[0].ScheduledStartDate.Valid)
 	assert.Equal(t, currentTime.Unix(), trips[0].ScheduledStartDate.Time.Unix())
 }
+
+func TestUpdateScheduleStartTripTimeAndLocation(t *testing.T) {
+	tx := createTx(t)
+	defer tx.Rollback()
+	currentTime := time.Now().Round(time.Second) //Rounding since time gets rounded to nearest second during insert. don't know why.
+	currentLocation := Location{
+		utils.Location{
+			Lat: 13.01,
+			Lng: 70.01,
+		},
+	}
+	trip, err := createTrip(&Trip{TripType: TripTypeCheckIn,
+		DriverID:  23,
+		VehicleID: 42,
+		Status:    "active",
+	}, tx)
+	tst.FailNowOnErr(t, err)
+	err = trip.UpdateDriverShouldStartTripTimeAndLocation(tx, currentTime, currentLocation)
+	tst.FailNowOnErr(t, err)
+
+	getDriverShouldStartTripTimeAndLocationQuery := `
+		select driver_should_start_trip_time, driver_should_start_trip_location from trips where id=?
+	`
+	type TempStruct struct {
+		DiverShouldStartTripTime     null.Time `db:"driver_should_start_trip_time"`
+		DiverShouldStartTripLocation Location  `db:"driver_should_start_trip_location"`
+	}
+	row := tx.QueryRowx(getDriverShouldStartTripTimeAndLocationQuery, trip.ID)
+	var tempStruct TempStruct
+	err = row.StructScan(&tempStruct)
+	tst.FailNowOnErr(t, err)
+
+	assert.True(t, tempStruct.DiverShouldStartTripTime.Valid)
+	assert.Equal(t, currentTime.Unix(), tempStruct.DiverShouldStartTripTime.Time.Unix())
+	assert.Equal(t, currentLocation, tempStruct.DiverShouldStartTripLocation)
+}
