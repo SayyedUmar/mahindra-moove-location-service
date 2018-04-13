@@ -111,23 +111,23 @@ func TestGetDriverByTripID(t *testing.T) {
 	assert.Equal(t, driver.User.EntityType, driver1.User.EntityType)
 }
 
-// func TestGetDriverLocation(t *testing.T) {
-// 	tx := createTx(t)
-// 	defer tx.Rollback()
+func TestGetDriverLocation(t *testing.T) {
+	tx := createTx(t)
+	defer tx.Rollback()
 
-// 	driver, err := createDriver(tx, "on_duty")
-// 	tst.FailNowOnErr(t, err)
+	driver, err := createDriver(tx, "on_duty")
+	tst.FailNowOnErr(t, err)
 
-// 	location := Location{
-// 		utils.Location{
-// 			Lat: HomeOneLat,
-// 			Lng: HomeOneLng,
-// 		},
-// 	}
-// 	tx.Exec("update users set current_location = ? where id = ?", location, driver.User.ID)
+	location := Location{
+		utils.Location{
+			Lat: 13.01,
+			Lng: 79.01,
+		},
+	}
+	tx.Exec("update users set current_location = ? where id = ?", location, driver.User.ID)
 
-// 	driverLocation, err := DriverLocation(tx, driver.User.ID)
-// 	tst.FailNowOnErr(t, err)
+	driverLocation, err := DriverLocation(tx, driver.User.ID)
+	tst.FailNowOnErr(t, err)
 
-// 	assert.Equal(t, location, driverLocation)
-// }
+	assert.Equal(t, location, *driverLocation)
+}

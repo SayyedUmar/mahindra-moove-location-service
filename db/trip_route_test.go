@@ -156,7 +156,7 @@ func TestUpdateDriverArrivedGeofenceInfo(t *testing.T) {
 	tst.FailNowOnErr(t, err)
 
 	location := Location{utils.Location{Lat: 12.0, Lng: 79.0}}
-	now := time.Now()
+	now := time.Now().Round(time.Second) //Rounding since time gets rounded to nearest second during insert. don't know why.
 
 	for _, tr := range trip.TripRoutes {
 		err = tr.UpdateDriverArrivedGeofenceInfo(tx, location, now)
@@ -184,7 +184,7 @@ func TestUpdateCompletedGeofenceInfo(t *testing.T) {
 	tst.FailNowOnErr(t, err)
 
 	location := Location{utils.Location{Lat: 12.0, Lng: 79.0}}
-	now := time.Now()
+	now := time.Now().Round(time.Second) //Rounding since time gets rounded to nearest second during insert. don't know why.
 
 	for _, tr := range trip.TripRoutes {
 		err = tr.UpdateCompletedGeofenceInfo(tx, location, now)
@@ -192,15 +192,15 @@ func TestUpdateCompletedGeofenceInfo(t *testing.T) {
 	}
 
 	type Temp struct {
-		GeofenceCompletiedDate     time.Time `db:"geofence_completed_date"`
-		GeofenceCompletiedLocation Location  `db:"geofence_completed_location"`
+		GeofenceCompletedDate     time.Time `db:"geofence_completed_date"`
+		GeofenceCompletedLocation Location  `db:"geofence_completed_location"`
 	}
 	for _, tr := range trip.TripRoutes {
 		var temp Temp
 
 		row := tx.QueryRowx("SELECT geofence_completed_date, geofence_completed_location FROM trip_routes where id = ?", tr.ID)
 		row.StructScan(&temp)
-		assert.EqualValues(t, location, temp.GeofenceCompletiedLocation)
-		assert.Equal(t, now.Unix(), temp.GeofenceCompletiedDate.Unix())
+		assert.EqualValues(t, location, temp.GeofenceCompletedLocation)
+		assert.Equal(t, now.Unix(), temp.GeofenceCompletedDate.Unix())
 	}
 }
