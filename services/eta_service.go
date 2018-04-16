@@ -1,6 +1,7 @@
 package services
 
 import (
+	"errors"
 	"fmt"
 	"strconv"
 	"time"
@@ -286,59 +287,77 @@ func getETAForAssignedTrip() {
 	for _, t := range assignedTrips {
 		go func(t *db.Trip) {
 			log.Debugf("Checking for trip %d for eta", t.ID)
-			if len(t.TripRoutes) == 0 {
-				log.Infof("zero trip routes in trip - %d", t.ID)
-				return
-			}
-			if !t.ScheduledStartDate.Valid {
-				log.Errorf("No scheduled start time for trip - %d, can't notify driver about when to start trip", t.DriverID)
-				log.Error(err)
-				return
-			}
 
-			lastLocation, err := db.DriverLocation(db.CurrentDB(), t.DriverUserID)
+			lastDriverLocation, err := db.DriverLocation(db.CurrentDB(), t.DriverUserID)
 			if err != nil {
 				log.Errorf("Error getting last locaction for driver - %d", t.DriverID)
 				log.Error(err)
 				return
 			}
-			ds := GetDurationService()
-			dm, err := ds.GetDuration(*lastLocation, t.TripRoutes[0].ScheduledStartLocation, clock.Now())
 
+			newStartTime, err := FindWhenShouldDriverStartTrip(t, lastDriverLocation, clock)
 			if err != nil {
-				log.Errorf("Error getting duration for trip - %d with start location as %v and stop location as %v", t.ID, lastLocation, t.TripRoutes[0].ScheduledStartLocation)
+				log.Errorf("Error: [%s] while find eta to start trip : %d", err.Error(), t.ID)
 				log.Error(err)
 				return
 			}
 
-			log.Debugf("got eta for assigned trip %d, %v", t.ID, dm)
+			log.Debugf("got new start time: %v for trip: %d", newStartTime, t.ID)
 
-			newStartTime := t.ScheduledStartDate.Time.Add(-dm.Duration)
-			err = t.UpdateDriverShouldStartTripTimeAndLocation(db.CurrentDB(), newStartTime, *lastLocation)
+			err = t.UpdateDriverShouldStartTripTimeAndLocation(db.CurrentDB(), *newStartTime, *lastDriverLocation)
 			if err != nil {
-				log.Errorf("Error updating driver should start info in trips table for trip - %d with time as %v and location as %v", t.ID, newStartTime, lastLocation)
+				log.Errorf("Error updating driver should start info in trips table for trip - %d with time as %v and location as %v", t.ID, newStartTime, lastDriverLocation)
 				log.Error(err)
 				return
 			}
 
-			if clock.Now().Add(dm.Duration).Add(time.Duration(time.Minute * 20)).After(t.ScheduledStartDate.Time) {
-				ns := GetNotificationService()
-				data := make(map[string]interface{})
-				data["push_type"] = "driver_should_start_trip"
-				data["trip_id"] = t.ID
-				data["driver_should_start_trip_time"] = newStartTime.Unix()
-
-				log.Debugf("Sending start trip notification to driver : %d, with notification payload: %v", t.DriverUserID, data)
-
-				err := ns.SendNotification(strconv.Itoa(t.DriverUserID), data, "driver")
-				if err != nil {
-					log.Errorf("Error while sending notification to start trip - %d", t.ID)
-					log.Error(err)
-					return
-				}
+			_, err = NotifyDriverShouldStartTripIfRequired(t, newStartTime, clock)
+			if err != nil {
+				log.Errorf("Error while sending notification to start trip: %d\n", t.ID)
+				log.Error(err)
 			}
 		}(t)
 	}
+}
+
+func FindWhenShouldDriverStartTrip(trip *db.Trip, driverLocation *db.Location, clock Clock) (*time.Time, error) {
+	if len(trip.TripRoutes) == 0 {
+		return nil, errors.New("can not find start time for trip with zero trip routes")
+	}
+	if !trip.ScheduledStartDate.Valid {
+		return nil, errors.New("ScheduledStartDate for trip is invalid")
+	}
+
+	ds := GetDurationService()
+	dm, err := ds.GetDuration(*driverLocation, trip.TripRoutes[0].ScheduledStartLocation, clock.Now())
+	if err != nil {
+		log.Errorf("Error getting duration for trip - %d with start location as %v and stop location as %v", trip.ID, driverLocation, trip.TripRoutes[0].ScheduledStartLocation)
+		return nil, err
+	}
+
+	newStartTime := trip.ScheduledStartDate.Time.Add(-dm.Duration)
+	return &newStartTime, nil
+}
+
+func NotifyDriverShouldStartTripIfRequired(trip *db.Trip, newStartTime *time.Time, clock Clock) (bool, error) {
+	newStartTimeWithBuffer := newStartTime.Add(-time.Duration(time.Minute * 20))
+	// Sending notification only if scheduledStartTime with buffer has already passed.
+	if newStartTimeWithBuffer.Before(clock.Now()) {
+		ns := GetNotificationService()
+		data := make(map[string]interface{})
+		data["push_type"] = "driver_should_start_trip"
+		data["trip_id"] = trip.ID
+		data["driver_should_start_trip_time"] = newStartTime.Unix()
+
+		log.Debugf("Sending start trip notification to driver : %d, with notification payload: %v", trip.DriverUserID, data)
+
+		err := ns.SendNotification(strconv.Itoa(trip.DriverUserID), data, "driver")
+		if err != nil {
+			return false, err
+		}
+		return true, nil
+	}
+	return false, nil
 }
 
 func StartETAServiceTimer(cancelChan chan bool) {

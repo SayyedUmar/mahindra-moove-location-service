@@ -4,7 +4,7 @@ vendor
 .DS_Store
 coverage.txt
 coverage.html
-db/debug.test
+*/debug.test
 .env
 coverage.out
 .vscode/launch.json

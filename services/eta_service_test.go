@@ -1,8 +1,14 @@
 package services_test
 
 import (
+	"errors"
 	"testing"
 	"time"
+
+	"github.com/stretchr/testify/assert"
+
+	tst "github.com/MOOVE-Network/location_service/testutils"
+	"gopkg.in/guregu/null.v3"
 
 	"strconv"
 
@@ -231,6 +237,98 @@ func checkinTripNotAllBoard() db.Trip {
 	}
 }
 
+func TestFindWhenShouldDriverStartTrip_ForCheckInTrip(t *testing.T) {
+	driverLocation := db.Location{
+		utils.Location{
+			Lat: 1,
+			Lng: 1,
+		},
+	}
+	trip := makeAssignedCheckinTrip()
+
+	mockController := gomock.NewController(t)
+	defer mockController.Finish()
+
+	mockDurationService := mocks.NewMockDurationService(mockController)
+	services.SetDurationService(mockDurationService)
+
+	dm := services.DurationMetrics{
+		Duration: time.Duration(time.Minute * 10),
+	}
+
+	clock := mockClock{}
+	mockDurationService.EXPECT().GetDuration(driverLocation, trip.TripRoutes[0].ScheduledStartLocation, clock.Now()).Return(dm, nil).Times(1)
+
+	newStartTime, err := services.FindWhenShouldDriverStartTrip(trip, &driverLocation, clock)
+	tst.FailNowOnErr(t, err)
+
+	assert.Equal(t, trip.ScheduledStartDate.Time.Add(-dm.Duration), *newStartTime)
+
+	//Testing for Errors.
+
+	//Testing if duration service gives error than function should return error.
+	mockDurationService.EXPECT().GetDuration(driverLocation, trip.TripRoutes[0].ScheduledStartLocation, clock.Now()).Return(services.DurationMetrics{}, errors.New("Some Error")).Times(1)
+	_, err = services.FindWhenShouldDriverStartTrip(trip, &driverLocation, clock)
+	assert.EqualError(t, err, "Some Error")
+
+	//Should give error as there is no schedule start date for first pickup.
+	trip.ScheduledStartDate = null.NewTime(time.Time{}, false)
+
+	mockDurationService.EXPECT().GetDuration(driverLocation, trip.TripRoutes[0].ScheduledStartLocation, clock.Now()).Times(0)
+
+	_, err = services.FindWhenShouldDriverStartTrip(trip, &driverLocation, clock)
+	assert.Error(t, err)
+
+	//Checking for trip with no trip routes. should give error.
+	trip.ScheduledStartDate = null.TimeFrom(clock.Now())
+	trip.TripRoutes = []db.TripRoute{}
+
+	mockDurationService.EXPECT().GetDuration(driverLocation, gomock.Any(), clock.Now()).Times(0)
+
+	_, err = services.FindWhenShouldDriverStartTrip(trip, &driverLocation, clock)
+	assert.Error(t, err)
+}
+func TestNotifyDriverShouldStartTripIfRequired(t *testing.T) {
+	trip := makeAssignedCheckinTrip()
+
+	mockController := gomock.NewController(t)
+	defer mockController.Finish()
+
+	mockNotificationService := mocks.NewMockNotificationService(mockController)
+	services.SetNotificationService(mockNotificationService)
+
+	clock := mockClock{}
+
+	newStartTime := clock.Now()
+	data := make(map[string]interface{})
+	data["push_type"] = "driver_should_start_trip"
+	data["trip_id"] = trip.ID
+	data["driver_should_start_trip_time"] = newStartTime.Unix()
+	mockNotificationService.EXPECT().SendNotification(strconv.Itoa(trip.DriverUserID), data, "driver").Return(nil).Times(1)
+
+	sent, err := services.NotifyDriverShouldStartTripIfRequired(trip, &newStartTime, clock)
+	tst.FailNowOnErr(t, err)
+
+	assert.True(t, sent)
+
+	//Testing for start time + buffer > in future.
+	newStartTime = clock.Now().Add(time.Duration(time.Hour * 1))
+	mockNotificationService.EXPECT().SendNotification(strconv.Itoa(trip.DriverUserID), data, "driver").Times(0)
+
+	sent, err = services.NotifyDriverShouldStartTripIfRequired(trip, &newStartTime, clock)
+	tst.FailNowOnErr(t, err)
+	assert.False(t, sent)
+
+	//Testing for Errors.
+	//Returns false if notification services returns error.
+	newStartTime = clock.Now()
+	mockNotificationService.EXPECT().SendNotification(strconv.Itoa(trip.DriverUserID), data, "driver").Return(errors.New("Some Error")).Times(1)
+
+	sent, err = services.NotifyDriverShouldStartTripIfRequired(trip, &newStartTime, clock)
+	assert.EqualError(t, err, "Some Error")
+	assert.False(t, sent)
+}
+
 // #endregion
 
 func checkinTripNotAllBoardWithOffset() db.Trip {
@@ -314,6 +412,30 @@ func checkinTripNotAllBoardWithOffsetWithOneOnBoard() db.Trip {
 				ScheduledRouteOrder:    3,
 				ScheduledStartLocation: db.Location{utils.Location{4, 4}},
 				ScheduledEndLocation:   db.Location{utils.Location{5, 5}},
+			},
+		},
+	}
+}
+
+func makeAssignedCheckinTrip() *db.Trip {
+	return &db.Trip{
+		ID:                 42,
+		TripType:           db.TripTypeCheckIn,
+		DriverID:           43,
+		DriverUserID:       400,
+		VehicleID:          23,
+		Status:             "assigned",
+		ScheduledStartDate: null.TimeFrom(mockClock{}.Now()),
+		TripRoutes: []db.TripRoute{
+			db.TripRoute{
+				EmployeeUserID:         4212,
+				ID:                     421,
+				TripID:                 42,
+				Status:                 "not_started",
+				Trip:                   db.Trip{DriverUserID: 400},
+				ScheduledRouteOrder:    1,
+				ScheduledStartLocation: db.Location{utils.Location{1, 1}},
+				ScheduledEndLocation:   db.Location{utils.Location{3, 3}},
 			},
 		},
 	}
