@@ -43,7 +43,7 @@ func main() {
 	services.InitGoogleRoadsService(os.Getenv("LOCATION_MAPS_API_KEY"))
 	services.InitNotificationService(os.Getenv("FCM_API_KEY"), os.Getenv("FCM_TOPIC_PREFIX"))
 	cancelable := make(chan bool)
-	// go services.StartETAServiceTimer(cancelable)
+	go services.StartETAServiceTimer(cancelable)
 	go cancelOnSignal(cancelable)
 
 	web.SetupServer()
