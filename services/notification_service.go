@@ -95,7 +95,7 @@ func NotifyTripRouteToDriver(tr *db.TripRoute, dm *DurationMetrics, offset time.
 	log.Debugf("notification data for trip %d \n", tr.TripID)
 	log.Debug(data)
 	driverID := strconv.Itoa(tr.Trip.DriverUserID)
-	err := ns.SendNotification(driverID, data, "driver")
+	err := ns.SendNotification(driverID, data, "user")
 	if err != nil {
 		log.Error("Unable to send notification ", err)
 	}

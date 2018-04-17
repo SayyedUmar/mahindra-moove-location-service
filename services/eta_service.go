@@ -351,7 +351,7 @@ func NotifyDriverShouldStartTripIfRequired(trip *db.Trip, newStartTime *time.Tim
 
 		log.Debugf("Sending start trip notification to driver : %d, with notification payload: %v", trip.DriverUserID, data)
 
-		err := ns.SendNotification(strconv.Itoa(trip.DriverUserID), data, "driver")
+		err := ns.SendNotification(strconv.Itoa(trip.DriverUserID), data, "user")
 		if err != nil {
 			return false, err
 		}

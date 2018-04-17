@@ -43,7 +43,7 @@ func TestGetETAForTripShould_NotifyETAForASimpleCheckinTrip(t *testing.T) {
 	data["duration"] = int64(duration.Duration.Minutes())
 	data["push_type"] = "driver_location_update_1"
 	userCall := mockNotificationService.EXPECT().SendNotification(strconv.Itoa(4212), data, "user")
-	mockNotificationService.EXPECT().SendNotification(strconv.Itoa(400), data, "driver").After(userCall)
+	mockNotificationService.EXPECT().SendNotification(strconv.Itoa(400), data, "user").After(userCall)
 
 	_, err := services.GetETAForTrip(&trip, currentLocation, mockClock{})
 	if err != nil {
@@ -73,7 +73,7 @@ func TestGetETAForTripShould_NotifyETAForACheckinTripWithEmpNotStarted(t *testin
 	notificationData1["duration"] = int64(duration.Duration.Minutes())
 	notificationData1["push_type"] = "driver_location_update_1"
 	userCall1 := mockNotificationService.EXPECT().SendNotification(strconv.Itoa(4223), notificationData1, "user")
-	mockNotificationService.EXPECT().SendNotification(strconv.Itoa(400), notificationData1, "driver").After(userCall1)
+	mockNotificationService.EXPECT().SendNotification(strconv.Itoa(400), notificationData1, "user").After(userCall1)
 
 	mockDurationService.EXPECT().GetDuration(db.Location{utils.Location{3, 3}}, db.Location{utils.Location{4, 4}}, mockClock{}.Now().Add(duration.Duration)).Return(duration, nil).After(durationCall1)
 	notificationData2 := make(map[string]interface{})
@@ -109,7 +109,7 @@ func TestGetETAForTripShould_NotifyETAForACheckinTripWithOffset(t *testing.T) {
 	notificationData1["duration"] = int64(duration.Duration.Minutes())
 	notificationData1["push_type"] = "driver_location_update_1"
 	userCall1 := mockNotificationService.EXPECT().SendNotification(strconv.Itoa(4233), notificationData1, "user")
-	mockNotificationService.EXPECT().SendNotification(strconv.Itoa(400), notificationData1, "driver").After(userCall1)
+	mockNotificationService.EXPECT().SendNotification(strconv.Itoa(400), notificationData1, "user").After(userCall1)
 
 	mockDurationService.EXPECT().GetDuration(db.Location{utils.Location{4, 4}}, db.Location{utils.Location{5, 5}}, mockClock{}.Now().Add(duration.Duration)).Return(duration, nil).After(durationCall1)
 
@@ -151,7 +151,7 @@ func TestGetETAForTripShould_NotifyETAForACheckinTripWithOneOnBoard(t *testing.T
 	notificationData1["duration"] = int64(duration.Duration.Minutes())
 	notificationData1["push_type"] = "driver_location_update_1"
 	userCall1 := mockNotificationService.EXPECT().SendNotification(strconv.Itoa(4223), notificationData1, "user")
-	mockNotificationService.EXPECT().SendNotification(strconv.Itoa(400), notificationData1, "driver").After(userCall1)
+	mockNotificationService.EXPECT().SendNotification(strconv.Itoa(400), notificationData1, "user").After(userCall1)
 
 	durationCall2 := mockDurationService.EXPECT().GetDuration(db.Location{utils.Location{3, 3}}, db.Location{utils.Location{4, 4}}, mockClock{}.Now().Add(duration.Duration)).Return(duration, nil).After(durationCall1)
 	notificationData2 := make(map[string]interface{})
@@ -304,7 +304,7 @@ func TestNotifyDriverShouldStartTripIfRequired(t *testing.T) {
 	data["push_type"] = "driver_should_start_trip"
 	data["trip_id"] = trip.ID
 	data["driver_should_start_trip_time"] = newStartTime.Unix()
-	mockNotificationService.EXPECT().SendNotification(strconv.Itoa(trip.DriverUserID), data, "driver").Return(nil).Times(1)
+	mockNotificationService.EXPECT().SendNotification(strconv.Itoa(trip.DriverUserID), data, "user").Return(nil).Times(1)
 
 	sent, err := services.NotifyDriverShouldStartTripIfRequired(trip, &newStartTime, clock)
 	tst.FailNowOnErr(t, err)
@@ -313,7 +313,7 @@ func TestNotifyDriverShouldStartTripIfRequired(t *testing.T) {
 
 	//Testing for start time + buffer > in future.
 	newStartTime = clock.Now().Add(time.Duration(time.Hour * 1))
-	mockNotificationService.EXPECT().SendNotification(strconv.Itoa(trip.DriverUserID), data, "driver").Times(0)
+	mockNotificationService.EXPECT().SendNotification(strconv.Itoa(trip.DriverUserID), data, "user").Times(0)
 
 	sent, err = services.NotifyDriverShouldStartTripIfRequired(trip, &newStartTime, clock)
 	tst.FailNowOnErr(t, err)
@@ -322,7 +322,7 @@ func TestNotifyDriverShouldStartTripIfRequired(t *testing.T) {
 	//Testing for Errors.
 	//Returns false if notification services returns error.
 	newStartTime = clock.Now()
-	mockNotificationService.EXPECT().SendNotification(strconv.Itoa(trip.DriverUserID), data, "driver").Return(errors.New("Some Error")).Times(1)
+	mockNotificationService.EXPECT().SendNotification(strconv.Itoa(trip.DriverUserID), data, "user").Return(errors.New("Some Error")).Times(1)
 
 	sent, err = services.NotifyDriverShouldStartTripIfRequired(trip, &newStartTime, clock)
 	assert.EqualError(t, err, "Some Error")
