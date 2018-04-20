@@ -49,7 +49,7 @@ var tripsByStatusQuery = `
 	from trips t 
 	join drivers d on d.id = t.driver_id
 	join users u on u.entity_id=d.id and u.entity_type="Driver"
-	where t.status=?`
+	where t.status in (?)`
 
 var updateActualMileageStmt = `
 	update trips set actual_mileage=? where id=?
@@ -119,14 +119,21 @@ func (t *Trip) LoadTripRoutes(db sqlx.Queryer, force bool) error {
 	return nil
 }
 
-// GetTripsByStatus loads trips with a given status and also eager loads trip routes along with it
-func GetTripsByStatus(db RebindQueryer, status string) ([]*Trip, error) {
+// GetTripsByStatuses loads trips with a given statuses and also eager loads trip routes along with it
+func GetTripsByStatuses(db RebindQueryer, statuses ...string) ([]*Trip, error) {
 	var trips []*Trip
 	tripMap := make(map[int]*Trip)
-	rows, err := db.Queryx(tripsByStatusQuery, status)
+
+	q, args, err := sqlx.In(tripsByStatusQuery, statuses)
 	if err != nil {
 		return nil, err
 	}
+	q = db.Rebind(q)
+	rows, err := db.Queryx(q, args...)
+	if err != nil {
+		return nil, err
+	}
+
 	for rows.Next() {
 		var t Trip
 		err = rows.StructScan(&t)
@@ -141,7 +148,7 @@ func GetTripsByStatus(db RebindQueryer, status string) ([]*Trip, error) {
 		trips = append(trips, t)
 	}
 
-	q, args, err := sqlx.In(tripRoutesForTripIDsQuery, tripIDs)
+	q, args, err = sqlx.In(tripRoutesForTripIDsQuery, tripIDs)
 	if err != nil {
 		return nil, err
 	}

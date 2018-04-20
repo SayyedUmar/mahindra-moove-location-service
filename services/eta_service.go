@@ -256,7 +256,7 @@ func GetETAForTrip(trip *db.Trip, currentLocation db.Location, clock Clock) (*ET
 }
 
 func GetETAForActiveTrips() {
-	activeTrips, err := db.GetTripsByStatus(db.CurrentDB(), "active")
+	activeTrips, err := db.GetTripsByStatuses(db.CurrentDB(), "active")
 	if err != nil {
 		log.Errorf("unable to get active trips - %s", err)
 	}
@@ -280,7 +280,7 @@ func GetETAForActiveTrips() {
 }
 
 func getETAForAssignedTrip() {
-	assignedTrips, err := db.GetTripsByStatus(db.CurrentDB(), "assigned")
+	assignedTrips, err := db.GetTripsByStatuses(db.CurrentDB(), "assigned")
 	if err != nil {
 		log.Errorf("unable to get assigned trips - %s", err)
 	}
@@ -301,8 +301,6 @@ func getETAForAssignedTrip() {
 				log.Error(err)
 				return
 			}
-
-			log.Debugf("got new start time: %v for trip: %d", newStartTime, t.ID)
 
 			err = t.UpdateDriverShouldStartTripTimeAndLocation(db.CurrentDB(), *newStartTime, *lastDriverLocation)
 			if err != nil {

@@ -161,7 +161,7 @@ func TestGetTripsByStatus(t *testing.T) {
 	trip3, err := createTripWithRoutes(tx, 25, 44, "not_started", "not_started", "not_started")
 	tst.FailNowOnErr(t, err)
 
-	trips, err := GetTripsByStatus(tx, "active")
+	trips, err := GetTripsByStatuses(tx, "active")
 	tst.FailNowOnErr(t, err)
 
 	assert.Equal(t, len(trips), 3)
@@ -184,7 +184,7 @@ func TestGetTripsByStatusFillsScheduledStartDate(t *testing.T) {
 		ScheduledStartDate: null.TimeFrom(currentTime),
 	}, tx)
 	tst.FailNowOnErr(t, err)
-	trips, err := GetTripsByStatus(tx, "active")
+	trips, err := GetTripsByStatuses(tx, "active")
 	tst.FailNowOnErr(t, err)
 
 	assert.Equal(t, 1, len(trips))
