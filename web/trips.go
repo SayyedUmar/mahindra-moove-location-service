@@ -63,6 +63,32 @@ func GetTripETA(w http.ResponseWriter, req *http.Request) {
 	}
 }
 
+func GetStartTripETA(w http.ResponseWriter, req *http.Request) {
+	trip, err := getTrip(req)
+	if err != nil {
+		ErrorWithMessage(fmt.Sprintf("Unable to find trip %s", err.Error())).Respond(w, 404)
+		return
+	}
+	lastDriverLocation, err := db.DriverLocation(db.CurrentDB(), trip.DriverUserID)
+	if err != nil {
+		ErrorWithMessage(fmt.Sprintf("Unable to find Driver last location %s", err.Error())).Respond(w, 404)
+		return
+	}
+	clock := services.RealClock{}
+	newStartTime, err := services.FindWhenShouldDriverStartTrip(trip, lastDriverLocation, clock)
+	if err != nil {
+		ErrorWithMessage(fmt.Sprintf("Error: [%s] while calculating eta to start trip : %d", err.Error(), trip.ID)).Respond(w, 500)
+		return
+	}
+	calculationTime := clock.Now()
+	err = trip.UpdateDriverShouldStartTripTimeAndLocation(db.CurrentDB(), *newStartTime, *lastDriverLocation, calculationTime)
+	if err != nil {
+		ErrorWithMessage(fmt.Sprintf("Error updating driver should start info in trips table for trip - %d with time as %v and location as %v", trip.ID, newStartTime, lastDriverLocation)).Respond(w, 500)
+		return
+	}
+	writeOk(w)
+}
+
 func TripSummary(w http.ResponseWriter, r *http.Request) {
 	useGoogle := false
 	usePassThrough := false

@@ -56,7 +56,11 @@ var updateActualMileageStmt = `
 `
 
 var updateDriverShouldStartTripTimeAndLocationStmt = `
-	update trips set driver_should_start_trip_time=?, driver_should_start_trip_location=? where id=?
+	update trips set driver_should_start_trip_time=?, driver_should_start_trip_location=?, 
+	driver_should_start_trip_timestamp=? where id=?
+`
+var getDriverShouldStartTripLocationQuery = `
+	select driver_should_start_trip_location from trips where id=?
 `
 
 // Trip structure maps to the trips table
@@ -119,7 +123,7 @@ func (t *Trip) LoadTripRoutes(db sqlx.Queryer, force bool) error {
 	return nil
 }
 
-// GetTripsByStatuses loads trips with a given statuses and also eager loads trip routes along with it
+// GetTripsByStatuses loads trips with given statuses and also eager loads trip routes along with it
 func GetTripsByStatuses(db RebindQueryer, statuses ...string) ([]*Trip, error) {
 	var trips []*Trip
 	tripMap := make(map[int]*Trip)
@@ -189,9 +193,19 @@ func (t *Trip) AllCheckedIn() bool {
 	return false
 }
 
-//UpdateDriverShouldStartTripTimeAndLocation updates driver_should_start_trip_time and driver_should_start_trip_location
-//for a given trip t.
-func (t *Trip) UpdateDriverShouldStartTripTimeAndLocation(db sqlx.Execer, scheduledTime time.Time, location Location) error {
-	_, err := db.Exec(updateDriverShouldStartTripTimeAndLocationStmt, scheduledTime, location, t.ID)
+//UpdateDriverShouldStartTripTimeAndLocation updates driver_should_start_trip_time, driver_should_start_trip_location
+//and driver_should_start_trip_calc_time for a given trip t.
+func (t *Trip) UpdateDriverShouldStartTripTimeAndLocation(db sqlx.Execer, scheduledTime time.Time, location Location, calculationTime time.Time) error {
+	_, err := db.Exec(updateDriverShouldStartTripTimeAndLocationStmt, scheduledTime, location, calculationTime, t.ID)
 	return err
+}
+
+func (t *Trip) GetDriverShouldStartTripLocation(db sqlx.Queryer) (*Location, error) {
+	row := db.QueryRowx(getDriverShouldStartTripLocationQuery, t.ID)
+	var location Location
+	err := row.Scan(&location)
+	if err != nil {
+		return nil, err
+	}
+	return &location, nil
 }

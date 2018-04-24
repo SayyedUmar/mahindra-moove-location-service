@@ -70,13 +70,10 @@ func GetDriverByTripID(db sqlx.Queryer, tripID int) (*Driver, error) {
 //DriverLocation Returns last known location for the driver.
 func DriverLocation(db sqlx.Queryer, driverUserID int) (*Location, error) {
 	row := db.QueryRowx(getLastDriverLocationQuery, driverUserID)
-	type LocationWrapper struct {
-		Location Location `db:"current_location"`
-	}
-	var locationWrapper LocationWrapper
-	err := row.StructScan(&locationWrapper)
+	var location Location
+	err := row.Scan(&location)
 	if err != nil {
 		return nil, err
 	}
-	return &locationWrapper.Location, nil
+	return &location, nil
 }

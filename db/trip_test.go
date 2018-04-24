@@ -209,15 +209,17 @@ func TestUpdateScheduleStartTripTimeAndLocation(t *testing.T) {
 		Status:    "active",
 	}, tx)
 	tst.FailNowOnErr(t, err)
-	err = trip.UpdateDriverShouldStartTripTimeAndLocation(tx, currentTime, currentLocation)
+	driverShouldStartTripTime := currentTime.Add(time.Duration(time.Hour * 1))
+	err = trip.UpdateDriverShouldStartTripTimeAndLocation(tx, driverShouldStartTripTime, currentLocation, currentTime)
 	tst.FailNowOnErr(t, err)
 
 	getDriverShouldStartTripTimeAndLocationQuery := `
-		select driver_should_start_trip_time, driver_should_start_trip_location from trips where id=?
+		select driver_should_start_trip_time, driver_should_start_trip_location, driver_should_start_trip_timestamp from trips where id=?
 	`
 	type TempStruct struct {
-		DiverShouldStartTripTime     null.Time `db:"driver_should_start_trip_time"`
-		DiverShouldStartTripLocation Location  `db:"driver_should_start_trip_location"`
+		DiverShouldStartTripTime            null.Time `db:"driver_should_start_trip_time"`
+		DiverShouldStartTripLocation        Location  `db:"driver_should_start_trip_location"`
+		DiverShouldStartTripCalculationTime null.Time `db:"driver_should_start_trip_timestamp"`
 	}
 	row := tx.QueryRowx(getDriverShouldStartTripTimeAndLocationQuery, trip.ID)
 	var tempStruct TempStruct
@@ -225,6 +227,36 @@ func TestUpdateScheduleStartTripTimeAndLocation(t *testing.T) {
 	tst.FailNowOnErr(t, err)
 
 	assert.True(t, tempStruct.DiverShouldStartTripTime.Valid)
-	assert.Equal(t, currentTime.Unix(), tempStruct.DiverShouldStartTripTime.Time.Unix())
+	assert.True(t, tempStruct.DiverShouldStartTripCalculationTime.Valid)
+	assert.Equal(t, driverShouldStartTripTime.Unix(), tempStruct.DiverShouldStartTripTime.Time.Unix())
 	assert.Equal(t, currentLocation, tempStruct.DiverShouldStartTripLocation)
+	assert.Equal(t, currentTime.Unix(), tempStruct.DiverShouldStartTripCalculationTime.Time.Unix())
+}
+
+func TestGetDriverShouldStartTripLocation(t *testing.T) {
+	tx := createTx(t)
+	defer tx.Rollback()
+
+	trip, err := createTrip(&Trip{TripType: TripTypeCheckIn,
+		DriverID:  23,
+		VehicleID: 42,
+		Status:    "active",
+	}, tx)
+	tst.FailNowOnErr(t, err)
+
+	startTripLocation, err := trip.GetDriverShouldStartTripLocation(tx)
+	assert.Error(t, err)
+
+	location := Location{
+		utils.Location{
+			Lat: 13.01,
+			Lng: 79.01,
+		},
+	}
+
+	trip.UpdateDriverShouldStartTripTimeAndLocation(tx, time.Now(), location, time.Now())
+	startTripLocation, err = trip.GetDriverShouldStartTripLocation(tx)
+	tst.FailNowOnErr(t, err)
+
+	assert.Equal(t, location, *startTripLocation)
 }

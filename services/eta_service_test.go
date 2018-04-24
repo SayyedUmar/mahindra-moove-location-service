@@ -288,7 +288,7 @@ func TestFindWhenShouldDriverStartTrip_ForCheckInTrip(t *testing.T) {
 	_, err = services.FindWhenShouldDriverStartTrip(trip, &driverLocation, clock)
 	assert.Error(t, err)
 }
-func TestNotifyDriverShouldStartTripIfRequired(t *testing.T) {
+func TestNotifyDriverShouldStartTrip(t *testing.T) {
 	trip := makeAssignedCheckinTrip()
 
 	mockController := gomock.NewController(t)
@@ -300,31 +300,23 @@ func TestNotifyDriverShouldStartTripIfRequired(t *testing.T) {
 	clock := mockClock{}
 
 	newStartTime := clock.Now()
+	calculationTime := clock.Now()
 	data := make(map[string]interface{})
 	data["push_type"] = "driver_should_start_trip"
 	data["trip_id"] = trip.ID
 	data["driver_should_start_trip_time"] = newStartTime.Unix()
+	data["driver_should_start_trip_timestamp"] = calculationTime.Unix()
 	mockNotificationService.EXPECT().SendNotification(strconv.Itoa(trip.DriverUserID), data, "user").Return(nil).Times(1)
 
-	sent, err := services.NotifyDriverShouldStartTripIfRequired(trip, &newStartTime, clock)
+	sent, err := services.NotifyDriverShouldToStartTrip(trip, &newStartTime, &calculationTime)
 	tst.FailNowOnErr(t, err)
-
 	assert.True(t, sent)
-
-	//Testing for start time + buffer > in future.
-	newStartTime = clock.Now().Add(time.Duration(time.Hour * 1))
-	mockNotificationService.EXPECT().SendNotification(strconv.Itoa(trip.DriverUserID), data, "user").Times(0)
-
-	sent, err = services.NotifyDriverShouldStartTripIfRequired(trip, &newStartTime, clock)
-	tst.FailNowOnErr(t, err)
-	assert.False(t, sent)
 
 	//Testing for Errors.
 	//Returns false if notification services returns error.
-	newStartTime = clock.Now()
 	mockNotificationService.EXPECT().SendNotification(strconv.Itoa(trip.DriverUserID), data, "user").Return(errors.New("Some Error")).Times(1)
 
-	sent, err = services.NotifyDriverShouldStartTripIfRequired(trip, &newStartTime, clock)
+	sent, err = services.NotifyDriverShouldToStartTrip(trip, &newStartTime, &calculationTime)
 	assert.EqualError(t, err, "Some Error")
 	assert.False(t, sent)
 }

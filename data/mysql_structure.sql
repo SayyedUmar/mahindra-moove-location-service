@@ -1181,6 +1181,7 @@ CREATE TABLE `trips` (
   `actual_mileage` int(11) DEFAULT 0,
   `driver_should_start_trip_time` datetime DEFAULT NULL,
   `driver_should_start_trip_location` text DEFAULT NULL,
+  `driver_should_start_trip_timestamp` datetime DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `index_trips_on_driver_id` (`driver_id`) USING BTREE,
   KEY `index_trips_on_site_id` (`site_id`) USING BTREE,
