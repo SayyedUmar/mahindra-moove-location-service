@@ -10,6 +10,7 @@ import (
 	"github.com/MOOVE-Network/location_service/db"
 	"github.com/MOOVE-Network/location_service/identity"
 	"github.com/MOOVE-Network/location_service/socketstore"
+	"github.com/gorilla/mux"
 	"github.com/gorilla/websocket"
 	log "github.com/sirupsen/logrus"
 	null "gopkg.in/guregu/null.v3"
@@ -24,14 +25,28 @@ var upgrader = websocket.Upgrader{
 var hub = NewHub()
 
 func LocationSocket(w http.ResponseWriter, r *http.Request) {
-	ident := r.Context().Value("identity").(*identity.Identity)
+	var ident *identity.Identity
+	var userID = 0
+	if r.Context().Value("identity") != nil {
+		ident = r.Context().Value("identity").(*identity.Identity)
+		userID = ident.Id
+	}
 	log.Debugf("headers %v", r.Header)
 	conn, err := upgrader.Upgrade(w, r, nil)
 	if err != nil {
 		log.Error(err)
 		return
 	}
-	client := NewClient(hub, conn, ident.Id)
+	if userID == 0 {
+		strId := mux.Vars(r)["id"]
+		if strId != nil {
+			uid, err := strconv.Atoi(strId)
+			if err != nil {
+				userID = strId
+			}
+		}
+	}
+	client := NewClient(hub, conn, userID)
 	hub.Register <- client
 	go readMessages(client)
 }
