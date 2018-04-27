@@ -8,9 +8,10 @@ import (
 	"encoding/base64"
 	"encoding/json"
 	"errors"
+	"strings"
+
 	log "github.com/sirupsen/logrus"
 	"golang.org/x/crypto/pbkdf2"
-	"strings"
 )
 
 const salt = "encrypted cookie"
@@ -85,6 +86,7 @@ func DecodeRailsSession(cookie, keyBase string) string {
 // ExtractUserId extracts User Id from the decrypted cookie
 // Please note that it assumes that the model name is user
 func ExtractUserId(jsonString string) (int, error) {
+	log.Debug("found json in cookie -- %s", jsonString)
 	buffer := bytes.NewBuffer([]byte(jsonString))
 	decoder := json.NewDecoder(buffer)
 	var sess map[string]interface{}
