@@ -46,6 +46,7 @@ func LocationSocket(w http.ResponseWriter, r *http.Request) {
 			}
 		}
 	}
+	log.Debugf("registering client with id %d", userID)
 	client := NewClient(hub, conn, userID)
 	hub.Register <- client
 	go readMessages(client)
