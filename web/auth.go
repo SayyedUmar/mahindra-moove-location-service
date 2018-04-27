@@ -2,10 +2,12 @@ package web
 
 import (
 	"context"
-	"github.com/MOOVE-Network/location_service/db"
-	"github.com/MOOVE-Network/location_service/identity"
+	"fmt"
 	"net/http"
 	"os"
+
+	"github.com/MOOVE-Network/location_service/db"
+	"github.com/MOOVE-Network/location_service/identity"
 )
 
 func TokenAuth(fn http.HandlerFunc) http.HandlerFunc {
@@ -45,7 +47,7 @@ func authWithSession(w http.ResponseWriter, req *http.Request, next http.Handler
 	sessionInfo := DecodeRailsSession(railsCookie, getRailsKeyBase())
 	userId, err := ExtractUserId(sessionInfo)
 	if err != nil {
-		ErrorWithMessage("Invalid cookie").Respond(w, 401)
+		ErrorWithMessage(fmt.Sprintf("Invalid cookie -- %v", err)).Respond(w, 401)
 	}
 	ident := identity.FetchIdentityByID(db.CurrentDB(), userId)
 	ctx := context.WithValue(req.Context(), "identity", ident)
