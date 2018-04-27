@@ -31,22 +31,24 @@ func LocationSocket(w http.ResponseWriter, r *http.Request) {
 		ident = r.Context().Value("identity").(*identity.Identity)
 		userID = ident.Id
 	}
+	if userID == 0 {
+		strId := mux.Vars(r)["id"]
+		if strId != "" {
+			uid, err := strconv.Atoi(strId)
+			if err == nil {
+				userID = uid
+			} else {
+				log.Debugf("Invalid route interpretation found found - %v", mux.Vars(r))
+			}
+		}
+	}
 	log.Debugf("headers %v", r.Header)
 	conn, err := upgrader.Upgrade(w, r, nil)
 	if err != nil {
 		log.Error(err)
 		return
 	}
-	if userID == 0 {
-		strId := mux.Vars(r)["id"]
-		if strId != "" {
-			uid, err := strconv.Atoi(strId)
-			if err != nil {
-				userID = uid
-			}
-		}
-	}
-	log.Debugf("registering client with id %d", userID)
+	log.Debugf("registering client with id - %d", userID)
 	client := NewClient(hub, conn, userID)
 	hub.Register <- client
 	go readMessages(client)
