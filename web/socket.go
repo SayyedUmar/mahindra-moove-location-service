@@ -39,10 +39,10 @@ func LocationSocket(w http.ResponseWriter, r *http.Request) {
 	}
 	if userID == 0 {
 		strId := mux.Vars(r)["id"]
-		if strId != nil {
+		if strId != "" {
 			uid, err := strconv.Atoi(strId)
 			if err != nil {
-				userID = strId
+				userID = uid
 			}
 		}
 	}
