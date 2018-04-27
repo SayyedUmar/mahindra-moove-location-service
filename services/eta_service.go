@@ -312,7 +312,7 @@ func getETAForAssignedTrip() {
 			}
 
 			lastLocation, err := t.GetDriverShouldStartTripLocation(db.CurrentDB())
-			if err != nil {
+			if err == nil {
 				minDistanceToCalculateEta, err := db.GetMinDistanceToCalculateStartTripEta(db.CurrentDB())
 				if err != nil {
 					minDistanceToCalculateEta = 500 //Assigning default value of 500 meters

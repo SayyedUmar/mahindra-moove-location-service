@@ -244,6 +244,7 @@ func TestGetDriverShouldStartTripLocation(t *testing.T) {
 	}, tx)
 	tst.FailNowOnErr(t, err)
 
+	//Testing for error, if DriverShouldStartTripLocation is nil than GetDriverShouldStartTripLocation should return error.
 	startTripLocation, err := trip.GetDriverShouldStartTripLocation(tx)
 	assert.Error(t, err)
 
