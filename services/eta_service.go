@@ -13,6 +13,12 @@ import (
 	null "gopkg.in/guregu/null.v3"
 )
 
+var tripShouldStartNotifiers map[int]*time.Timer
+
+func init() {
+	tripShouldStartNotifiers = make(map[int]*time.Timer)
+}
+
 func NotNullTime(t time.Time) null.Time {
 	return null.NewTime(t, true)
 }
@@ -338,6 +344,35 @@ func getETAForAssignedTrip() {
 				log.Error(err)
 				return
 			}
+
+			oldTimer, ok := tripShouldStartNotifiers[t.ID]
+			if ok {
+				oldTimer.Stop()
+			}
+
+			newTimer := time.AfterFunc(newStartTime.Sub(time.Now()), func() {
+				trip, err := db.GetTripByID(db.CurrentDB(), t.ID)
+				if err != nil {
+					log.Errorf("could not get trip for id %d to create trip should start notification.")
+				}
+				if trip.HasStarted() {
+					log.Infof("Trip %d has already started", trip.ID)
+					return
+				}
+				tx, err := db.CurrentDB().Beginx()
+				if err != nil {
+					log.Errorf("Could not create TripShouldStart notification for trip id %d because %v", t.ID, err)
+					return
+				}
+				defer tx.Commit()
+				tss, err := db.CreateTripShouldStartNotification(tx, t.ID, t.DriverID)
+				if err != nil {
+					log.Errorf("Could not create TripShouldStart notification for trip id %d because %v", t.ID, err)
+					return
+				}
+				log.Infof("Created a trip should start notification for trip %d", tss.TripID)
+			})
+			tripShouldStartNotifiers[t.ID] = newTimer
 
 			_, err = NotifyDriverShouldToStartTrip(t, newStartTime, &calculationTime)
 			if err != nil {
