@@ -308,7 +308,7 @@ func TestNotifyDriverShouldStartTrip(t *testing.T) {
 	data["driver_should_start_trip_timestamp"] = calculationTime.Unix()
 	mockNotificationService.EXPECT().SendNotification(strconv.Itoa(trip.DriverUserID), data, "user").Return(nil).Times(1)
 
-	sent, err := services.NotifyDriverShouldToStartTrip(trip, &newStartTime, &calculationTime)
+	sent, err := services.NotifyDriverShouldStartTrip(trip, &newStartTime, &calculationTime)
 	tst.FailNowOnErr(t, err)
 	assert.True(t, sent)
 
@@ -316,7 +316,7 @@ func TestNotifyDriverShouldStartTrip(t *testing.T) {
 	//Returns false if notification services returns error.
 	mockNotificationService.EXPECT().SendNotification(strconv.Itoa(trip.DriverUserID), data, "user").Return(errors.New("Some Error")).Times(1)
 
-	sent, err = services.NotifyDriverShouldToStartTrip(trip, &newStartTime, &calculationTime)
+	sent, err = services.NotifyDriverShouldStartTrip(trip, &newStartTime, &calculationTime)
 	assert.EqualError(t, err, "Some Error")
 	assert.False(t, sent)
 }

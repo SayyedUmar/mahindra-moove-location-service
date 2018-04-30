@@ -374,7 +374,7 @@ func getETAForAssignedTrip() {
 			})
 			tripShouldStartNotifiers[t.ID] = newTimer
 
-			_, err = NotifyDriverShouldToStartTrip(t, newStartTime, &calculationTime)
+			_, err = NotifyDriverShouldStartTrip(t, newStartTime, &calculationTime)
 			if err != nil {
 				log.Errorf("Error while sending notification to start trip: %d\n", t.ID)
 				log.Error(err)
@@ -402,7 +402,7 @@ func FindWhenShouldDriverStartTrip(trip *db.Trip, driverLocation *db.Location, c
 	return &newStartTime, nil
 }
 
-func NotifyDriverShouldToStartTrip(trip *db.Trip, newStartTime *time.Time, calculationTime *time.Time) (bool, error) {
+func NotifyDriverShouldStartTrip(trip *db.Trip, newStartTime *time.Time, calculationTime *time.Time) (bool, error) {
 	ns := GetNotificationService()
 	data := make(map[string]interface{})
 	data["push_type"] = "driver_should_start_trip"
