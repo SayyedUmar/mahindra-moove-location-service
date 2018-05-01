@@ -194,7 +194,7 @@ func (t *Trip) AllCheckedIn() bool {
 }
 
 //UpdateDriverShouldStartTripTimeAndLocation updates driver_should_start_trip_time, driver_should_start_trip_location
-//and driver_should_start_trip_calc_time for a given trip t.
+//and driver_should_start_trip_timestamp for a given trip t.
 func (t *Trip) UpdateDriverShouldStartTripTimeAndLocation(db sqlx.Execer, scheduledTime time.Time, location Location, calculationTime time.Time) error {
 	_, err := db.Exec(updateDriverShouldStartTripTimeAndLocationStmt, scheduledTime, location, calculationTime, t.ID)
 	return err

@@ -34,7 +34,7 @@ func getTripID(req *http.Request) (int, error) {
 func getTrip(req *http.Request) (*db.Trip, error) {
 	idInt, err := getTripID(req)
 	if err != nil {
-		return nil, fmt.Errorf("Invalid driver id in paramters %v - %s", mux.Vars(req), err)
+		return nil, fmt.Errorf("Invalid driver id in parameters %v - %s", mux.Vars(req), err)
 	}
 	return db.GetTripByID(db.CurrentDB(), idInt)
 }
