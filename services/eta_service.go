@@ -409,6 +409,7 @@ func NotifyDriverShouldStartTrip(trip *db.Trip, newStartTime *time.Time, calcula
 	data["trip_id"] = trip.ID
 	data["driver_should_start_trip_time"] = newStartTime.Unix()
 	data["driver_should_start_trip_timestamp"] = calculationTime.Unix()
+	data["driver_should_start_trip_calc_time"] = calculationTime.Unix() //For backword compatibility
 
 	log.Debugf("Sending start trip notification to driver : %d, with notification payload: %v", trip.DriverUserID, data)
 

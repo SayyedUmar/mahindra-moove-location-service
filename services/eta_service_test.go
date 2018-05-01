@@ -306,6 +306,7 @@ func TestNotifyDriverShouldStartTrip(t *testing.T) {
 	data["trip_id"] = trip.ID
 	data["driver_should_start_trip_time"] = newStartTime.Unix()
 	data["driver_should_start_trip_timestamp"] = calculationTime.Unix()
+	data["driver_should_start_trip_calc_time"] = calculationTime.Unix()
 	mockNotificationService.EXPECT().SendNotification(strconv.Itoa(trip.DriverUserID), data, "user").Return(nil).Times(1)
 
 	sent, err := services.NotifyDriverShouldStartTrip(trip, &newStartTime, &calculationTime)
