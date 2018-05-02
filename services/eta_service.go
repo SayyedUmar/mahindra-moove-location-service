@@ -350,7 +350,14 @@ func getETAForAssignedTrip() {
 				oldTimer.Stop()
 			}
 
-			newTimer := time.AfterFunc(newStartTime.Sub(time.Now()), func() {
+			durationForDelayedTripNotification, err := db.GetBufferDurationForDelayTripNotification(db.CurrentDB())
+			if err != nil {
+				durationForDelayedTripNotification = 10 //defaulting of 10 minutes
+			}
+
+			timerDuration := newStartTime.Add(time.Duration(durationForDelayedTripNotification) * time.Minute).Sub(time.Now())
+
+			newTimer := time.AfterFunc(timerDuration, func() {
 				trip, err := db.GetTripByID(db.CurrentDB(), t.ID)
 				if err != nil {
 					log.Errorf("could not get trip for id %d to create trip should start notification.")
