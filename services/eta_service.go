@@ -300,6 +300,11 @@ func getETAForAssignedTrip() {
 				return
 			}
 
+			if t.ScheduledStartDate.Time.After(clock.Now()) {
+				log.Debugf("Stoping eta calculation as first pickup time is already passed for trip: %d", t.ID)
+				return
+			}
+
 			maxTimeToCalculateEta, err := db.GetMaxTimeToCalculateStartTripEta(db.CurrentDB())
 			if err != nil {
 				maxTimeToCalculateEta = 60 * 3 //Assigning default value of 3 hours
