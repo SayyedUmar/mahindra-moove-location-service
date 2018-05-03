@@ -300,7 +300,7 @@ func getETAForAssignedTrip() {
 				return
 			}
 
-			if t.ScheduledStartDate.Time.After(clock.Now()) {
+			if clock.Now().After(t.ScheduledStartDate.Time) {
 				log.Debugf("Stoping eta calculation as first pickup time is already passed for trip: %d", t.ID)
 				return
 			}
