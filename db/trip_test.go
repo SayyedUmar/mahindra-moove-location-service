@@ -261,3 +261,15 @@ func TestGetDriverShouldStartTripLocation(t *testing.T) {
 
 	assert.Equal(t, location, *startTripLocation)
 }
+
+func TestHasTripStarted(t *testing.T) {
+	trip := Trip{
+		Status: "active",
+	}
+	assert.True(t, trip.HasStarted())
+
+	for _, status := range []string{"assigned", "assign_requested", "assign_request_expired", "completed", "canceled"} {
+		trip.Status = status
+		assert.False(t, trip.HasStarted())
+	}
+}

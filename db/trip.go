@@ -99,9 +99,9 @@ func (t *Trip) SetActualMileage(db sqlx.Execer, mileage int) error {
 	return err
 }
 
-// IsStarted returns true if the trip has been created but not started yet.
+// IsStarted returns true if the trip is in active state.
 func (t *Trip) HasStarted() bool {
-	return (t.Status == "assigned" || t.Status == "assign_requested" || t.Status == "assign_request_expired")
+	return t.Status == "active"
 }
 
 // LoadTripRoutes loads / refreshes the trip routes for a given trip
