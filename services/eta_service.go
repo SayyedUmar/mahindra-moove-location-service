@@ -386,13 +386,13 @@ func NotifyDriverShouldToStartTrip(trip *db.Trip, newStartTime *time.Time, calcu
 }
 
 func StartETAServiceTimer(cancelChan chan bool) {
-	GetETAForActiveTrips()
+	// GetETAForActiveTrips()
 	getETAForAssignedTrip()
 	ticker := time.NewTicker(5 * time.Minute)
 	for {
 		select {
 		case _ = <-ticker.C:
-			GetETAForActiveTrips()
+			// GetETAForActiveTrips()
 			getETAForAssignedTrip()
 		case _ = <-cancelChan:
 			break
