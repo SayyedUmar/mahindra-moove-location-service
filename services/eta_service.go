@@ -363,6 +363,11 @@ func FindWhenShouldDriverStartTrip(trip *db.Trip, driverLocation *db.Location, c
 		return nil, err
 	}
 
+	if dm.Duration == 0 {
+		log.Errorf("Received zero duration for trip - %d", trip.ID)
+		return nil, fmt.Errorf("Received zero duration for trip - %d", trip.ID)
+	}
+
 	newStartTime := trip.ScheduledStartDate.Time.Add(-dm.Duration)
 	return &newStartTime, nil
 }
