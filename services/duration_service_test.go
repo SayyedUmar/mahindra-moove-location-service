@@ -2,6 +2,7 @@ package services
 
 import (
 	"os"
+	"strings"
 	"testing"
 
 	"time"
@@ -31,6 +32,10 @@ func TestGoogleDurationService_GetDuration_Actual(t *testing.T) {
 	startLocation := db.Location{utils.Location{Lat: TarkaLabsLat, Lng: TarkaLabsLng}}
 	endLocation := db.Location{utils.Location{Lat: HomeOneLat, Lng: HomeOneLng}}
 	dm, err := gds.GetDuration(startLocation, endLocation, time.Now())
-	tst.FailNowOnErr(t, err)
-	assert.True(t, dm.Duration.Seconds() > 1)
+	if err != nil {
+		assert.True(t, strings.HasPrefix(err.Error(), "maps: OVER_QUERY_LIMIT - You have exceeded your daily request quota for this API. We recommend registering for a key at the Google Developers Console"))
+	} else {
+		tst.FailNowOnErr(t, err)
+		assert.True(t, dm.Duration.Seconds() > 1)
+	}
 }

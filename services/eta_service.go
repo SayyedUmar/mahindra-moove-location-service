@@ -267,6 +267,7 @@ func GetETAForActiveTrips() {
 	activeTrips, err := db.GetTripsByStatuses(db.CurrentDB(), "active")
 	if err != nil {
 		log.Errorf("unable to get active trips - %s", err)
+		return
 	}
 	for _, t := range activeTrips {
 		go func(t *db.Trip) {
@@ -274,11 +275,13 @@ func GetETAForActiveTrips() {
 			if err != nil {
 				log.Errorf("Error getting current location for Trip %d", t.ID)
 				log.Error(err)
+				return
 			}
 			etas, err := GetETAForTrip(t, tl.Location, clock)
 			if err != nil {
 				log.Errorf("Error processing ETA for Trip %d", t.ID)
 				log.Error(err)
+				return
 			}
 			for _, tr := range etas.TripRoutes {
 				db.SaveEta(db.CurrentDB(), tr.ID, tr.PickupTime, tr.DropoffTime)
@@ -433,13 +436,13 @@ func NotifyDriverShouldStartTrip(trip *db.Trip, newStartTime *time.Time, calcula
 }
 
 func StartETAServiceTimer(cancelChan chan bool) {
-	GetETAForActiveTrips()
+	// GetETAForActiveTrips()
 	getETAForAssignedTrip()
 	ticker := time.NewTicker(5 * time.Minute)
 	for {
 		select {
 		case _ = <-ticker.C:
-			GetETAForActiveTrips()
+			// GetETAForActiveTrips()
 			getETAForAssignedTrip()
 		case _ = <-cancelChan:
 			break
