@@ -261,6 +261,7 @@ func GetETAForActiveTrips() {
 	activeTrips, err := db.GetTripsByStatuses(db.CurrentDB(), "active")
 	if err != nil {
 		log.Errorf("unable to get active trips - %s", err)
+		return
 	}
 	for _, t := range activeTrips {
 		go func(t *db.Trip) {
@@ -268,11 +269,13 @@ func GetETAForActiveTrips() {
 			if err != nil {
 				log.Errorf("Error getting current location for Trip %d", t.ID)
 				log.Error(err)
+				return
 			}
 			etas, err := GetETAForTrip(t, tl.Location, clock)
 			if err != nil {
 				log.Errorf("Error processing ETA for Trip %d", t.ID)
 				log.Error(err)
+				return
 			}
 			for _, tr := range etas.TripRoutes {
 				db.SaveEta(db.CurrentDB(), tr.ID, tr.PickupTime, tr.DropoffTime)
@@ -361,11 +364,6 @@ func FindWhenShouldDriverStartTrip(trip *db.Trip, driverLocation *db.Location, c
 	if err != nil {
 		log.Errorf("Error getting duration for trip - %d with start location as %v and stop location as %v", trip.ID, driverLocation, trip.TripRoutes[0].ScheduledStartLocation)
 		return nil, err
-	}
-
-	if dm.Duration == 0 {
-		log.Errorf("Received zero duration for trip - %d", trip.ID)
-		return nil, fmt.Errorf("Received zero duration for trip - %d", trip.ID)
 	}
 
 	newStartTime := trip.ScheduledStartDate.Time.Add(-dm.Duration)
