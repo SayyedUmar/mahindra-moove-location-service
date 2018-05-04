@@ -358,44 +358,48 @@ func getETAForAssignedTrip() {
 				oldTimer.Stop()
 			}
 
-			durationForDelayedTripNotification, err := db.GetBufferDurationForDelayTripNotification(db.CurrentDB())
-			if err != nil {
-				durationForDelayedTripNotification = 10 //defaulting of 10 minutes
-			}
-
-			timerDuration := newStartTime.Add(time.Duration(durationForDelayedTripNotification) * time.Minute).Sub(time.Now())
-
-			newTimer := time.AfterFunc(timerDuration, func() {
-				trip, err := db.GetTripByID(db.CurrentDB(), t.ID)
-				if err != nil {
-					log.Errorf("could not get trip for id %d to create trip should start notification.")
-				}
-				if trip.HasStarted() {
-					log.Infof("Trip %d has already started", trip.ID)
-					return
-				}
-				tx, err := db.CurrentDB().Beginx()
-				if err != nil {
-					log.Errorf("Could not create TripShouldStart notification for trip id %d because %v", t.ID, err)
-					return
-				}
-				defer tx.Commit()
-				tss, err := db.CreateTripShouldStartNotification(tx, t.ID, t.DriverID)
-				if err != nil {
-					log.Errorf("Could not create TripShouldStart notification for trip id %d because %v", t.ID, err)
-					return
-				}
-				log.Infof("Created a trip should start notification for trip %d", tss.TripID)
-			})
-			tripShouldStartNotifiers[t.ID] = newTimer
-
 			_, err = NotifyDriverShouldStartTrip(t, newStartTime, &calculationTime)
 			if err != nil {
 				log.Errorf("Error while sending notification to start trip: %d\n", t.ID)
 				log.Error(err)
 			}
+
+			SetStartTripDelayTimer(t.ID, newStartTime)
 		}(t)
 	}
+}
+
+func SetStartTripDelayTimer(tripID int, startTime *time.Time) {
+	durationForDelayedTripNotification, err := db.GetBufferDurationForDelayTripNotification(db.CurrentDB())
+	if err != nil {
+		durationForDelayedTripNotification = 10 //defaulting of 10 minutes
+	}
+
+	timerDuration := startTime.Add(time.Duration(durationForDelayedTripNotification) * time.Minute).Sub(time.Now())
+
+	newTimer := time.AfterFunc(timerDuration, func() {
+		trip, err := db.GetTripByID(db.CurrentDB(), tripID)
+		if err != nil {
+			log.Errorf("could not get trip for id %d to create trip should start notification.")
+		}
+		if trip.HasStarted() {
+			log.Infof("Trip %d has already started", trip.ID)
+			return
+		}
+		tx, err := db.CurrentDB().Beginx()
+		if err != nil {
+			log.Errorf("Could not create TripShouldStart notification for trip id %d because %v", trip.ID, err)
+			return
+		}
+		defer tx.Commit()
+		tss, err := db.CreateTripShouldStartNotification(tx, trip.ID, trip.DriverID)
+		if err != nil {
+			log.Errorf("Could not create TripShouldStart notification for trip id %d because %v", trip.ID, err)
+			return
+		}
+		log.Infof("Created a trip should start notification for trip %d", tss.TripID)
+	})
+	tripShouldStartNotifiers[tripID] = newTimer
 }
 
 func FindWhenShouldDriverStartTrip(trip *db.Trip, driverLocation *db.Location, clock Clock) (*time.Time, error) {

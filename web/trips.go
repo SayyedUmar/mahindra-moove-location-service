@@ -86,6 +86,9 @@ func GetStartTripETA(w http.ResponseWriter, req *http.Request) {
 		ErrorWithMessage(fmt.Sprintf("Error updating driver should start info in trips table for trip - %d with time as %v and location as %v", trip.ID, newStartTime, lastDriverLocation)).Respond(w, 500)
 		return
 	}
+
+	services.SetStartTripDelayTimer(trip.ID, newStartTime)
+
 	writeOk(w)
 }
 
