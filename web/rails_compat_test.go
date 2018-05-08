@@ -6,6 +6,24 @@ import (
 	"testing"
 )
 
+func TestDecodeRailsSessionShouldUnescapeUrlEncoding(t *testing.T) {
+	keyBase := "daef0f128e8c899673cbcc71b3d4854112006de625db4bab0116818c7a7dc5cae52fc531dfb5f153d1b7fb3021331de744683b0346317751115c1837cbc69672"
+	cookie := "OGFNYmtFejZTZDc0YkpXTjFXaUp1NHZjaHRpcjVKajM3eFZPWEZjamlaTk5UT0huY1R5YUlFdndITHUydTlzVUNDNEZJY0FGeUN5Z0s2Um52ODJqekQ4bWxYaHI5SmoreVBHYUtkenJpSm1KdWRrMXYrZmc2a3FXTlNZYUlSRy8vSTc4bStwM2tHVDFGZ1NrV3V6cVIxa2dnWUNMWE5FNXFMamNjVzBpZHhpajBXaGJlZEN4QmV0bEJkUENSZG0vSmJ3RzVMdUNGakRyQUU3blh5d01uclFVM1Y5Z244SGxEWkhPZk95TUdyaz0tLWVJZjR6bU5Uck5lTCtzT3V1VXRJdWc9PQ%3D%3D--40a7c5ea0818daabde304fd65a878aaef534cd27"
+	var sess map[string]interface{}
+	decrypted := DecodeRailsSession(cookie, keyBase)
+	buffer := bytes.NewBuffer([]byte(decrypted))
+	decoder := json.NewDecoder(buffer)
+	err := decoder.Decode(&sess)
+	if err != nil {
+		t.Log(err)
+		t.FailNow()
+	}
+	if sess["session_id"].(string) != "dfa336b7bc2bb7e84bef023fd0291aea" {
+		t.Logf("expected %s found %s\n", "dfa336b7bc2bb7e84bef023fd0291aea", sess["session_id"].(string))
+		t.FailNow()
+	}
+}
+
 func TestDecodeRailsSessionShouldDecodeSession(t *testing.T) {
 
 	keyBase := "f1d186616befd0912ed643cdc621377baa17368402970cfca9eaaf75f93286da121c22f1576ac5399a0d4c9ab3026849ebb67cd617437d73835c136e1c40a946"

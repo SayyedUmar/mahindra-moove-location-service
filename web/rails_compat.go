@@ -8,6 +8,7 @@ import (
 	"encoding/base64"
 	"encoding/json"
 	"errors"
+	"net/url"
 	"strings"
 
 	log "github.com/sirupsen/logrus"
@@ -56,6 +57,10 @@ func decodeCookie(cookie string) encrypted {
 	// weird corner case when Rails5 decides to add other information to the encrypted cookie
 	if strings.Contains(cookie, "--") {
 		cookie = strings.Split(cookie, "--")[0]
+	}
+	unescaped, err := url.QueryUnescape(cookie)
+	if err == nil {
+		cookie = unescaped
 	}
 	cookieBytes, err := base64.StdEncoding.DecodeString(cookie)
 	if err != nil {

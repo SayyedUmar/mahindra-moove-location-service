@@ -54,7 +54,7 @@ func SetupServer() {
 	router.HandleFunc("/api/v3/trips/{id}/eta", LogRequestsMiddleware(GetTripETA)).Methods("GET")
 	router.HandleFunc("/api/v3/trips/{id}/start_trip_eta", LogRequestsMiddleware(GetStartTripETA)).Methods("GET")
 	router.HandleFunc("/api/v3/trips/{id}/summary", LogRequestsMiddleware(TripSummary))
-	router.HandleFunc("/api/v3/drivers/{id}/location", LocationSocket)
+	router.HandleFunc("/api/v3/drivers/{id}/location", Auth(LocationSocket))
 
 	router.HandleFunc("/api/v3/version", EchoVersion)
 	log.Info("Starting ... ")
