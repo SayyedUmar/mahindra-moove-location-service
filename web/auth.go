@@ -8,6 +8,7 @@ import (
 
 	"github.com/MOOVE-Network/location_service/db"
 	"github.com/MOOVE-Network/location_service/identity"
+	log "github.com/sirupsen/logrus"
 )
 
 func TokenAuth(fn http.HandlerFunc) http.HandlerFunc {
@@ -26,12 +27,13 @@ func authWithToken(w http.ResponseWriter, req *http.Request, next http.HandlerFu
 	accessToken := req.Header.Get("access-token")
 	client := req.Header.Get("client")
 	if uid == "" || accessToken == "" || client == "" {
-		ErrorWithMessage("Invalid Credentials").Respond(w, 401)
+		log.Debugf("UID - %s |  AT - %s Client - %s", uid, accessToken, client)
+		ErrorWithMessage("Invalid Credentials Received from mobile app").Respond(w, 401)
 		return
 	}
 	ident := identity.FetchIdentityByUID(db.CurrentDB(), uid)
 	if !ident.IsValid(client, accessToken) {
-		ErrorWithMessage("Invalid Credentials").Respond(w, 401)
+		ErrorWithMessage("Invalid Credentials - Found invalid token").Respond(w, 401)
 		return
 	}
 	ctx := context.WithValue(req.Context(), "identity", ident)
