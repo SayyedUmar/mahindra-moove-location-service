@@ -62,6 +62,7 @@ func Auth(fn http.HandlerFunc) http.HandlerFunc {
 		cookie, err := req.Cookie("_moove_session")
 		if cookie != nil && err == nil {
 			authWithSession(w, req, fn)
+			return
 		}
 
 		// Try Token Auth
@@ -70,6 +71,7 @@ func Auth(fn http.HandlerFunc) http.HandlerFunc {
 		client := req.Header.Get("client")
 		if uid != "" && accessToken != "" && client != "" {
 			authWithToken(w, req, fn)
+			return
 		}
 		ErrorWithMessage("Invalid Credentials").Respond(w, 401)
 	}
