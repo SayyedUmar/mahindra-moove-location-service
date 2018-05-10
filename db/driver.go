@@ -32,6 +32,12 @@ var getUserByDriverIDQuery = `
 	join drivers d on d.id = u.entity_id and u.entity_type = "Driver"
 	where d.id=?`
 
+var getDriverByUserIDQuery = `
+	select d.id, d.status
+	from drivers d
+	join users u on u.entity_id = d.id and u.entity_type = "Driver"
+	where u.id = ?`
+
 var getLastDriverLocationQuery = `select current_location from users where id=?`
 
 //GetDriverByID retuns Driver struct along with user for a give driver id if found otherwise will return error
@@ -76,4 +82,10 @@ func DriverLocation(db sqlx.Queryer, driverUserID int) (*Location, error) {
 		return nil, err
 	}
 	return &location, nil
+}
+
+//GetDriverByUserID returns driver struct along with User for given user id if found otherwise will return error.
+func GetDriverByUserID(db sqlx.Queryer, userID int) (*Driver, error) {
+	row := db.QueryRowx(getDriverByUserIDQuery, userID)
+	return loadDiver(db, row)
 }
