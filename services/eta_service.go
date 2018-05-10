@@ -353,11 +353,6 @@ func getETAForAssignedTrip() {
 				return
 			}
 
-			oldTimer, ok := tripShouldStartNotifiers[t.ID]
-			if ok {
-				oldTimer.Stop()
-			}
-
 			_, err = NotifyDriverShouldStartTrip(t, newStartTime, &calculationTime)
 			if err != nil {
 				log.Errorf("Error while sending notification to start trip: %d\n", t.ID)
@@ -399,6 +394,11 @@ func SetStartTripDelayTimer(tripID int, startTime *time.Time) {
 		}
 		log.Infof("Created a trip should start notification for trip %d", tss.TripID)
 	})
+
+	oldTimer, ok := tripShouldStartNotifiers[tripID]
+	if ok {
+		oldTimer.Stop()
+	}
 	tripShouldStartNotifiers[tripID] = newTimer
 }
 
