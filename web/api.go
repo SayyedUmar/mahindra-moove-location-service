@@ -145,7 +145,6 @@ func setupGeofenceTimer() {
 			tempGfEvents = append(tempGfEvents, gfEvents...)
 			gfEvents = nil
 			tlMutex.Unlock()
-			log.Infof("Processing events %+v", tempGfEvents)
 			processGeofenceEvents(tempGfEvents)
 		}
 	}()
@@ -169,8 +168,6 @@ func processGeofenceEvents(gfEvents []socketstore.GeofenceEvent) {
 			gfEventMap[tripID] = append(val, geofenceEvent)
 		}
 	}
-
-	log.Infof("events Map %+v", gfEventMap)
 
 	for tripID, events := range gfEventMap {
 		trip, err := db.GetTripByID(db.CurrentDB(), tripID)
