@@ -1,6 +1,7 @@
 package web
 
 import (
+	"fmt"
 	"net/http"
 	"sort"
 	"strconv"
@@ -254,7 +255,6 @@ func setupOverSpeedingCheckTimer() {
 	ticker := time.NewTicker(time.Minute)
 	go func() {
 		for _ = range ticker.C {
-			log.Infoln("checking for overspeeding")
 			speedLimit, err := db.GetSpeedLimit(db.CurrentDB())
 			if err != nil {
 				speedLimit = 22.2222
@@ -265,9 +265,6 @@ func setupOverSpeedingCheckTimer() {
 				overSpeedDuration = 60
 			}
 
-			log.Infoln("overSpeedDuration:", speedLimit)
-
-			log.Infoln("driverLocations:", driverLocationsForSpeedCheck)
 			tempDriverLocations := make(map[int64][]models.DriverLocation)
 			overSpeedMutex.Lock()
 			for _, dl := range driverLocationsForSpeedCheck {
@@ -281,30 +278,24 @@ func setupOverSpeedingCheckTimer() {
 			}
 			driverLocationsForSpeedCheck = nil
 			overSpeedMutex.Unlock()
-			log.Infoln("tempDriverLocations:", tempDriverLocations)
 			for tripID, value := range tempDriverLocations {
 				sort.Slice(value, func(i, j int) bool {
 					return value[i].RecordedAt.Before(value[j].RecordedAt)
 				})
 
-				log.Infof("\nsorted trip:%d locations: %v", tripID, value)
 				for _, dl := range value {
 					overSpeedStartTime, OK := overSpeedDriversTime[tripID]
-					log.Infoln("overSpeedStartTime:", overSpeedStartTime, "OK:", OK)
 					if !OK {
 						if dl.Speed <= speedLimit {
-							log.Infoln("Diver has not over speeded and not over speeding")
 							//have not over speeded and not over speeding
 							continue
 						} else {
-							log.Infoln("Diver has over speeded for the first time:", &dl.RecordedAt)
 							//This if the first occurrence of over speeding
 							overSpeedDriversTime[tripID] = &dl.RecordedAt
 							continue
 						}
 					} else {
 						if dl.Speed <= speedLimit {
-							log.Infoln("Driver reduced speed from max speed limit, deleting records")
 							delete(overSpeedDriversTime, tripID)
 							delete(overSpeedNotificationsSent, tripID)
 							continue
@@ -313,7 +304,6 @@ func setupOverSpeedingCheckTimer() {
 						if overSpeedStartTime.Add(time.Duration(overSpeedDuration) * time.Second).Before(dl.RecordedAt) {
 							notificationSent, OK := overSpeedNotificationsSent[tripID]
 							if OK && notificationSent {
-								log.Infoln("Overspeed Notification already sent, so no need to do anything")
 								continue //Notification already sent, so no need to do anything
 							}
 
@@ -322,22 +312,11 @@ func setupOverSpeedingCheckTimer() {
 								log.Errorf("Unable to convert string userID - %s to int", dl.UserID.String)
 								continue
 							}
-							driver, err := db.GetDriverByUserID(db.CurrentDB(), userID)
+							dos, err := createOverSpeedingNotification(tripID, userID)
 							if err != nil {
-								log.Errorf("Unable to get driver for user id - %d, error - %s", userID, err)
+								log.Errorf("Could not create DriverOverSpeeding notification for trip id %d because %s", tripID, err)
 								continue
 							}
-							tx, err := db.CurrentDB().Beginx()
-							if err != nil {
-								log.Errorf("Could not create DriverOverSpeeding notification for trip id %d because %v", tripID, err)
-								continue
-							}
-							dos, err := db.CreateDriverOverSpeedingNotification(tx, int(tripID), driver.ID)
-							if err != nil {
-								log.Errorf("Could not create DriverOverSpeeding notification for trip id %d because %v", tripID, err)
-								continue
-							}
-							tx.Commit()
 							overSpeedNotificationsSent[tripID] = true
 							log.Infof("Created a driver over speeding notification for trip %d", dos.TripID)
 						}
@@ -346,4 +325,21 @@ func setupOverSpeedingCheckTimer() {
 			}
 		}
 	}()
+}
+
+func createOverSpeedingNotification(tripID int64, userID int) (*db.Notification, error) {
+	driver, err := db.GetDriverByUserID(db.CurrentDB(), userID)
+	if err != nil {
+		return nil, fmt.Errorf("Unable to get driver for user id - %d, error - %s", userID, err)
+	}
+	tx, err := db.CurrentDB().Beginx()
+	if err != nil {
+		return nil, fmt.Errorf("Could not create transaction in createOverSpeedingNotification func because %s", err)
+	}
+	defer tx.Commit()
+	dos, err := db.CreateDriverOverSpeedingNotification(tx, int(tripID), driver.ID)
+	if err != nil {
+		return nil, err
+	}
+	return dos, nil
 }
