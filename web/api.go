@@ -261,7 +261,7 @@ func setupOverSpeedingCheckTimer() {
 			if err != nil {
 				speedLimit = 22.2222
 			}
-			overSpeedDuration, err := db.GetOverSpeedingDuration(db.CurrentDB())
+			overSpeedDuration, err := db.GetSpeedLimitViolationDuration(db.CurrentDB())
 			if err != nil {
 				overSpeedDuration = 60
 			}

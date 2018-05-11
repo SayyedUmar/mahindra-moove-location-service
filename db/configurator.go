@@ -55,9 +55,9 @@ func GetMaxTimeToCalculateStartTripEta(db sqlx.Queryer) (int, error) {
 	return timeInMinutes, nil
 }
 
-//GetSpeedLimit returns value of in_trip_speed_limit_in_kmph in meters per second.
+//GetSpeedLimit returns value of speed_limit in meters per second.
 func GetSpeedLimit(db sqlx.Queryer) (float64, error) {
-	configuration, err := getConfiguration(db, "in_trip_speed_limit_in_kmph")
+	configuration, err := getConfiguration(db, "speed_limit")
 	if err != nil {
 		return 0, err
 	}
@@ -69,9 +69,9 @@ func GetSpeedLimit(db sqlx.Queryer) (float64, error) {
 	return speedLimit * 1000 / (3600), nil
 }
 
-//GetOverSpeedNotificationTime returns value of in_trip_over_speed_duration in seconds.
-func GetOverSpeedingDuration(db sqlx.Queryer) (int, error) {
-	configuration, err := getConfiguration(db, "in_trip_over_speed_duration")
+//GetSpeedLimitViolationDuration returns value of speed_limit_violation_time in seconds.
+func GetSpeedLimitViolationDuration(db sqlx.Queryer) (int, error) {
+	configuration, err := getConfiguration(db, "speed_limit_violation_time")
 	if err != nil {
 		return 0, err
 	}

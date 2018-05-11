@@ -23,7 +23,7 @@ func TestGetBufferDurationForDelayTripNotification(t *testing.T) {
 
 func TestGetSpeedLimit(t *testing.T) {
 	tx := createTx(t)
-	_, err := createConfigurator(tx, "in_trip_speed_limit_in_kmph", "80")
+	_, err := createConfigurator(tx, "speed_limit", "80")
 	tst.FailNowOnErr(t, err)
 
 	speedLimit, err := GetSpeedLimit(tx)
@@ -32,7 +32,7 @@ func TestGetSpeedLimit(t *testing.T) {
 	tx.Rollback()
 
 	tx = createTx(t)
-	_, err = createConfigurator(tx, "in_trip_speed_limit_in_kmph", "79.2")
+	_, err = createConfigurator(tx, "speed_limit", "79.2")
 	tst.FailNowOnErr(t, err)
 
 	speedLimit, err = GetSpeedLimit(tx)
@@ -44,10 +44,10 @@ func TestGetSpeedLimit(t *testing.T) {
 func TestGetOverSpeedingDuration(t *testing.T) {
 	tx := createTx(t)
 	defer tx.Rollback()
-	_, err := createConfigurator(tx, "in_trip_over_speed_duration", "60")
+	_, err := createConfigurator(tx, "speed_limit_violation_time", "60")
 	tst.FailNowOnErr(t, err)
 
-	duration, err := GetOverSpeedingDuration(tx)
+	duration, err := GetSpeedLimitViolationDuration(tx)
 	tst.FailNowOnErr(t, err)
 	assert.Equal(t, 60, duration)
 }
