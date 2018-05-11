@@ -131,3 +131,23 @@ func TestGetDriverLocation(t *testing.T) {
 
 	assert.Equal(t, location, *driverLocation)
 }
+
+func TestGetDriverByUserID(t *testing.T) {
+	tx := createTx(t)
+	defer tx.Rollback()
+
+	driver, err := createDriver(tx, "on_duty")
+	tst.FailNowOnErr(t, err)
+
+	driver1, err := GetDriverByUserID(tx, driver.User.ID)
+	tst.FailNowOnErr(t, err)
+
+	assert.Equal(t, driver.ID, driver1.ID)
+	assert.Equal(t, driver.Status, driver1.Status)
+	assert.Equal(t, driver.User.ID, driver1.User.ID)
+	assert.Equal(t, driver.User.FirstName, driver1.User.FirstName)
+	assert.Equal(t, driver.User.MiddleName, driver1.User.MiddleName)
+	assert.Equal(t, driver.User.LastName, driver1.User.LastName)
+	assert.Equal(t, driver.User.EntityID, driver1.User.EntityID)
+	assert.Equal(t, driver.User.EntityType, driver1.User.EntityType)
+}

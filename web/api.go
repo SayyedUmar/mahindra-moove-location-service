@@ -2,6 +2,7 @@ package web
 
 import (
 	"net/http"
+	"sort"
 	"strconv"
 	"sync"
 	"time"
@@ -23,6 +24,11 @@ var gfEvents []socketstore.GeofenceEvent
 
 var dlMutex = &sync.Mutex{}
 var driverLocations []models.DriverLocation
+
+var driverLocationsForSpeedCheck []models.DriverLocation
+var overSpeedDriversTime = make(map[int64]*time.Time)
+var overSpeedNotificationsSent = make(map[int64]bool)
+var overSpeedMutex = &sync.Mutex{}
 
 func WriteHeartBeat(w http.ResponseWriter, req *http.Request) {
 	ident := req.Context().Value("identity").(*identity.Identity)
@@ -244,4 +250,92 @@ func updateGeofenceInfoInTripRoutes(trip *db.Trip, events []socketstore.Geofence
 			}
 		}
 	}
+}
+
+func setupOverSpeedingCheckTimer() {
+	log.Infoln("started over speeding check timer")
+	ticker := time.NewTicker(time.Minute)
+	go func() {
+		for _ = range ticker.C {
+			speedLimit, err := db.GetSpeedLimit(db.CurrentDB())
+			if err != nil {
+				speedLimit = 22.2222
+			}
+			overSpeedDuration, err := db.GetSpeedLimitViolationDuration(db.CurrentDB())
+			if err != nil {
+				overSpeedDuration = 60
+			}
+
+			tempDriverLocations := make(map[int64][]models.DriverLocation)
+			overSpeedMutex.Lock()
+			for _, dl := range driverLocationsForSpeedCheck {
+				if dl.TripID.Valid {
+					val, ok := tempDriverLocations[dl.TripID.Int64]
+					if !ok {
+						val = make([]models.DriverLocation, 0, 8) //Just for the sake of giving some capacity giving 8.
+					}
+					tempDriverLocations[dl.TripID.Int64] = append(val, dl)
+				}
+			}
+			driverLocationsForSpeedCheck = nil
+			overSpeedMutex.Unlock()
+			for tripID, value := range tempDriverLocations {
+				sort.Slice(value, func(i, j int) bool {
+					return value[i].RecordedAt.Before(value[j].RecordedAt)
+				})
+
+				for _, dl := range value {
+					overSpeedStartTime, OK := overSpeedDriversTime[tripID]
+
+					if !OK {
+						if dl.Speed <= speedLimit {
+							//have not over speeded and not over speeding
+							continue
+						} else {
+							//This if the first occurrence of over speeding
+							overSpeedDriversTime[tripID] = &dl.RecordedAt
+							continue
+						}
+					} else {
+						if dl.Speed <= speedLimit {
+							delete(overSpeedDriversTime, tripID)
+							delete(overSpeedNotificationsSent, tripID)
+							continue
+						}
+
+						if overSpeedStartTime.Add(time.Duration(overSpeedDuration) * time.Second).Before(dl.RecordedAt) {
+							notificationSent, OK := overSpeedNotificationsSent[tripID]
+							if OK && notificationSent {
+								continue //Notification already sent, so no need to do anything
+							}
+
+							userID, err := strconv.Atoi(dl.UserID.String)
+							if err != nil {
+								log.Errorf("Unable to convert string userID - %s to int", dl.UserID.String)
+								continue
+							}
+							driver, err := db.GetDriverByUserID(db.CurrentDB(), userID)
+							if err != nil {
+								log.Errorf("Unable to get driver for user id - %d, error - %s", userID, err)
+								continue
+							}
+							tx, err := db.CurrentDB().Beginx()
+							if err != nil {
+								log.Errorf("Could not create DriverOverSpeeding notification for trip id %d because %v", tripID, err)
+								return
+							}
+							defer tx.Commit()
+							dos, err := db.CreateDriverOverSpeedingNotification(tx, int(tripID), driver.ID)
+							if err != nil {
+								log.Errorf("Could not create DriverOverSpeeding notification for trip id %d because %v", tripID, err)
+								return
+							}
+							overSpeedNotificationsSent[tripID] = true
+							log.Infof("Created a driver over speeding notification for trip %d", dos.TripID)
+						}
+					}
+				}
+			}
+		}
+	}()
 }

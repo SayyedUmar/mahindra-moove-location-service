@@ -56,6 +56,9 @@ func GetTripETA(w http.ResponseWriter, req *http.Request) {
 		ErrorWithMessage(fmt.Sprintf("Error: [%s] while calculating eta for trip : %d", err.Error(), trip.ID)).Respond(w, 500)
 		return
 	}
+	for _, tr := range resp.TripRoutes {
+		db.SaveEta(db.CurrentDB(), tr.ID, tr.PickupTime, tr.DropoffTime)
+	}
 	w.Header().Add("Content-Type", "application/json")
 	encoder := json.NewEncoder(w)
 	err = encoder.Encode(resp)

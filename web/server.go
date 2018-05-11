@@ -63,6 +63,7 @@ func SetupServer() {
 	setupTripLocationTimer()
 	setupGeofenceTimer()
 	setupDriverLocationTimer()
+	setupOverSpeedingCheckTimer()
 	go hub.Run()
 
 	handler := handlers.LoggingHandler(os.Stdout, router)

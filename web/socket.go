@@ -108,7 +108,9 @@ func readMessages(client *Client) {
 			dl.UserID = null.StringFrom(strconv.Itoa(client.ID))
 			driverLocations = append(driverLocations, dl)
 			dlMutex.Unlock()
-
+			overSpeedMutex.Lock()
+			driverLocationsForSpeedCheck = append(driverLocationsForSpeedCheck, dl)
+			overSpeedMutex.Unlock()
 			client.hub.Send(strconv.Itoa(locationUpdate.TripID), message)
 			client.hub.Send(strconv.Itoa(client.ID), message)
 		case "HEARTBEAT":
