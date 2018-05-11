@@ -314,7 +314,7 @@ func setupOverSpeedingCheckTimer() {
 								log.Errorf("Unable to convert string userID - %s to int", dl.UserID.String)
 								continue
 							}
-							driver, err := db.GetDriverByTripID(db.CurrentDB(), userID)
+							driver, err := db.GetDriverByUserID(db.CurrentDB(), userID)
 							if err != nil {
 								log.Errorf("Unable to get driver for user id - %d, error - %s", userID, err)
 								continue
