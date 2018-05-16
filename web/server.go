@@ -41,12 +41,7 @@ func (r *RollbarLogger) Println(args ...interface{}) {
 	}
 	log.Error(args)
 }
-
-func SetupServer() {
-	port := os.Getenv("LOCATION_PORT")
-	if port == "" {
-		port = "4343"
-	}
+func SetupRouter() *mux.Router {
 	router := mux.NewRouter()
 	router.Handle("/api/v3/metrics", promhttp.Handler())
 	router.HandleFunc("/api/v1/drivers/{id}/heart_beat", LogRequestsMiddleware(TokenAuth(WriteHeartBeat))).Methods("POST")
@@ -57,6 +52,15 @@ func SetupServer() {
 	router.HandleFunc("/api/v3/drivers/{id}/location", Auth(LocationSocket))
 
 	router.HandleFunc("/api/v3/version", EchoVersion)
+	return router
+}
+
+func SetupServer() {
+	port := os.Getenv("LOCATION_PORT")
+	if port == "" {
+		port = "4343"
+	}
+	router := SetupRouter()
 	log.Info("Starting ... ")
 	log.Infof("Listening on port %s ... ", port)
 	setupHeartBeatTimer()
