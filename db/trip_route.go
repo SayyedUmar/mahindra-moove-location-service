@@ -27,17 +27,19 @@ type TripRoute struct {
 	ScheduledRouteOrder    int            `db:"scheduled_route_order"`
 	ScheduledStartLocation Location       `db:"scheduled_start_location"`
 	ScheduledEndLocation   Location       `db:"scheduled_end_location"`
+	EmployeeID             int            `db:"employee_id"`
 	EmployeeUserID         int            `db:"employee_user_id"`
 	BusStopName            sql.NullString `db:"bus_stop_name"`
 	PickUpTime             null.Time      `db:"pick_up_time"`
 	DropOffTime            null.Time      `db:"drop_off_time"`
+	Date                   null.Time      `db:"date"`
 	Trip                   Trip
 }
 
 const tripRoutesByIDQuery = `
-	select tr.id, tr.trip_id, tr.status, u.id as employee_user_id,
+	select tr.id, tr.trip_id, tr.status, u.id as employee_user_id, et.employee_id,
 	tr.scheduled_route_order, tr.scheduled_start_location, tr.scheduled_end_location,
-	tr.bus_stop_name
+	tr.bus_stop_name, et.date
 	from trip_routes tr
 	join employee_trips et on et.id = tr.employee_trip_id
 	join employees e on e.id = et.employee_id
@@ -92,6 +94,20 @@ func getTripRouteByID(db sqlx.Queryer, id int) (*TripRoute, error) {
 	}
 
 	return &tr, nil
+}
+
+func (tr *TripRoute) IsSiteArrivalDelayed(newDropTime time.Time) bool {
+	if !tr.Date.Valid {
+		return false
+	}
+	return newDropTime.Sub(tr.Date.Time) > 10*time.Minute
+}
+func (tr *TripRoute) TriggerSiteArrivalDelayNotification(db *sqlx.Tx, newDropTime time.Time) error {
+	if !tr.IsSiteArrivalDelayed(newDropTime) {
+		return nil
+	}
+	_, err := CreateSiteArrivalDelayNotification(db, tr.TripID, tr.Trip.DriverID, tr.EmployeeID)
+	return err
 }
 
 func (tr *TripRoute) UpdateDriverArrivedGeofenceInfo(db sqlx.Execer, location Location, time time.Time) error {

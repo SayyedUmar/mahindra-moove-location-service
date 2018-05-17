@@ -13,6 +13,7 @@ type Notification struct {
 	ID              int64     `db:"id"`
 	TripID          int       `db:"trip_id"`
 	DriverID        int       `db:"driver_id"`
+	EmployeeID      int       `db:"employee_id"`
 	Message         string    `db:"message"`
 	Receiver        int       `db:"receiver"`
 	Status          int       `db:"status"`
@@ -24,11 +25,11 @@ type Notification struct {
 }
 
 const insertNotificationStmt = `
-insert into notifications (trip_id, driver_id, message, 
+insert into notifications (trip_id, driver_id, employee_id, message, 
 													receiver, status, created_at, 
 													updated_at, resolved_status,
 													new_notification, sequence)
-values (:trip_id, :driver_id, :message,
+values (:trip_id, :driver_id, :employee_id, :message,
 				:receiver, :status, :created_at,
 				:updated_at, :resolved_status,
 				:new_notification, :sequence)`
@@ -41,6 +42,9 @@ const DOS_SEQUENCE = 3
 
 const FIRST_PICKUP_DELAYED = "first_pickup_delayed"
 const FPD_SEQUENCE = 1
+
+const SITE_ARRIVAL_DELAY = "site_arrival_delay"
+const SAD_SEQUENCE = 1
 
 type Receiver int
 
@@ -97,6 +101,32 @@ func CreateFirstPickupDelayedNotification(db *sqlx.Tx, tripID int, driverID int)
 	return nil, fmt.Errorf("A first_pickup_delayed notification already exists for trip %d and driver %d", tripID, driverID)
 }
 
+// CreateSiteArrivalDelayNotification creates a site_arrival_delay notification
+func CreateSiteArrivalDelayNotification(db *sqlx.Tx, tripID, driverID, employeeID int) (*Notification, error) {
+	sadNotification := &Notification{
+		TripID:          tripID,
+		DriverID:        driverID,
+		EmployeeID:      employeeID,
+		Message:         SITE_ARRIVAL_DELAY,
+		Receiver:        int(Operator),
+		Status:          0,
+		CreatedAt:       time.Now(),
+		UpdatedAt:       time.Now(),
+		ResolvedStatus:  false,
+		NewNotification: true,
+		Sequence:        SAD_SEQUENCE,
+	}
+	if !sadNotification.HasUnresolvedByEmployee(db) {
+		notificationID, err := insertNotification(db, sadNotification)
+		if err != nil {
+			return nil, err
+		}
+		sadNotification.ID = notificationID
+		return sadNotification, nil
+	}
+	return nil, fmt.Errorf("A site_arrival_delay notification already exists for trip %d and employee %d", tripID, employeeID)
+}
+
 // CreateDriverOverSpeedingNotification method creates the trip_should_start notification in the notifications table
 func CreateDriverOverSpeedingNotification(db *sqlx.Tx, tripID int, driverID int) (*Notification, error) {
 	dosNotification := &Notification{
@@ -125,16 +155,43 @@ func (n *Notification) HasUnresolved(db *sqlx.Tx) bool {
 	return HasUnresolvedNotifications(db, n.TripID, n.DriverID, n.Message)
 }
 
+// HasUnresolvedByEmployee returns true if the given notifications message, trip_id, employee_id
+// combination has any unresolved notifications
+func (n *Notification) HasUnresolvedByEmployee(db *sqlx.Tx) bool {
+	return HasUnresolvedNotificationsByEmployee(db, n.TripID, n.EmployeeID, n.Message)
+}
+
 // HasUnresolvedNotifications returns true if trip has unresolved notifications for a driver
 func HasUnresolvedNotifications(db *sqlx.Tx, tripID int, driverID int, message string) bool {
 	checkNotificationQuery := `select id from notifications 
-	where trip_id=:tripID and driver_id=:driverID and message=:message
+	where trip_id=:TripID and driver_id=:DriverID and message=:Message
 	and resolved_status=false`
 	row := db.QueryRowx(checkNotificationQuery, struct {
 		DriverID int
 		TripID   int
 		Message  string
 	}{DriverID: driverID, TripID: tripID, Message: message})
+	var id int
+	err := row.Scan(&id)
+	if err != nil && err == sql.ErrNoRows {
+		return false
+	}
+	if err == nil {
+		return true
+	}
+	return false
+}
+
+// HasUnresolvedNotificationsByEmployee returns true if trip has unresolved notificiations for an employee
+func HasUnresolvedNotificationsByEmployee(db *sqlx.Tx, tripID int, employeeID int, message string) bool {
+	checkNotificationQuery := `select id from notifications 
+	where trip_id=:TripID and employee_id=:EmployeeID and message=:Message
+	and resolved_status=false`
+	row := db.QueryRowx(checkNotificationQuery, struct {
+		EmployeeID int
+		TripID     int
+		Message    string
+	}{EmployeeID: employeeID, TripID: tripID, Message: message})
 	var id int
 	err := row.Scan(&id)
 	if err != nil && err == sql.ErrNoRows {

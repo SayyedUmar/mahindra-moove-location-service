@@ -287,17 +287,41 @@ func GetETAForActiveTrips() {
 			firstTR := t.GetFirstTripRoute()
 			for _, tr := range etas.TripRoutes {
 				db.SaveEta(db.CurrentDB(), tr.ID, tr.PickupTime, tr.DropoffTime)
+				if t.TripType != db.TripTypeCheckOut {
+					continue
+				}
 				// First Pickup
 				if firstTR == nil {
 					log.Errorf("The trip does not have trip routes or the scheduled route order for a trip is not set")
 					return
 				}
-				if tr.ID == firstTR.ID && t.TripType == db.TripTypeCheckIn {
+				if tr.ID == firstTR.ID {
 					if !tr.PickupTime.Valid {
 						// The pickup has already been done. Nothing for us to do
 						continue
 					}
 					t.TriggerFirstPickupDelayedNotification(db.CurrentDB(), tr.PickupTime.Time)
+				}
+				tripRoute := t.GetTripRoute(tr.ID)
+				if tripRoute == nil {
+					log.Errorf("Unable to find trip route with id %d for trip %d", tr.ID, t.ID)
+					continue
+				}
+				tx, err := db.CurrentDB().Beginx()
+				if err != nil {
+					log.Errorf("Could not open transaction for SAD notification %s", err)
+					continue
+				}
+				err = tripRoute.TriggerSiteArrivalDelayNotification(tx, tr.DropoffTime.Time)
+				if err != nil {
+					tx.Rollback()
+					log.Errorf("Unable to trigger SAD notification %s", err)
+					continue
+				}
+				err = tx.Commit()
+				if err != nil {
+					log.Errorf("Unable to commit SAD notification transaction - %s", err)
+					continue
 				}
 			}
 		}(t)

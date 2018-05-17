@@ -18,9 +18,9 @@ const (
 )
 
 var tripRoutesForTripQuery = `
-	select tr.id, tr.trip_id, tr.status, u.id as employee_user_id,
+	select tr.id, tr.trip_id, tr.status, u.id as employee_user_id, et.employee_id,
 	tr.scheduled_route_order, tr.scheduled_start_location, tr.scheduled_end_location,
-	tr.bus_stop_name, tr.pick_up_time, tr.drop_off_time
+	tr.bus_stop_name, tr.pick_up_time, tr.drop_off_time, et.date
 	from trip_routes tr
 	join employee_trips et on et.id = tr.employee_trip_id
 	join employees e on e.id = et.employee_id
@@ -28,9 +28,9 @@ var tripRoutesForTripQuery = `
 	where tr.trip_id=? order by scheduled_route_order asc`
 
 var tripRoutesForTripIDsQuery = `
-	select tr.id, tr.trip_id, tr.status, u.id as employee_user_id,
+	select tr.id, tr.trip_id, tr.status, u.id as employee_user_id, et.employee_id,
 	tr.scheduled_route_order, tr.scheduled_start_location, tr.scheduled_end_location,
-	tr.bus_stop_name, tr.pick_up_time, tr.drop_off_time
+	tr.bus_stop_name, tr.pick_up_time, tr.drop_off_time, et.date
 	from trip_routes tr
 	join employee_trips et on et.id = tr.employee_trip_id
 	join employees e on e.id = et.employee_id
@@ -211,6 +211,14 @@ func (t *Trip) TriggerFirstPickupDelayedNotification(db *sqlx.DB, pickupTime tim
 	err = tx.Commit()
 	if err != nil {
 		return fmt.Errorf("Error committing transaction for First Pickup delayed %d", t.ID)
+	}
+	return nil
+}
+func (t *Trip) GetTripRoute(trID int) *TripRoute {
+	for _, tr := range t.TripRoutes {
+		if tr.ID == trID {
+			return &tr
+		}
 	}
 	return nil
 }
