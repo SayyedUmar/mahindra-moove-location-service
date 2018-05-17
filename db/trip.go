@@ -199,8 +199,10 @@ func (t *Trip) IsFirstPickupDelayed(newPickupTime time.Time) bool {
 	return newPickupTime.Sub(t.ScheduledStartDate.Time) > 10*time.Minute
 }
 
-func (t *Trip) TriggerFirstPickupDelayedNotification(db *sqlx.DB) error {
-
+func (t *Trip) TriggerFirstPickupDelayedNotification(db *sqlx.DB, pickupTime time.Time) error {
+	if !t.IsFirstPickupDelayed(pickupTime) {
+		return nil
+	}
 	tx, err := db.Beginx()
 	if err != nil {
 		return fmt.Errorf("Could not create transaction %v", err)
