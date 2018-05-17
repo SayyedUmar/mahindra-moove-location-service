@@ -284,29 +284,20 @@ func GetETAForActiveTrips() {
 				return
 			}
 
+			firstTR := t.GetFirstTripRoute()
 			for _, tr := range etas.TripRoutes {
 				db.SaveEta(db.CurrentDB(), tr.ID, tr.PickupTime, tr.DropoffTime)
-				firstTR := t.GetFirstTripRoute()
+				// First Pickup
 				if firstTR == nil {
 					log.Errorf("The trip does not have trip routes or the scheduled route order for a trip is not set")
 					return
 				}
-				if tr.ID == firstTR.ID {
-					if tr.PickupTime.Valid && t.ScheduledStartDate.Valid {
-						if tr.PickupTime.Time.Sub(t.ScheduledStartDate.Time) > 10*time.Minute {
-							tx, err := db.CurrentDB().Beginx()
-							if err != nil {
-								log.Errorf("Could not create transaction %v", err)
-								return
-							}
-							db.CreateFirstPickupDelayedNotification(tx, t.ID, t.DriverID)
-							err = tx.Commit()
-							if err != nil {
-								log.Errorf("Error committing transaction for First Pickup delayed %d", t.ID)
-								return
-							}
-						}
+				if tr.ID == firstTR.ID && t.TripType == db.TripTypeCheckIn {
+					if !tr.PickupTime.Valid {
+						// The pickup has already been done. Nothing for us to do
+						continue
 					}
+					t.TriggerFirstPickupDelayedNotification(db.CurrentDB())
 				}
 			}
 		}(t)

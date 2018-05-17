@@ -192,6 +192,27 @@ func (t *Trip) GetFirstTripRoute() *TripRoute {
 	return nil
 }
 
+func (t *Trip) IsFirstPickupDelayed(newPickupTime time.Time) bool {
+	if !t.ScheduledStartDate.Valid {
+		return false
+	}
+	return newPickupTime.Sub(t.ScheduledStartDate.Time) > 10*time.Minute
+}
+
+func (t *Trip) TriggerFirstPickupDelayedNotification(db *sqlx.DB) error {
+
+	tx, err := db.Beginx()
+	if err != nil {
+		return fmt.Errorf("Could not create transaction %v", err)
+	}
+	CreateFirstPickupDelayedNotification(tx, t.ID, t.DriverID)
+	err = tx.Commit()
+	if err != nil {
+		return fmt.Errorf("Error committing transaction for First Pickup delayed %d", t.ID)
+	}
+	return nil
+}
+
 func (t *Trip) IsCheckIn() bool {
 	return t.TripType == TripTypeCheckIn
 }
