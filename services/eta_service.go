@@ -297,7 +297,7 @@ func GetETAForActiveTrips() {
 						// The pickup has already been done. Nothing for us to do
 						continue
 					}
-					t.TriggerFirstPickupDelayedNotification(db.CurrentDB())
+					t.TriggerFirstPickupDelayedNotification(db.CurrentDB(), tr.PickupTime.Time)
 				}
 			}
 		}(t)
