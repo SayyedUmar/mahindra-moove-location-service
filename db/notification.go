@@ -1,6 +1,7 @@
 package db
 
 import (
+	"database/sql"
 	"fmt"
 	"time"
 
@@ -38,6 +39,9 @@ const TSS_SEQUENCE = 3
 const DRIVER_OVER_SPEEDING = "driver_over_speeding"
 const DOS_SEQUENCE = 3
 
+const FIRST_PICKUP_DELAYED = "first_pickup_delayed"
+const FPD_SEQUENCE = 1
+
 type Receiver int
 
 const (
@@ -68,6 +72,31 @@ func CreateTripShouldStartNotification(db *sqlx.Tx, tripID int, driverID int) (*
 	return tssNotification, nil
 }
 
+// CreateFirstPickupDelayedNotification creates a first_pickup_delayed notification
+func CreateFirstPickupDelayedNotification(db *sqlx.Tx, tripID int, driverID int) (*Notification, error) {
+	fpdNotification := &Notification{
+		TripID:          tripID,
+		DriverID:        driverID,
+		Message:         FIRST_PICKUP_DELAYED,
+		Receiver:        int(Operator),
+		Status:          0,
+		CreatedAt:       time.Now(),
+		UpdatedAt:       time.Now(),
+		ResolvedStatus:  false,
+		NewNotification: true,
+		Sequence:        FPD_SEQUENCE,
+	}
+	if !fpdNotification.HasUnresolved(db) {
+		notificationID, err := insertNotification(db, fpdNotification)
+		if err != nil {
+			return nil, err
+		}
+		fpdNotification.ID = notificationID
+		return fpdNotification, nil
+	}
+	return nil, fmt.Errorf("A first_pickup_delayed notification already exists for trip %d and driver %d", tripID, driverID)
+}
+
 // CreateDriverOverSpeedingNotification method creates the trip_should_start notification in the notifications table
 func CreateDriverOverSpeedingNotification(db *sqlx.Tx, tripID int, driverID int) (*Notification, error) {
 	dosNotification := &Notification{
@@ -88,6 +117,33 @@ func CreateDriverOverSpeedingNotification(db *sqlx.Tx, tripID int, driverID int)
 	}
 	dosNotification.ID = notificationID
 	return dosNotification, nil
+}
+
+// HasUnresolved returns true if the given notifications message, trip_id, driver_id
+// combination has any unresolved notifications
+func (n *Notification) HasUnresolved(db *sqlx.Tx) bool {
+	return HasUnresolvedNotifications(db, n.TripID, n.DriverID, n.Message)
+}
+
+// HasUnresolvedNotifications returns true if trip has unresolved notifications for a driver
+func HasUnresolvedNotifications(db *sqlx.Tx, tripID int, driverID int, message string) bool {
+	checkNotificationQuery := `select id from notifications 
+	where trip_id=:tripID and driver_id=:driverID and message=:message
+	and resolved_status=false`
+	row := db.QueryRowx(checkNotificationQuery, struct {
+		DriverID int
+		TripID   int
+		Message  string
+	}{DriverID: driverID, TripID: tripID, Message: message})
+	var id int
+	err := row.Scan(&id)
+	if err != nil && err == sql.ErrNoRows {
+		return false
+	}
+	if err == nil {
+		return true
+	}
+	return false
 }
 
 func insertNotification(db *sqlx.Tx, notification *Notification) (int64, error) {

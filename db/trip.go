@@ -182,6 +182,16 @@ func GetTripsByStatuses(db RebindQueryer, statuses ...string) ([]*Trip, error) {
 	return trips, nil
 }
 
+// GetFirstTripRoute returns the first trip route based on ScheduledRouteOrder
+func (t *Trip) GetFirstTripRoute() *TripRoute {
+	for _, tr := range t.TripRoutes {
+		if tr.ScheduledRouteOrder == 0 {
+			return &tr
+		}
+	}
+	return nil
+}
+
 func (t *Trip) IsCheckIn() bool {
 	return t.TripType == TripTypeCheckIn
 }
