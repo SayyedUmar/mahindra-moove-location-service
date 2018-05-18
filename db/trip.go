@@ -8,6 +8,7 @@ import (
 	"time"
 
 	"github.com/jmoiron/sqlx"
+	log "github.com/sirupsen/logrus"
 )
 
 const (
@@ -192,15 +193,19 @@ func (t *Trip) GetFirstTripRoute() *TripRoute {
 	return nil
 }
 
-func (t *Trip) IsFirstPickupDelayed(newPickupTime time.Time) bool {
+func (t *Trip) IsFirstPickupDelayed(db sqlx.Queryer, newPickupTime time.Time) bool {
 	if !t.ScheduledStartDate.Valid {
 		return false
 	}
-	return newPickupTime.Sub(t.ScheduledStartDate.Time) > 10*time.Minute
+	val, err := ConfigGetTripDelayNotification(db)
+	if err != nil {
+		log.Errorf("Unable to fetch TripDelayedNotification configuration - %s. Defaulting to %d", err, val)
+	}
+	return newPickupTime.Sub(t.ScheduledStartDate.Time) > time.Duration(val)*time.Minute
 }
 
 func (t *Trip) TriggerFirstPickupDelayedNotification(db *sqlx.DB, pickupTime time.Time) error {
-	if !t.IsFirstPickupDelayed(pickupTime) {
+	if !t.IsFirstPickupDelayed(db, pickupTime) {
 		return nil
 	}
 	tx, err := db.Beginx()

@@ -96,14 +96,18 @@ func getTripRouteByID(db sqlx.Queryer, id int) (*TripRoute, error) {
 	return &tr, nil
 }
 
-func (tr *TripRoute) IsSiteArrivalDelayed(newDropTime time.Time) bool {
+func (tr *TripRoute) IsSiteArrivalDelayed(db sqlx.Queryer, newDropTime time.Time) bool {
 	if !tr.Date.Valid {
 		return false
 	}
-	return newDropTime.Sub(tr.Date.Time) > 10*time.Minute
+	val, err := ConfigGetTripDelayNotification(db)
+	if err != nil {
+		log.Errorf("Unable to fetch TripDelayedNotification configuration - %s. Defaulting to %d", err, val)
+	}
+	return newDropTime.Sub(tr.Date.Time) > time.Duration(val)*time.Minute
 }
 func (tr *TripRoute) TriggerSiteArrivalDelayNotification(db *sqlx.Tx, newDropTime time.Time) error {
-	if !tr.IsSiteArrivalDelayed(newDropTime) {
+	if !tr.IsSiteArrivalDelayed(db, newDropTime) {
 		return nil
 	}
 	_, err := CreateSiteArrivalDelayNotification(db, tr.TripID, tr.Trip.DriverID, tr.EmployeeID)

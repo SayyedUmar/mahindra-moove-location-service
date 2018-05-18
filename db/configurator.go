@@ -1,6 +1,7 @@
 package db
 
 import (
+	"database/sql"
 	"strconv"
 
 	"github.com/jmoiron/sqlx"
@@ -14,6 +15,12 @@ type Configuration struct {
 
 var findByRequestTypeQuery = `select id, request_type, value 
 	from configurators where request_type=?`
+
+// ConfigGetTripDelayNotification gets the report_time_check_in value
+// from the configurators table in the database
+func ConfigGetTripDelayNotification(db sqlx.Queryer) (int, error) {
+	return getIntValue(db, "report_time_check_in", 10)
+}
 
 //GetBufferDurationForDelayTripNotification returns value of buffer_duration_for_delayed_trip_notification in minutes.
 func GetBufferDurationForDelayTripNotification(db sqlx.Queryer) (int, error) {
@@ -91,4 +98,19 @@ func getConfiguration(db sqlx.Queryer, requestType string) (*Configuration, erro
 		return nil, err
 	}
 	return &configuration, nil
+}
+
+func getIntValue(db sqlx.Queryer, key string, defaultValue int) (int, error) {
+	config, err := getConfiguration(db, key)
+	if err != nil {
+		if err == sql.ErrNoRows {
+			return defaultValue, nil
+		}
+		return defaultValue, err
+	}
+	val, err := strconv.Atoi(config.Value)
+	if err != nil {
+		return defaultValue, err
+	}
+	return val, nil
 }

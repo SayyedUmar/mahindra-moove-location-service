@@ -20,6 +20,26 @@ func TestGetBufferDurationForDelayTripNotification(t *testing.T) {
 
 	assert.Equal(t, 20, value)
 }
+func TestConfigGetTripDelayNotification(t *testing.T) {
+	tx := createTx(t)
+	defer tx.Rollback()
+	_, err := createConfigurator(tx, "report_time_check_in", "20")
+	tst.FailNowOnErr(t, err)
+
+	value, err := ConfigGetTripDelayNotification(tx)
+	tst.FailNowOnErr(t, err)
+
+	assert.Equal(t, 20, value)
+}
+func TestConfigGetTripDelayNotificationShouldReturnDefaultValue(t *testing.T) {
+	tx := createTx(t)
+	defer tx.Rollback()
+
+	value, err := ConfigGetTripDelayNotification(tx)
+	tst.FailNowOnErr(t, err)
+
+	assert.Equal(t, 10, value)
+}
 
 func TestGetSpeedLimit(t *testing.T) {
 	tx := createTx(t)
