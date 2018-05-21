@@ -252,7 +252,7 @@ func updateGeofenceInfoInTripRoutes(trip *db.Trip, events []socketstore.Geofence
 
 func setupOverSpeedingCheckTimer() {
 	log.Infoln("started over speeding check timer")
-	ticker := time.NewTicker(time.Minute)
+	ticker := time.NewTicker(10 * time.Second)
 	go func() {
 		for _ = range ticker.C {
 			speedLimit, err := db.GetSpeedLimit(db.CurrentDB())

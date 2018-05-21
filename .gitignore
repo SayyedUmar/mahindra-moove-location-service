@@ -8,3 +8,6 @@ coverage.html
 .env
 coverage.out
 .vscode/launch.json
+data/prod_dump*
+prod_dump*
+testtool/testtool

@@ -41,6 +41,12 @@ func (r *RollbarLogger) Println(args ...interface{}) {
 	}
 	log.Error(args)
 }
+func socketHandler() http.HandlerFunc {
+	if socketDebugMode() {
+		return LocationSocket
+	}
+	return Auth(LocationSocket)
+}
 func SetupRouter() *mux.Router {
 	router := mux.NewRouter()
 	router.Handle("/api/v3/metrics", promhttp.Handler())
@@ -49,7 +55,7 @@ func SetupRouter() *mux.Router {
 	router.HandleFunc("/api/v3/trips/{id}/eta", LogRequestsMiddleware(GetTripETA)).Methods("GET")
 	router.HandleFunc("/api/v3/trips/{id}/start_trip_eta", LogRequestsMiddleware(GetStartTripETA)).Methods("GET")
 	router.HandleFunc("/api/v3/trips/{id}/summary", LogRequestsMiddleware(TripSummary))
-	router.HandleFunc("/api/v3/drivers/{id}/location", Auth(LocationSocket))
+	router.HandleFunc("/api/v3/drivers/{id}/location", socketHandler())
 
 	router.HandleFunc("/api/v3/version", EchoVersion)
 	return router
@@ -81,4 +87,8 @@ func SetupServer() {
 
 func rollbarEnabled() bool {
 	return os.Getenv("ROLLBAR_TOKEN") != ""
+}
+func socketDebugMode() bool {
+	fmt.Printf(os.Getenv("SOCKET_DEBUG"))
+	return os.Getenv("SOCKET_DEBUG") != ""
 }

@@ -15,7 +15,9 @@ import (
 
 // LocationUpdate maps location updates to Redis
 type LocationUpdate struct {
-	TripID      int `json:"tripId"`
+	ID          string `json:"id"`
+	EventType   string `json:"eventType"`
+	TripID      int    `json:"tripId"`
 	UserID      string
 	Lat         float64
 	Lng         float64
