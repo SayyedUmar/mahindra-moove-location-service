@@ -54,7 +54,7 @@ func handleCheckinTrip(trip *db.Trip, currentLocation db.Location, clock Clock) 
 		for _, tr := range trip.TripRoutes {
 			etaResp.TripRoutes = append(etaResp.TripRoutes, ETATripRoute{
 				ID:             tr.ID,
-				PickupTime:     NotNullTime(clock.Now().Add(dm.Duration)),
+				DropoffTime:    NotNullTime(clock.Now().Add(dm.Duration)),
 				ETAInMinutes:   dm.Duration.Minutes(),
 				EmployeeUserID: tr.EmployeeUserID,
 				Status:         tr.Status,
