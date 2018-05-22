@@ -186,8 +186,8 @@ func handleCheckoutTrip(trip *db.Trip, currentLocation db.Location, clock Clock)
 
 	log.Infof("TripRoutes for trip %d are %v\n", trip.ID, trip.TripRoutes)
 
+	var offset time.Duration
 	for _, tr := range trip.TripRoutes {
-		var offset time.Duration
 		log.Infof("finding eta for TripRoute %d with status %s with offset of %d seconds\n", tr.ID, tr.Status, int(offset.Seconds()))
 		if tr.Status != "on_board" && tr.Status != "not_started" {
 			etaResp.TripRoutes = append(etaResp.TripRoutes, ETATripRoute{
