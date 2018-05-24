@@ -61,10 +61,10 @@ func handleCheckinTrip(trip *db.Trip, currentLocation db.Location, clock Clock) 
 			})
 			NotifyTripRouteToEmployee(&tr, &dm, 0, ns)
 		}
-		NotifyTripRouteToDriver(&trip.TripRoutes[0], &dm, 0, ns)
 		return &etaResp, nil
 	}
 	var offset time.Duration
+	var previousOffset time.Duration
 	var trsToBeNotified []db.TripRoute
 	var previousEndLocation db.Location
 	for _, tr := range trip.TripRoutes {
@@ -79,35 +79,17 @@ func handleCheckinTrip(trip *db.Trip, currentLocation db.Location, clock Clock) 
 			// Notify them the last
 			trsToBeNotified = append(trsToBeNotified, tr)
 		}
-		if tr.Status == "not_started" && offset == 0 {
-			startLoc := currentLocation
-			endLoc := tr.ScheduledStartLocation
-			previousEndLocation = tr.ScheduledStartLocation
+		if tr.Status == "not_started" {
 			dm, ok := etaBusMap[tr.ScheduledRouteOrder]
 			if !ok {
-				log.Infof("Requesting eta of trip %d from %s to %s with offset of %d mins\n", trip.ID, startLoc.ToString(), endLoc.ToString(), 0)
-				dmLocal, err := ds.GetDuration(startLoc, endLoc, clock.Now())
-				if err != nil {
-					return nil, err
+				var startLoc db.Location
+				if offset == 0 {
+					startLoc = currentLocation
+				} else {
+					startLoc = previousEndLocation
 				}
-				etaBusMap[tr.ScheduledRouteOrder] = dmLocal
-				dm = dmLocal
-			}
-			etaResp.TripRoutes = append(etaResp.TripRoutes, ETATripRoute{
-				ID:             tr.ID,
-				PickupTime:     NotNullTime(clock.Now().Add(dm.Duration)),
-				ETAInMinutes:   dm.Duration.Minutes(),
-				EmployeeUserID: tr.EmployeeUserID,
-				Status:         tr.Status,
-			})
-			NotifyTripRouteToEmployee(&tr, &dm, offset, ns)
-			NotifyTripRouteToDriver(&tr, &dm, offset, ns)
-			offset += dm.Duration
-		} else if tr.Status == "not_started" && offset > 0 {
-			startLoc := previousEndLocation
-			endLoc := tr.ScheduledStartLocation
-			dm, ok := etaBusMap[tr.ScheduledRouteOrder]
-			if !ok {
+				endLoc := tr.ScheduledStartLocation
+				previousEndLocation = endLoc
 				log.Infof("Requesting eta of trip %d from %s to %s with offset of %d mins\n", trip.ID, startLoc.ToString(), endLoc.ToString(), int64(offset.Minutes()))
 				dmLocal, err := ds.GetDuration(startLoc, endLoc, clock.Now().Add(offset))
 				if err != nil {
@@ -115,16 +97,27 @@ func handleCheckinTrip(trip *db.Trip, currentLocation db.Location, clock Clock) 
 				}
 				etaBusMap[tr.ScheduledRouteOrder] = dmLocal
 				dm = dmLocal
+
+				etaResp.TripRoutes = append(etaResp.TripRoutes, ETATripRoute{
+					ID:             tr.ID,
+					PickupTime:     NotNullTime(clock.Now().Add(dm.Duration).Add(offset)),
+					ETAInMinutes:   (dm.Duration + offset).Minutes(),
+					EmployeeUserID: tr.EmployeeUserID,
+					Status:         tr.Status,
+				})
+				NotifyTripRouteToEmployee(&tr, &dm, offset, ns)
+				previousOffset = offset
+				offset += dm.Duration
+			} else {
+				etaResp.TripRoutes = append(etaResp.TripRoutes, ETATripRoute{
+					ID:             tr.ID,
+					PickupTime:     NotNullTime(clock.Now().Add(dm.Duration).Add(previousOffset)),
+					ETAInMinutes:   (dm.Duration + previousOffset).Minutes(),
+					EmployeeUserID: tr.EmployeeUserID,
+					Status:         tr.Status,
+				})
+				NotifyTripRouteToEmployee(&tr, &dm, previousOffset, ns)
 			}
-			etaResp.TripRoutes = append(etaResp.TripRoutes, ETATripRoute{
-				ID:             tr.ID,
-				PickupTime:     NotNullTime(clock.Now().Add(dm.Duration).Add(offset)),
-				ETAInMinutes:   (dm.Duration + offset).Minutes(),
-				EmployeeUserID: tr.EmployeeUserID,
-				Status:         tr.Status,
-			})
-			NotifyTripRouteToEmployee(&tr, &dm, offset, ns)
-			offset += dm.Duration
 		}
 	}
 	if len(trsToBeNotified) > 0 {
@@ -150,7 +143,6 @@ func handleCheckinTrip(trip *db.Trip, currentLocation db.Location, clock Clock) 
 }
 
 func handleCheckoutTrip(trip *db.Trip, currentLocation db.Location, clock Clock) (*ETAResponse, error) {
-	log.Infof("inside handleCheckoutTrip for trip %d\n", trip.ID)
 	etaBusMap := make(map[int]DurationMetrics)
 	etaResp := ETAResponse{ID: trip.ID, UpdatedAt: clock.Now()}
 	ds := GetDurationService()
@@ -184,45 +176,27 @@ func handleCheckoutTrip(trip *db.Trip, currentLocation db.Location, clock Clock)
 		return &etaResp, nil
 	}
 
-	log.Infof("TripRoutes for trip %d are %v\n", trip.ID, trip.TripRoutes)
-
 	var offset time.Duration
+	var previousOffset time.Duration
+	var previousEndLocation db.Location
 	for _, tr := range trip.TripRoutes {
-		log.Infof("finding eta for TripRoute %d with status %s with offset of %d seconds\n", tr.ID, tr.Status, int(offset.Seconds()))
-		if tr.Status != "on_board" && tr.Status != "not_started" {
+		if tr.Status != "on_board" && tr.Status != "driver_arrived" {
 			etaResp.TripRoutes = append(etaResp.TripRoutes, ETATripRoute{
 				ID:             tr.ID,
 				EmployeeUserID: tr.EmployeeUserID,
 				Status:         tr.Status,
 			})
 		}
-		if tr.Status == "on_board" && offset == 0 {
-			startLoc := currentLocation
-			endLoc := tr.ScheduledEndLocation
-			dm, ok := etaBusMap[tr.ScheduledRouteOrder]
-			if !ok {
-				log.Infof("Requesting eta of trip %d, tripRoute %d from %s to %s with offset of %d mins\n", trip.ID, tr.ID, startLoc.ToString(), endLoc.ToString(), 0)
-				dmLocal, err := ds.GetDuration(startLoc, endLoc, clock.Now())
-				if err != nil {
-					return nil, err
-				}
-				etaBusMap[tr.ScheduledRouteOrder] = dmLocal
-				dm = dmLocal
+
+		if tr.Status == "on_board" || tr.Status == "driver_arrived" {
+			var startLoc db.Location
+			if offset == 0 {
+				startLoc = currentLocation
 			} else {
-				log.Infof("Eta of trip %d, tripRoute %d already calculated %v\n", trip.ID, tr.ID, dm)
+				startLoc = previousEndLocation
 			}
-			etaResp.TripRoutes = append(etaResp.TripRoutes, ETATripRoute{
-				ID:             tr.ID,
-				DropoffTime:    NotNullTime(clock.Now().Add(dm.Duration).Add(offset)),
-				ETAInMinutes:   (dm.Duration + offset).Minutes(),
-				EmployeeUserID: tr.EmployeeUserID,
-				Status:         tr.Status,
-			})
-			NotifyTripRouteToEmployee(&tr, &dm, offset, ns)
-			offset += dm.Duration
-		} else if tr.Status == "on_board" && offset > 0 {
-			startLoc := tr.ScheduledStartLocation
 			endLoc := tr.ScheduledEndLocation
+			previousEndLocation = endLoc
 			dm, ok := etaBusMap[tr.ScheduledRouteOrder]
 			if !ok {
 				log.Infof("Requesting eta of trip %d, tripRoute %d from %s to %s with offset of %d mins\n", trip.ID, tr.ID, startLoc.ToString(), endLoc.ToString(), int(offset.Minutes()))
@@ -232,21 +206,30 @@ func handleCheckoutTrip(trip *db.Trip, currentLocation db.Location, clock Clock)
 				}
 				etaBusMap[tr.ScheduledRouteOrder] = dmLocal
 				dm = dmLocal
+
+				etaResp.TripRoutes = append(etaResp.TripRoutes, ETATripRoute{
+					ID:             tr.ID,
+					DropoffTime:    NotNullTime(clock.Now().Add(dm.Duration).Add(offset)),
+					ETAInMinutes:   (dm.Duration + offset).Minutes(),
+					EmployeeUserID: tr.EmployeeUserID,
+					Status:         tr.Status,
+				})
+				NotifyTripRouteToEmployee(&tr, &dm, offset, ns)
+
+				previousOffset = offset
+				offset += dm.Duration
 			} else {
-				log.Infof("Eta of trip %d, tripRoute %d already calculated %v\n", trip.ID, tr.ID, dm)
+				etaResp.TripRoutes = append(etaResp.TripRoutes, ETATripRoute{
+					ID:             tr.ID,
+					DropoffTime:    NotNullTime(clock.Now().Add(dm.Duration).Add(previousOffset)),
+					ETAInMinutes:   (dm.Duration + previousOffset).Minutes(),
+					EmployeeUserID: tr.EmployeeUserID,
+					Status:         tr.Status,
+				})
+				NotifyTripRouteToEmployee(&tr, &dm, previousOffset, ns)
 			}
-			etaResp.TripRoutes = append(etaResp.TripRoutes, ETATripRoute{
-				ID:             tr.ID,
-				DropoffTime:    NotNullTime(clock.Now().Add(dm.Duration).Add(offset)),
-				ETAInMinutes:   (dm.Duration + offset).Minutes(),
-				EmployeeUserID: tr.EmployeeUserID,
-				Status:         tr.Status,
-			})
-			NotifyTripRouteToEmployee(&tr, &dm, offset, ns)
-			offset += dm.Duration
 		}
 	}
-	log.Infof("Final Eta response for trip: %d is %v\n", trip.ID, etaResp)
 	return &etaResp, nil
 }
 

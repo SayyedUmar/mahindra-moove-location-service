@@ -88,19 +88,6 @@ func NotifyTripRouteToEmployee(tr *db.TripRoute, dm *DurationMetrics, offset tim
 	}
 }
 
-// NotifyTripRouteToDriver takes duration metrics for a trip route and sends a notification to the driver
-func NotifyTripRouteToDriver(tr *db.TripRoute, dm *DurationMetrics, offset time.Duration, ns NotificationService) {
-
-	data := getPushNotificationData(dm, offset)
-	log.Debugf("notification data for trip %d \n", tr.TripID)
-	log.Debug(data)
-	driverID := strconv.Itoa(tr.Trip.DriverUserID)
-	err := ns.SendNotification(driverID, data, "user")
-	if err != nil {
-		log.Error("Unable to send notification ", err)
-	}
-}
-
 func getPushNotificationData(dm *DurationMetrics, offset time.Duration) map[string]interface{} {
 	data := make(map[string]interface{})
 	data["duration"] = int64((dm.Duration + offset).Minutes())
