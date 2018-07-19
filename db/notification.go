@@ -127,7 +127,7 @@ func CreateSiteArrivalDelayNotification(db *sqlx.Tx, tripID, driverID, employeeI
 	return nil, fmt.Errorf("A site_arrival_delay notification already exists for trip %d and employee %d", tripID, employeeID)
 }
 
-// CreateDriverOverSpeedingNotification method creates the trip_should_start notification in the notifications table
+// CreateDriverOverSpeedingNotification method creates the driver_over_speeding notification in the notifications table
 func CreateDriverOverSpeedingNotification(db *sqlx.Tx, tripID int, driverID int) (*Notification, error) {
 	dosNotification := &Notification{
 		TripID:          tripID,
@@ -182,7 +182,7 @@ func HasUnresolvedNotifications(db *sqlx.Tx, tripID int, driverID int, message s
 	return false
 }
 
-// HasUnresolvedNotificationsByEmployee returns true if trip has unresolved notificiations for an employee
+// HasUnresolvedNotificationsByEmployee returns true if trip has unresolved notifications for an employee
 func HasUnresolvedNotificationsByEmployee(db *sqlx.Tx, tripID int, employeeID int, message string) bool {
 	checkNotificationQuery := `select id from notifications 
 	where trip_id=:TripID and employee_id=:EmployeeID and message=:Message

@@ -406,6 +406,7 @@ func SetStartTripDelayTimer(tripID int, startTime *time.Time) {
 		trip, err := db.GetTripByID(db.CurrentDB(), tripID)
 		if err != nil {
 			log.Errorf("could not get trip for id %d to create trip should start notification.")
+			return
 		}
 		if trip.HasStarted() || trip.IsTerminal() {
 			log.Infof("Trip %d has already started or trip has completed", trip.ID)
