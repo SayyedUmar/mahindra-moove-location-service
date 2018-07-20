@@ -418,12 +418,13 @@ func SetStartTripDelayTimer(tripID int, startTime *time.Time) {
 			return
 		}
 		defer tx.Commit()
+		log.Infof("Creating a trip should start notification for trip %d with status %s", trip.ID, trip.Status)
 		tss, err := db.CreateTripShouldStartNotification(tx, trip.ID, trip.DriverID)
 		if err != nil {
 			log.Errorf("Could not create TripShouldStart notification for trip id %d because %v", trip.ID, err)
 			return
 		}
-		log.Infof("Created a trip should start notification for trip %d", tss.TripID)
+		log.Infof("Created a trip should start notification for trip %d with status %s", tss.TripID, trip.Status)
 	})
 
 	oldTimer, ok := tripShouldStartNotifiers[tripID]
