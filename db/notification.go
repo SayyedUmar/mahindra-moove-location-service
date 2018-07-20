@@ -164,13 +164,9 @@ func (n *Notification) HasUnresolvedByEmployee(db *sqlx.Tx) bool {
 // HasUnresolvedNotifications returns true if trip has unresolved notifications for a driver
 func HasUnresolvedNotifications(db *sqlx.Tx, tripID int, driverID int, message string) bool {
 	checkNotificationQuery := `select id from notifications 
-	where trip_id=:TripID and driver_id=:DriverID and message=:Message
+	where trip_id=? and driver_id=? and message=?
 	and resolved_status=false`
-	row := db.QueryRowx(checkNotificationQuery, struct {
-		DriverID int
-		TripID   int
-		Message  string
-	}{DriverID: driverID, TripID: tripID, Message: message})
+	row := db.QueryRowx(checkNotificationQuery, tripID, driverID, message)
 	var id int
 	err := row.Scan(&id)
 	if err != nil && err == sql.ErrNoRows {
@@ -185,13 +181,9 @@ func HasUnresolvedNotifications(db *sqlx.Tx, tripID int, driverID int, message s
 // HasUnresolvedNotificationsByEmployee returns true if trip has unresolved notifications for an employee
 func HasUnresolvedNotificationsByEmployee(db *sqlx.Tx, tripID int, employeeID int, message string) bool {
 	checkNotificationQuery := `select id from notifications 
-	where trip_id=:TripID and employee_id=:EmployeeID and message=:Message
+	where trip_id=? and employee_id=? and message=?
 	and resolved_status=false`
-	row := db.QueryRowx(checkNotificationQuery, struct {
-		EmployeeID int
-		TripID     int
-		Message    string
-	}{EmployeeID: employeeID, TripID: tripID, Message: message})
+	row := db.QueryRowx(checkNotificationQuery, tripID, employeeID, message)
 	var id int
 	err := row.Scan(&id)
 	if err != nil && err == sql.ErrNoRows {
