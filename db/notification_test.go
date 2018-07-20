@@ -17,6 +17,29 @@ func TestShouldInsertTSSNotification(t *testing.T) {
 	if tssNotification.ID <= 0 {
 		t.Fatalf("Notification ID was not set %v", tssNotification)
 	}
+
+
+	t.Logf("Notification : %v", tssNotification)
+
+	//There should not be two unresolved notifications.
+	_, err = CreateTripShouldStartNotification(tx, 42, 23)
+	t.Logf("Error : %v", err)
+	assert.NotNil(t, err)
+
+	oldNotifID := tssNotification.ID
+	//A new notification should generate if older notification for same trip and driver is resolved.
+	tx.MustExec("update notifications set resolved_status=true where id=?", tssNotification.ID)
+	tssNotification, err = CreateTripShouldStartNotification(tx, 42, 23)
+	if err != nil {
+		t.Fatalf("Could not create notification %v", err)
+	}
+	if tssNotification.ID <= 0 {
+		t.Fatalf("Notification ID was not set %v", tssNotification)
+	}
+
+	if tssNotification.ID == oldNotifID {
+		t.Fatalf("New notification is not created when older is resolved for %v", tssNotification)
+	}
 }
 
 func TestShouldInsertDOSNotification(t *testing.T) {

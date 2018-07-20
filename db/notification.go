@@ -68,12 +68,15 @@ func CreateTripShouldStartNotification(db *sqlx.Tx, tripID int, driverID int) (*
 		NewNotification: true,
 		Sequence:        TSS_SEQUENCE,
 	}
-	notificationID, err := insertNotification(db, tssNotification)
-	if err != nil {
-		return nil, err
+	if !tssNotification.HasUnresolved(db) {
+		notificationID, err := insertNotification(db, tssNotification)
+		if err != nil {
+			return nil, err
+		}
+		tssNotification.ID = notificationID
+		return tssNotification, nil
 	}
-	tssNotification.ID = notificationID
-	return tssNotification, nil
+	return nil, fmt.Errorf("A trip_should_start notification already exists for trip %d and driver %d", tripID, driverID)
 }
 
 // CreateFirstPickupDelayedNotification creates a first_pickup_delayed notification
