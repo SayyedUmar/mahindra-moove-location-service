@@ -257,12 +257,12 @@ func setupOverSpeedingCheckTimer() {
 		for _ = range ticker.C {
 			speedLimit, err := db.GetSpeedLimit(db.CurrentDB())
 			if err != nil {
-				speedLimit = 22.2222
+				speedLimit = 22.2222 //80Kmph.
 			}
 			log.Infoln("Speed Limit:", speedLimit)
 			overSpeedDuration, err := db.GetSpeedLimitViolationDuration(db.CurrentDB())
 			if err != nil {
-				overSpeedDuration = 60
+				overSpeedDuration = 60 //1 minute.
 			}
 
 			tempDriverLocations := make(map[int64][]models.DriverLocation)
