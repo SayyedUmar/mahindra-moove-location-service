@@ -19,10 +19,12 @@ func init() {
 	tripShouldStartNotifiers = make(map[int]*time.Timer)
 }
 
+// NotNullTime use null.Time instead of NullTime in all models
 func NotNullTime(t time.Time) null.Time {
 	return null.NewTime(t, true)
 }
 
+// ETATripRoute create ETA for trip endpoint
 type ETATripRoute struct {
 	ID             int       `json:"id"`
 	PickupTime     null.Time `json:"pickup_time"`
@@ -31,6 +33,8 @@ type ETATripRoute struct {
 	EmployeeUserID int       `json:"employee_user_id"`
 	Status         string    `json:"status"`
 }
+
+// ETAResponse create a stucture for ETA Response
 type ETAResponse struct {
 	ID         int            `json:"id"`
 	UpdatedAt  time.Time      `json:"updated_at"`
@@ -233,18 +237,23 @@ func handleCheckoutTrip(trip *db.Trip, currentLocation db.Location, clock Clock)
 	return &etaResp, nil
 }
 
+// Clock Create a structure for log direction requests for debugging enable clock for easier debugging of ETA service
 type Clock interface {
 	Now() time.Time
 }
+
+// RealClock Create a Structure for log direction requests for debugging enable clock for easier debugging of ETA service
 type RealClock struct {
 }
 
+// Now Function for log direction requests for debugging enable clock for easier debugging of ETA service
 func (rc RealClock) Now() time.Time {
 	return time.Now()
 }
 
 var clock = RealClock{}
 
+// GetETAForTrip get ETA for trip endpoint
 func GetETAForTrip(trip *db.Trip, currentLocation db.Location, clock Clock) (*ETAResponse, error) {
 	if len(trip.TripRoutes) < 1 {
 		return nil, fmt.Errorf("The trip %d has no trip routes", trip.ID)
@@ -255,6 +264,7 @@ func GetETAForTrip(trip *db.Trip, currentLocation db.Location, clock Clock) (*ET
 	return handleCheckoutTrip(trip, currentLocation, clock)
 }
 
+// GetETAForActiveTrips Renamed and Changed GetTripsByStatus func to query by more than one status
 func GetETAForActiveTrips() {
 	activeTrips, err := db.GetTripsByStatuses(db.CurrentDB(), "active")
 	if err != nil {
@@ -394,6 +404,7 @@ func getETAForAssignedTrip() {
 	}
 }
 
+// SetStartTripDelayTimer changes done for notifying driver as when to start trip.
 func SetStartTripDelayTimer(tripID int, startTime *time.Time) {
 	durationForDelayedTripNotification, err := db.GetBufferDurationForDelayTripNotification(db.CurrentDB())
 	if err != nil {
@@ -434,6 +445,7 @@ func SetStartTripDelayTimer(tripID int, startTime *time.Time) {
 	tripShouldStartNotifiers[tripID] = newTimer
 }
 
+// FindWhenShouldDriverStartTrip Refactored implementation for orchestrated start trip for testing.
 func FindWhenShouldDriverStartTrip(trip *db.Trip, driverLocation *db.Location, clock Clock) (*time.Time, error) {
 	if len(trip.TripRoutes) == 0 {
 		return nil, errors.New("can not find start time for trip with zero trip routes")
@@ -453,6 +465,7 @@ func FindWhenShouldDriverStartTrip(trip *db.Trip, driverLocation *db.Location, c
 	return &newStartTime, nil
 }
 
+// NotifyDriverShouldStartTrip function to orchestrated start trip
 func NotifyDriverShouldStartTrip(trip *db.Trip, newStartTime *time.Time, calculationTime *time.Time) (bool, error) {
 	ns := GetNotificationService()
 	data := make(map[string]interface{})
@@ -471,6 +484,7 @@ func NotifyDriverShouldStartTrip(trip *db.Trip, newStartTime *time.Time, calcula
 	return true, nil
 }
 
+// StartETAServiceTimer Writing start trip eta to trips for each eta calculation
 func StartETAServiceTimer(cancelChan chan bool) {
 	// GetETAForActiveTrips()
 	getETAForAssignedTrip()

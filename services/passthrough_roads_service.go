@@ -10,9 +10,11 @@ import (
 	log "github.com/sirupsen/logrus"
 )
 
+// PassThroughRoadsService Structure to do a passthrough a Road Service
 type PassThroughRoadsService struct {
 }
 
+// Match Function to do a passthrough a Road Service
 func (pts *PassThroughRoadsService) Match(points []utils.Location, timestamps []time.Time) (*MatchResponse, error) {
 	ps := geo.NewPointSet()
 	for _, loc := range points {

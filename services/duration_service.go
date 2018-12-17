@@ -34,6 +34,7 @@ func GetDurationService() DurationService {
 	return durationService
 }
 
+// DurationMetrics Define a structure for duration metrics
 type DurationMetrics struct {
 	DepartureTime    time.Time
 	ArrivalTime      time.Time

@@ -12,14 +12,17 @@ import (
 	"github.com/MOOVE-Network/location_service/utils"
 )
 
+// OSRMClient Structure to access an OSRM Client
 type OSRMClient struct {
 	baseURL string
 }
 
+// NewOSRMClient Function to initiate a OSRM Client
 func NewOSRMClient(baseUrl string) *OSRMClient {
 	return &OSRMClient{baseURL: baseUrl}
 }
 
+// Match Function to google Match with OSRM
 func (c *OSRMClient) Match(locations []utils.Location, timestamps []time.Time) (*MatchResponse, error) {
 	var locs []string
 	for _, loc := range locations {

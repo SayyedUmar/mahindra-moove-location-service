@@ -20,10 +20,12 @@ import (
 
 var googleRoadsService RoadsService
 
+// GoogleRoadsService Structure add google roads service with the same contract as the OSRM service
 type GoogleRoadsService struct {
 	client *maps.Client
 }
 
+// InitGoogleRoadsService function to initiate google roads service with the same contract as the OSRM service
 func InitGoogleRoadsService(apiKey string) {
 	grs, err := MakeGoogleRoadsService(apiKey)
 	if err != nil {
@@ -32,10 +34,12 @@ func InitGoogleRoadsService(apiKey string) {
 	googleRoadsService = grs
 }
 
+// GetGoogleRoadsService Function to get google roads service with the same contract as the OSRM service
 func GetGoogleRoadsService() RoadsService {
 	return googleRoadsService
 }
 
+// MakeGoogleRoadsService Function to create a Google Road Service
 func MakeGoogleRoadsService(apiKey string) (*GoogleRoadsService, error) {
 	if apiKey == "" {
 		return nil, errors.New("API Key is empty")
@@ -87,6 +91,7 @@ func (rs *GoogleRoadsService) snapToRoads(points []utils.Location) (*Route, erro
 	return &route, nil
 }
 
+// Match Function match goole road service with OSRM Srvice
 func (rs *GoogleRoadsService) Match(points []utils.Location, _ []time.Time) (*MatchResponse, error) {
 	var pointSets [][]utils.Location
 	if len(points) > 100 {
@@ -123,10 +128,13 @@ func (rs *GoogleRoadsService) Match(points []utils.Location, _ []time.Time) (*Ma
 		Distance:  totalMileage,
 	}, nil
 }
+
+// LocationToLatLngs Function that converts location to lat,long
 func LocationToLatLngs(loc utils.Location) maps.LatLng {
 	return maps.LatLng{Lat: loc.Lat, Lng: loc.Lng}
 }
 
+// httpRequest Function to use request SnapToRoad
 func httpRequest(strRequest maps.SnapToRoadRequest) (*http.Request, error) {
 	baseUrl := "https://roads.googleapis.com/v1/snapToRoads"
 	req, err := http.NewRequest("GET", baseUrl, nil)
@@ -170,8 +178,8 @@ func makeRequest(strRequest maps.SnapToRoadRequest) {
 			log.Errorf("Error reading body : %s", err.Error())
 			return
 		}
-		log.Error("Body is %s ", string(body))
-		log.Error("Status is %s ", resp.Status)
+		log.Error("Body is %s", string(body))
+		log.Error("Status is %s", resp.Status)
 	}
 
 }
