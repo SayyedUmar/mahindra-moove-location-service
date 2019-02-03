@@ -19,7 +19,7 @@ type exit struct{ code int }
 func TestMain(m *testing.M) {
 	defer handleExit()
 	if os.Getenv("LOCATION_PG_DATABASE_URL") == "" {
-		os.Setenv("LOCATION_PG_DATABASE_URL", "postgres://localhost/location_service_test?sslmode=disable")
+		os.Setenv("LOCATION_PG_DATABASE_URL", "postgres://clustering-pg-test.ct3tozaserta.ap-southeast-1.rds.amazonaws.com/location_service?sslmode=disable")
 	}
 	db := InitSQLConnection()
 	SetActiveDB(db)
