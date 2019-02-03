@@ -14,7 +14,7 @@ var db *sqlx.DB
 func InitSQLConnection() *sqlx.DB {
 	dbUrl := os.Getenv("LOCATION_PG_DATABASE_URL")
 	if dbUrl == "" {
-		dbUrl = "postgres://clustering-pg-test.ct3tozaserta.ap-southeast-1.rds.amazonaws.com/location_service?sslmode=disable"
+		dbUrl = "postgres://moove:m00ve4wd@clustering-pg-test.ct3tozaserta.ap-southeast-1.rds.amazonaws.com/location_service?sslmode=disable"
 	}
 	localDb, err := sqlx.Open("postgres", dbUrl)
 	if err != nil {

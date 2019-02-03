@@ -16,8 +16,8 @@ jobs:
           - MYSQL_DATABASE=moove_test
       - image: circleci/postgres
         environment:
-          - POSTGRES_USER: ubuntu
-          - POSTGRES_DB: location_service_test
+          - POSTGRES_USER: moove
+          - POSTGRES_DB: location_service
 
     #### TEMPLATE_NOTE: go expects specific checkout path representing url
     #### expecting it in the form of
@@ -60,7 +60,7 @@ jobs:
           name: test
           command: ./test.sh
           environment:
-            LOCATION_PG_DATABASE_URL: postgres://clustering-pg-test.ct3tozaserta.ap-southeast-1.rds.amazonaws.com/location_service?sslmode=disable
+            LOCATION_PG_DATABASE_URL: postgres://moove:m00ve4wd@clustering-pg-test.ct3tozaserta.ap-southeast-1.rds.amazonaws.com/location_service?sslmode=disable
       - run: 
           name: build binaries
           command: |
