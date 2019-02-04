@@ -13,6 +13,7 @@ import (
 	"github.com/MOOVE-Network/location_service/models"
 	"github.com/MOOVE-Network/location_service/services"
 	"github.com/MOOVE-Network/location_service/socketstore"
+	"github.com/jmoiron/sqlx"
 	log "github.com/sirupsen/logrus"
 )
 
@@ -110,10 +111,10 @@ func setupTripLocationTimer() {
 	}()
 }
 
-func setupDriverLocationTimer() {
+func setupDriverLocationTimer(dbPtr *sqlx.DB) {
 	ticker := time.NewTicker(time.Second * 5)
 	go func() {
-		stmt, err := models.DriverLocationPrepareInsertStmt(models.CurrentDB())
+		stmt, err := models.DriverLocationPrepareInsertStmt(dbPtr)
 		if err != nil {
 			log.Errorf("Unable to prepare insert statement for driver location %s ", err)
 			panic(err)

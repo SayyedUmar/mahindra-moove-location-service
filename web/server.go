@@ -6,6 +6,7 @@ import (
 	"net/http"
 	"os"
 
+	"github.com/jmoiron/sqlx"
 	"github.com/stvp/rollbar"
 
 	"github.com/MOOVE-Network/location_service/version"
@@ -61,7 +62,7 @@ func SetupRouter() *mux.Router {
 	return router
 }
 
-func SetupServer() {
+func SetupServer(dbPtr *sqlx.DB) {
 	port := os.Getenv("LOCATION_PORT")
 	if port == "" {
 		port = "4343"
@@ -72,7 +73,7 @@ func SetupServer() {
 	setupHeartBeatTimer()
 	setupTripLocationTimer()
 	setupGeofenceTimer()
-	setupDriverLocationTimer()
+	setupDriverLocationTimer(dbPtr)
 	setupOverSpeedingCheckTimer()
 	go hub.Run()
 
