@@ -7,6 +7,7 @@ import (
 	"time"
 
 	"github.com/MOOVE-Network/location_service/utils"
+	"github.com/jmoiron/sqlx"
 
 	"github.com/MOOVE-Network/location_service/db"
 	log "github.com/sirupsen/logrus"
@@ -330,8 +331,8 @@ func GetETAForActiveTrips() {
 	}
 }
 
-func getETAForAssignedTrip() {
-	assignedTrips, err := db.GetTripsByStatuses(db.CurrentDB(), "assigned", "assign_requested", "assign_request_expired")
+func getETAForAssignedTrip(dbPtr *sqlx.DB) {
+	assignedTrips, err := db.GetTripsByStatuses(dbPtr, "assigned", "assign_requested", "assign_request_expired")
 	if err != nil {
 		log.Errorf("unable to get assigned trips - %s", err)
 	}
@@ -485,15 +486,15 @@ func NotifyDriverShouldStartTrip(trip *db.Trip, newStartTime *time.Time, calcula
 }
 
 // StartETAServiceTimer Writing start trip eta to trips for each eta calculation
-func StartETAServiceTimer(cancelChan chan bool) {
+func StartETAServiceTimer(cancelChan chan bool, dbPtr *sqlx.DB) {
 	// GetETAForActiveTrips()
-	getETAForAssignedTrip()
+	getETAForAssignedTrip(dbPtr)
 	ticker := time.NewTicker(5 * time.Minute)
 	for {
 		select {
 		case _ = <-ticker.C:
 			// GetETAForActiveTrips()
-			getETAForAssignedTrip()
+			getETAForAssignedTrip(dbPtr)
 		case _ = <-cancelChan:
 			break
 		}
