@@ -39,14 +39,18 @@ func main() {
 	redis.SetClient(redisClient)
 	defer closeConn(redisClient)
 
+	os.Setenv("LOCATION_MAPS_API_KEY", "AIzaSyBqCo3g-P2P7MMSedPt-izL-oq1gL4804w")
+	os.Setenv("FCM_API_KEY", "AAAAEXz4c6s:APA91bGE8CJdgnJQPsxgVAxM7asjVEdShM6wpq6jme5sShi4S095MdCuKOGSYuaE3AlrVYKeNrjcrfJQtIoafXabnOKI5kZOBarGkPKlo-pZah3f_iT6rvLA49CpJvx7UOf6JSzL0Zb4")
+	os.Setenv("FCM_TOPIC_PREFIX", "local")
+
 	services.InitDurationService(os.Getenv("LOCATION_MAPS_API_KEY"))
 	services.InitGoogleRoadsService(os.Getenv("LOCATION_MAPS_API_KEY"))
 	services.InitNotificationService(os.Getenv("FCM_API_KEY"), os.Getenv("FCM_TOPIC_PREFIX"))
 	cancelable := make(chan bool)
-	go services.StartETAServiceTimer(cancelable)
+	go services.StartETAServiceTimer(cancelable, db.CurrentDB())
 	go cancelOnSignal(cancelable)
 
-	web.SetupServer()
+	web.SetupServer(db.CurrentDB())
 }
 
 func cancelOnSignal(cancelable chan bool) {

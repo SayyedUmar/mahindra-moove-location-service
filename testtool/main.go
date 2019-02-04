@@ -12,7 +12,7 @@ import (
 	"github.com/MOOVE-Network/location_service/db"
 	"github.com/MOOVE-Network/location_service/testtool/osrm"
 	"github.com/MOOVE-Network/location_service/testtool/socketclient"
-	"github.com/paulmach/go.geo"
+	geo "github.com/paulmach/go.geo"
 )
 
 func init() {
@@ -115,7 +115,7 @@ func emitPoints(geom string, finish chan bool) chan geo.Point {
 func getOSRMURL() string {
 	osrmURL := os.Getenv("OSRM_URL")
 	if osrmURL == "" {
-		osrmURL = "http://ec2-13-127-26-106.ap-south-1.compute.amazonaws.com:5000"
+		osrmURL = "http://ec2-54-255-208-196.ap-southeast-1.compute.amazonaws.com:5000/"
 	}
 	return osrmURL
 }

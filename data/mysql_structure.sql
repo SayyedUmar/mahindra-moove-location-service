@@ -1,13 +1,13 @@
--- MySQL dump 10.16  Distrib 10.2.13-MariaDB, for osx10.13 (x86_64)
+-- MySQL dump 10.13  Distrib 8.0.15, for macos10.14 (x86_64)
 --
--- Host: localhost    Database: moove_development
+-- Host: localhost    Database: moove_test
 -- ------------------------------------------------------
--- Server version	10.2.13-MariaDB
+-- Server version	8.0.15
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8 */;
+ SET NAMES utf8mb4 ;
 /*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
 /*!40103 SET TIME_ZONE='+00:00' */;
 /*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
@@ -21,7 +21,7 @@
 
 DROP TABLE IF EXISTS `ar_internal_metadata`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+ SET character_set_client = utf8mb4 ;
 CREATE TABLE `ar_internal_metadata` (
   `key` varchar(255) NOT NULL,
   `value` varchar(255) DEFAULT NULL,
@@ -37,7 +37,7 @@ CREATE TABLE `ar_internal_metadata` (
 
 DROP TABLE IF EXISTS `ba_invoices`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+ SET character_set_client = utf8mb4 ;
 CREATE TABLE `ba_invoices` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `company_type` varchar(255) DEFAULT NULL,
@@ -61,17 +61,17 @@ CREATE TABLE `ba_invoices` (
 
 DROP TABLE IF EXISTS `ba_package_rates`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+ SET character_set_client = utf8mb4 ;
 CREATE TABLE `ba_package_rates` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `ba_vehicle_rate_id` int(11) DEFAULT NULL,
   `duration` varchar(255) DEFAULT NULL,
-  `package_duty_hours` decimal(10,0) DEFAULT 0,
-  `package_km` decimal(10,0) DEFAULT 0,
-  `package_overage_per_km` decimal(10,0) DEFAULT 0,
-  `package_overage_per_time` decimal(10,0) DEFAULT 0,
-  `package_overage_time` tinyint(1) DEFAULT 0,
-  `package_rate` decimal(10,0) DEFAULT 0,
+  `package_duty_hours` decimal(10,0) DEFAULT '0',
+  `package_km` decimal(10,0) DEFAULT '0',
+  `package_overage_per_km` decimal(10,0) DEFAULT '0',
+  `package_overage_per_time` decimal(10,0) DEFAULT '0',
+  `package_overage_time` tinyint(1) DEFAULT '0',
+  `package_rate` decimal(10,0) DEFAULT '0',
   `package_mileage_calculation` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `index_ba_package_rates_on_ba_vehicle_rate_id` (`ba_vehicle_rate_id`)
@@ -84,13 +84,13 @@ CREATE TABLE `ba_package_rates` (
 
 DROP TABLE IF EXISTS `ba_services`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+ SET character_set_client = utf8mb4 ;
 CREATE TABLE `ba_services` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `business_associate_id` int(11) DEFAULT NULL,
   `service_type` varchar(255) DEFAULT NULL,
   `billing_model` varchar(255) DEFAULT NULL,
-  `vary_with_vehicle` tinyint(1) DEFAULT 0,
+  `vary_with_vehicle` tinyint(1) DEFAULT '0',
   `logistics_company_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `index_ba_services_on_business_associate_id` (`business_associate_id`),
@@ -104,14 +104,14 @@ CREATE TABLE `ba_services` (
 
 DROP TABLE IF EXISTS `ba_trip_invoices`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+ SET character_set_client = utf8mb4 ;
 CREATE TABLE `ba_trip_invoices` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `trip_id` int(11) DEFAULT NULL,
   `ba_invoice_id` int(11) DEFAULT NULL,
-  `trip_amount` decimal(10,0) DEFAULT 0,
-  `trip_penalty` decimal(10,0) DEFAULT 0,
-  `trip_toll` decimal(10,0) DEFAULT 0,
+  `trip_amount` decimal(10,0) DEFAULT '0',
+  `trip_penalty` decimal(10,0) DEFAULT '0',
+  `trip_toll` decimal(10,0) DEFAULT '0',
   `ba_vehicle_rate_id` int(11) DEFAULT NULL,
   `ba_zone_rate_id` int(11) DEFAULT NULL,
   `vehicle_id` int(11) DEFAULT NULL,
@@ -132,15 +132,15 @@ CREATE TABLE `ba_trip_invoices` (
 
 DROP TABLE IF EXISTS `ba_vehicle_rates`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+ SET character_set_client = utf8mb4 ;
 CREATE TABLE `ba_vehicle_rates` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `ba_service_id` int(11) DEFAULT NULL,
   `vehicle_capacity` int(11) DEFAULT NULL,
-  `ac` tinyint(1) DEFAULT 1,
+  `ac` tinyint(1) DEFAULT '1',
   `cgst` decimal(10,0) DEFAULT NULL,
   `sgst` decimal(10,0) DEFAULT NULL,
-  `overage` tinyint(1) DEFAULT 0,
+  `overage` tinyint(1) DEFAULT '0',
   `time_on_duty` int(11) DEFAULT NULL,
   `overage_per_hour` decimal(10,0) DEFAULT NULL,
   PRIMARY KEY (`id`),
@@ -154,7 +154,7 @@ CREATE TABLE `ba_vehicle_rates` (
 
 DROP TABLE IF EXISTS `ba_zone_rates`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+ SET character_set_client = utf8mb4 ;
 CREATE TABLE `ba_zone_rates` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `ba_vehicle_rate_id` int(11) DEFAULT NULL,
@@ -172,16 +172,16 @@ CREATE TABLE `ba_zone_rates` (
 
 DROP TABLE IF EXISTS `bus_trip_routes`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+ SET character_set_client = utf8mb4 ;
 CREATE TABLE `bus_trip_routes` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `stop_name` text DEFAULT NULL,
-  `stop_address` text DEFAULT NULL,
+  `stop_name` text,
+  `stop_address` text,
   `stop_latitude` decimal(10,6) DEFAULT NULL,
   `stop_longitude` decimal(10,6) DEFAULT NULL,
   `stop_order` int(11) DEFAULT NULL,
   `bus_trip_id` int(11) DEFAULT NULL,
-  `name` text DEFAULT NULL,
+  `name` text,
   PRIMARY KEY (`id`),
   KEY `index_bus_trip_routes_on_bus_trip_id` (`bus_trip_id`),
   CONSTRAINT `fk_rails_41366cd05d` FOREIGN KEY (`bus_trip_id`) REFERENCES `bus_trips` (`id`)
@@ -194,7 +194,7 @@ CREATE TABLE `bus_trip_routes` (
 
 DROP TABLE IF EXISTS `bus_trips`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+ SET character_set_client = utf8mb4 ;
 CREATE TABLE `bus_trips` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `status` varchar(255) DEFAULT NULL,
@@ -211,7 +211,7 @@ CREATE TABLE `bus_trips` (
 
 DROP TABLE IF EXISTS `business_associates`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+ SET character_set_client = utf8mb4 ;
 CREATE TABLE `business_associates` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `admin_f_name` varchar(255) DEFAULT NULL,
@@ -228,16 +228,16 @@ CREATE TABLE `business_associates` (
   `created_at` datetime NOT NULL,
   `updated_at` datetime NOT NULL,
   `name` varchar(255) DEFAULT NULL,
-  `standard_price` decimal(10,0) DEFAULT 0,
-  `pay_period` int(11) DEFAULT 0,
-  `time_on_duty_limit` int(11) DEFAULT 0,
-  `distance_limit` int(11) DEFAULT 0,
-  `rate_by_time` decimal(10,0) DEFAULT 0,
-  `rate_by_distance` decimal(10,0) DEFAULT 0,
-  `invoice_frequency` int(11) DEFAULT 0,
-  `service_tax_percent` decimal(5,4) DEFAULT 0.0000,
-  `swachh_bharat_cess` decimal(5,4) DEFAULT 0.0020,
-  `krishi_kalyan_cess` decimal(5,4) DEFAULT 0.0020,
+  `standard_price` decimal(10,0) DEFAULT '0',
+  `pay_period` int(11) DEFAULT '0',
+  `time_on_duty_limit` int(11) DEFAULT '0',
+  `distance_limit` int(11) DEFAULT '0',
+  `rate_by_time` decimal(10,0) DEFAULT '0',
+  `rate_by_distance` decimal(10,0) DEFAULT '0',
+  `invoice_frequency` int(11) DEFAULT '0',
+  `service_tax_percent` decimal(5,4) DEFAULT '0.0000',
+  `swachh_bharat_cess` decimal(5,4) DEFAULT '0.0020',
+  `krishi_kalyan_cess` decimal(5,4) DEFAULT '0.0020',
   `logistics_company_id` int(11) DEFAULT NULL,
   `profit_centre` varchar(255) DEFAULT NULL,
   `agreement_date` datetime DEFAULT NULL,
@@ -252,7 +252,7 @@ CREATE TABLE `business_associates` (
 
 DROP TABLE IF EXISTS `cluster_vehicles`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+ SET character_set_client = utf8mb4 ;
 CREATE TABLE `cluster_vehicles` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `date` datetime DEFAULT NULL,
@@ -272,12 +272,12 @@ CREATE TABLE `cluster_vehicles` (
 
 DROP TABLE IF EXISTS `configurators`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+ SET character_set_client = utf8mb4 ;
 CREATE TABLE `configurators` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `request_type` varchar(255) DEFAULT NULL,
   `value` varchar(255) DEFAULT '0',
-  `conf_type` int(11) DEFAULT 0,
+  `conf_type` int(11) DEFAULT '0',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -288,7 +288,7 @@ CREATE TABLE `configurators` (
 
 DROP TABLE IF EXISTS `devices`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+ SET character_set_client = utf8mb4 ;
 CREATE TABLE `devices` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `device_id` varchar(255) DEFAULT NULL,
@@ -311,7 +311,7 @@ CREATE TABLE `devices` (
 
 DROP TABLE IF EXISTS `driver_first_pickups`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+ SET character_set_client = utf8mb4 ;
 CREATE TABLE `driver_first_pickups` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `trip_id` int(11) DEFAULT NULL,
@@ -327,12 +327,33 @@ CREATE TABLE `driver_first_pickups` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Table structure for table `driver_locations`
+--
+
+DROP TABLE IF EXISTS `driver_locations`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+ SET character_set_client = utf8mb4 ;
+CREATE TABLE `driver_locations` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `recorded_at` datetime NOT NULL,
+  `trip_id` int(11) DEFAULT NULL,
+  `user_id` varchar(255) DEFAULT NULL,
+  `location` text,
+  `distance` int(11) DEFAULT NULL,
+  `speed` text,
+  `accuracy` text,
+  `created_at` datetime NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=10581 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
 -- Table structure for table `driver_requests`
 --
 
 DROP TABLE IF EXISTS `driver_requests`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+ SET character_set_client = utf8mb4 ;
 CREATE TABLE `driver_requests` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `request_type` int(11) DEFAULT NULL,
@@ -359,7 +380,7 @@ CREATE TABLE `driver_requests` (
 
 DROP TABLE IF EXISTS `drivers`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+ SET character_set_client = utf8mb4 ;
 CREATE TABLE `drivers` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `business_associate_id` int(11) DEFAULT NULL,
@@ -396,7 +417,7 @@ CREATE TABLE `drivers` (
 
 DROP TABLE IF EXISTS `drivers_shifts`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+ SET character_set_client = utf8mb4 ;
 CREATE TABLE `drivers_shifts` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `driver_id` int(11) DEFAULT NULL,
@@ -418,7 +439,7 @@ CREATE TABLE `drivers_shifts` (
 
 DROP TABLE IF EXISTS `employee_clusters`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+ SET character_set_client = utf8mb4 ;
 CREATE TABLE `employee_clusters` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `error` varchar(255) DEFAULT NULL,
@@ -437,7 +458,7 @@ CREATE TABLE `employee_clusters` (
 
 DROP TABLE IF EXISTS `employee_companies`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+ SET character_set_client = utf8mb4 ;
 CREATE TABLE `employee_companies` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `logistics_company_id` int(11) DEFAULT NULL,
@@ -449,16 +470,16 @@ CREATE TABLE `employee_companies` (
   `business_type` varchar(255) DEFAULT NULL,
   `service_tax_no` varchar(255) DEFAULT NULL,
   `hq_address` varchar(255) DEFAULT NULL,
-  `standard_price` decimal(10,0) DEFAULT 0,
-  `pay_period` int(11) DEFAULT 0,
-  `time_on_duty_limit` int(11) DEFAULT 0,
-  `distance_limit` int(11) DEFAULT 0,
-  `rate_by_time` decimal(10,0) DEFAULT 0,
-  `rate_by_distance` decimal(10,0) DEFAULT 0,
-  `invoice_frequency` int(11) DEFAULT 0,
-  `service_tax_percent` decimal(5,4) DEFAULT 0.0000,
-  `swachh_bharat_cess` decimal(5,4) DEFAULT 0.0020,
-  `krishi_kalyan_cess` decimal(5,4) DEFAULT 0.0020,
+  `standard_price` decimal(10,0) DEFAULT '0',
+  `pay_period` int(11) DEFAULT '0',
+  `time_on_duty_limit` int(11) DEFAULT '0',
+  `distance_limit` int(11) DEFAULT '0',
+  `rate_by_time` decimal(10,0) DEFAULT '0',
+  `rate_by_distance` decimal(10,0) DEFAULT '0',
+  `invoice_frequency` int(11) DEFAULT '0',
+  `service_tax_percent` decimal(5,4) DEFAULT '0.0000',
+  `swachh_bharat_cess` decimal(5,4) DEFAULT '0.0020',
+  `krishi_kalyan_cess` decimal(5,4) DEFAULT '0.0020',
   `profit_centre` varchar(255) DEFAULT NULL,
   `agreement_date` datetime DEFAULT NULL,
   PRIMARY KEY (`id`),
@@ -472,7 +493,7 @@ CREATE TABLE `employee_companies` (
 
 DROP TABLE IF EXISTS `employee_schedules`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+ SET character_set_client = utf8mb4 ;
 CREATE TABLE `employee_schedules` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `employee_id` int(11) DEFAULT NULL,
@@ -493,7 +514,7 @@ CREATE TABLE `employee_schedules` (
 
 DROP TABLE IF EXISTS `employee_trip_issues`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+ SET character_set_client = utf8mb4 ;
 CREATE TABLE `employee_trip_issues` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `issue` int(11) DEFAULT NULL,
@@ -509,7 +530,7 @@ CREATE TABLE `employee_trip_issues` (
 
 DROP TABLE IF EXISTS `employee_trips`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+ SET character_set_client = utf8mb4 ;
 CREATE TABLE `employee_trips` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `employee_id` int(11) DEFAULT NULL,
@@ -522,19 +543,19 @@ CREATE TABLE `employee_trips` (
   `updated_at` datetime NOT NULL,
   `trip_route_id` int(11) DEFAULT NULL,
   `rating` int(11) DEFAULT NULL,
-  `rating_feedback` text DEFAULT NULL,
-  `dismissed` tinyint(1) DEFAULT 0,
+  `rating_feedback` text,
+  `dismissed` tinyint(1) DEFAULT '0',
   `site_id` int(11) DEFAULT NULL,
   `state` int(11) DEFAULT NULL,
   `schedule_date` datetime DEFAULT NULL,
   `zone` int(11) DEFAULT NULL,
-  `cluster_error` text DEFAULT NULL,
-  `bus_rider` tinyint(1) DEFAULT 0,
+  `cluster_error` text,
+  `bus_rider` tinyint(1) DEFAULT '0',
   `shift_id` int(11) DEFAULT NULL,
-  `is_clustered` tinyint(1) DEFAULT 0,
-  `route_order` text DEFAULT NULL,
+  `is_clustered` tinyint(1) DEFAULT '0',
+  `route_order` text,
   `employee_cluster_id` int(11) DEFAULT NULL,
-  `cancel_status` text DEFAULT NULL,
+  `cancel_status` text,
   PRIMARY KEY (`id`),
   KEY `index_employee_trips_on_employee_id` (`employee_id`) USING BTREE,
   KEY `index_employee_trips_on_trip_id` (`trip_id`) USING BTREE,
@@ -550,7 +571,7 @@ CREATE TABLE `employee_trips` (
 
 DROP TABLE IF EXISTS `employees`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+ SET character_set_client = utf8mb4 ;
 CREATE TABLE `employees` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `employee_company_id` int(11) DEFAULT NULL,
@@ -570,9 +591,9 @@ CREATE TABLE `employees` (
   `emergency_contact_name` varchar(255) DEFAULT NULL,
   `emergency_contact_phone` varchar(255) DEFAULT NULL,
   `line_manager_id` int(11) DEFAULT NULL,
-  `is_guard` tinyint(1) DEFAULT 0,
-  `geohash` text DEFAULT NULL,
-  `bus_travel` tinyint(1) DEFAULT 0,
+  `is_guard` tinyint(1) DEFAULT '0',
+  `geohash` text,
+  `bus_travel` tinyint(1) DEFAULT '0',
   `bus_trip_route_id` int(11) DEFAULT NULL,
   `billing_zone` varchar(255) DEFAULT 'Default',
   `landmark` varchar(255) DEFAULT NULL,
@@ -581,7 +602,7 @@ CREATE TABLE `employees` (
   KEY `index_employees_on_site_id` (`site_id`) USING BTREE,
   KEY `index_employees_on_zone_id` (`zone_id`) USING BTREE,
   KEY `index_employees_on_bus_trip_route_id` (`bus_trip_route_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1848 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=1851 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -590,7 +611,7 @@ CREATE TABLE `employees` (
 
 DROP TABLE IF EXISTS `employer_shift_managers`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+ SET character_set_client = utf8mb4 ;
 CREATE TABLE `employer_shift_managers` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `employee_company_id` int(11) DEFAULT NULL,
@@ -606,7 +627,7 @@ CREATE TABLE `employer_shift_managers` (
 
 DROP TABLE IF EXISTS `employers`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+ SET character_set_client = utf8mb4 ;
 CREATE TABLE `employers` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `employee_company_id` int(11) DEFAULT NULL,
@@ -629,7 +650,7 @@ CREATE TABLE `employers` (
 
 DROP TABLE IF EXISTS `google_api_keys`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+ SET character_set_client = utf8mb4 ;
 CREATE TABLE `google_api_keys` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `key` varchar(255) DEFAULT NULL,
@@ -648,7 +669,7 @@ CREATE TABLE `google_api_keys` (
 
 DROP TABLE IF EXISTS `ingest_jobs`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+ SET character_set_client = utf8mb4 ;
 CREATE TABLE `ingest_jobs` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `start_date` date DEFAULT NULL,
@@ -664,12 +685,12 @@ CREATE TABLE `ingest_jobs` (
   `error_file_content_type` varchar(255) DEFAULT NULL,
   `error_file_file_size` int(11) DEFAULT NULL,
   `error_file_updated_at` datetime DEFAULT NULL,
-  `failed_row_count` int(11) DEFAULT 0,
-  `processed_row_count` int(11) DEFAULT 0,
-  `schedule_updated_count` int(11) DEFAULT 0,
-  `employee_provisioned_count` int(11) DEFAULT 0,
-  `schedule_provisioned_count` int(11) DEFAULT 0,
-  `schedule_assigned_count` int(11) DEFAULT 0,
+  `failed_row_count` int(11) DEFAULT '0',
+  `processed_row_count` int(11) DEFAULT '0',
+  `schedule_updated_count` int(11) DEFAULT '0',
+  `employee_provisioned_count` int(11) DEFAULT '0',
+  `schedule_provisioned_count` int(11) DEFAULT '0',
+  `schedule_assigned_count` int(11) DEFAULT '0',
   `ingest_type` varchar(255) DEFAULT NULL,
   `file_digest` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`),
@@ -683,7 +704,7 @@ CREATE TABLE `ingest_jobs` (
 
 DROP TABLE IF EXISTS `invoice_attachments`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+ SET character_set_client = utf8mb4 ;
 CREATE TABLE `invoice_attachments` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `created_at` datetime NOT NULL,
@@ -704,7 +725,7 @@ CREATE TABLE `invoice_attachments` (
 
 DROP TABLE IF EXISTS `invoices`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+ SET character_set_client = utf8mb4 ;
 CREATE TABLE `invoices` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `company_type` varchar(255) DEFAULT NULL,
@@ -728,7 +749,7 @@ CREATE TABLE `invoices` (
 
 DROP TABLE IF EXISTS `line_managers`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+ SET character_set_client = utf8mb4 ;
 CREATE TABLE `line_managers` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `employee_company_id` int(11) DEFAULT NULL,
@@ -745,7 +766,7 @@ CREATE TABLE `line_managers` (
 
 DROP TABLE IF EXISTS `logistics_companies`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+ SET character_set_client = utf8mb4 ;
 CREATE TABLE `logistics_companies` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) DEFAULT NULL,
@@ -766,7 +787,7 @@ CREATE TABLE `logistics_companies` (
 
 DROP TABLE IF EXISTS `notifications`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+ SET character_set_client = utf8mb4 ;
 CREATE TABLE `notifications` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `driver_id` int(11) DEFAULT NULL,
@@ -777,9 +798,9 @@ CREATE TABLE `notifications` (
   `status` int(11) DEFAULT NULL,
   `created_at` datetime NOT NULL,
   `updated_at` datetime NOT NULL,
-  `resolved_status` tinyint(1) DEFAULT 1,
-  `call_sid` text DEFAULT NULL,
-  `new_notification` tinyint(1) DEFAULT 0,
+  `resolved_status` tinyint(1) DEFAULT '1',
+  `call_sid` text,
+  `new_notification` tinyint(1) DEFAULT '0',
   `sequence` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `index_notifications_on_driver_id` (`driver_id`) USING BTREE,
@@ -794,7 +815,7 @@ CREATE TABLE `notifications` (
 
 DROP TABLE IF EXISTS `operator_shift_managers`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+ SET character_set_client = utf8mb4 ;
 CREATE TABLE `operator_shift_managers` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `logistics_company_id` int(11) DEFAULT NULL,
@@ -816,7 +837,7 @@ CREATE TABLE `operator_shift_managers` (
 
 DROP TABLE IF EXISTS `operators`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+ SET character_set_client = utf8mb4 ;
 CREATE TABLE `operators` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `logistics_company_id` int(11) DEFAULT NULL,
@@ -839,17 +860,17 @@ CREATE TABLE `operators` (
 
 DROP TABLE IF EXISTS `package_rates`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+ SET character_set_client = utf8mb4 ;
 CREATE TABLE `package_rates` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `vehicle_rate_id` int(11) DEFAULT NULL,
   `duration` varchar(255) DEFAULT NULL,
-  `package_duty_hours` decimal(10,0) DEFAULT 0,
-  `package_km` decimal(10,0) DEFAULT 0,
-  `package_overage_per_km` decimal(10,0) DEFAULT 0,
-  `package_overage_per_time` decimal(10,0) DEFAULT 0,
-  `package_overage_time` tinyint(1) DEFAULT 0,
-  `package_rate` decimal(10,0) DEFAULT 0,
+  `package_duty_hours` decimal(10,0) DEFAULT '0',
+  `package_km` decimal(10,0) DEFAULT '0',
+  `package_overage_per_km` decimal(10,0) DEFAULT '0',
+  `package_overage_per_time` decimal(10,0) DEFAULT '0',
+  `package_overage_time` tinyint(1) DEFAULT '0',
+  `package_rate` decimal(10,0) DEFAULT '0',
   `package_mileage_calculation` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `index_package_rates_on_vehicle_rate_id` (`vehicle_rate_id`)
@@ -862,7 +883,7 @@ CREATE TABLE `package_rates` (
 
 DROP TABLE IF EXISTS `schema_migrations`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+ SET character_set_client = utf8mb4 ;
 CREATE TABLE `schema_migrations` (
   `version` varchar(255) NOT NULL,
   PRIMARY KEY (`version`)
@@ -875,13 +896,13 @@ CREATE TABLE `schema_migrations` (
 
 DROP TABLE IF EXISTS `services`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+ SET character_set_client = utf8mb4 ;
 CREATE TABLE `services` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `site_id` int(11) DEFAULT NULL,
   `service_type` varchar(255) DEFAULT NULL,
   `billing_model` varchar(255) DEFAULT NULL,
-  `vary_with_vehicle` tinyint(1) DEFAULT 0,
+  `vary_with_vehicle` tinyint(1) DEFAULT '0',
   `logistics_company_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `index_services_on_site_id` (`site_id`),
@@ -895,7 +916,7 @@ CREATE TABLE `services` (
 
 DROP TABLE IF EXISTS `shift_times`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+ SET character_set_client = utf8mb4 ;
 CREATE TABLE `shift_times` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `shift_manager_id` int(11) DEFAULT NULL,
@@ -916,7 +937,7 @@ CREATE TABLE `shift_times` (
 
 DROP TABLE IF EXISTS `shift_users`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+ SET character_set_client = utf8mb4 ;
 CREATE TABLE `shift_users` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `shift_id` int(11) DEFAULT NULL,
@@ -933,7 +954,7 @@ CREATE TABLE `shift_users` (
 
 DROP TABLE IF EXISTS `shifts`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+ SET character_set_client = utf8mb4 ;
 CREATE TABLE `shifts` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) DEFAULT NULL,
@@ -952,7 +973,7 @@ CREATE TABLE `shifts` (
 
 DROP TABLE IF EXISTS `sites`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+ SET character_set_client = utf8mb4 ;
 CREATE TABLE `sites` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) DEFAULT NULL,
@@ -973,7 +994,7 @@ CREATE TABLE `sites` (
 
 DROP TABLE IF EXISTS `transport_desk_managers`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+ SET character_set_client = utf8mb4 ;
 CREATE TABLE `transport_desk_managers` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `employee_company_id` int(11) DEFAULT NULL,
@@ -990,7 +1011,7 @@ CREATE TABLE `transport_desk_managers` (
 
 DROP TABLE IF EXISTS `trip_change_requests`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+ SET character_set_client = utf8mb4 ;
 CREATE TABLE `trip_change_requests` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `request_type` int(11) DEFAULT NULL,
@@ -1002,9 +1023,9 @@ CREATE TABLE `trip_change_requests` (
   `employee_trip_id` int(11) DEFAULT NULL,
   `created_at` datetime NOT NULL,
   `updated_at` datetime NOT NULL,
-  `shift` tinyint(1) DEFAULT 0,
-  `bus_rider` tinyint(1) DEFAULT 0,
-  `schedule_date` text DEFAULT NULL,
+  `shift` tinyint(1) DEFAULT '0',
+  `bus_rider` tinyint(1) DEFAULT '0',
+  `schedule_date` text,
   PRIMARY KEY (`id`),
   KEY `index_trip_change_requests_on_employee_id` (`employee_id`) USING BTREE,
   KEY `index_trip_change_requests_on_employee_trip_id` (`employee_trip_id`) USING BTREE,
@@ -1018,14 +1039,14 @@ CREATE TABLE `trip_change_requests` (
 
 DROP TABLE IF EXISTS `trip_invoices`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+ SET character_set_client = utf8mb4 ;
 CREATE TABLE `trip_invoices` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `trip_id` int(11) DEFAULT NULL,
   `invoice_id` int(11) DEFAULT NULL,
-  `trip_amount` decimal(10,0) DEFAULT 0,
-  `trip_penalty` decimal(10,0) DEFAULT 0,
-  `trip_toll` decimal(10,0) DEFAULT 0,
+  `trip_amount` decimal(10,0) DEFAULT '0',
+  `trip_penalty` decimal(10,0) DEFAULT '0',
+  `trip_toll` decimal(10,0) DEFAULT '0',
   `vehicle_rate_id` int(11) DEFAULT NULL,
   `zone_rate_id` int(11) DEFAULT NULL,
   `vehicle_id` int(11) DEFAULT NULL,
@@ -1046,16 +1067,16 @@ CREATE TABLE `trip_invoices` (
 
 DROP TABLE IF EXISTS `trip_locations`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+ SET character_set_client = utf8mb4 ;
 CREATE TABLE `trip_locations` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `trip_id` int(11) DEFAULT NULL,
-  `location` text DEFAULT NULL,
+  `location` text,
   `time` datetime DEFAULT NULL,
   `created_at` datetime NOT NULL,
   `updated_at` datetime NOT NULL,
   `distance` int(11) DEFAULT NULL,
-  `speed` text DEFAULT NULL,
+  `speed` text,
   PRIMARY KEY (`id`),
   KEY `index_trip_locations_on_trip_id` (`trip_id`) USING BTREE
 ) ENGINE=InnoDB AUTO_INCREMENT=17825416 DEFAULT CHARSET=utf8;
@@ -1067,7 +1088,7 @@ CREATE TABLE `trip_locations` (
 
 DROP TABLE IF EXISTS `trip_route_exceptions`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+ SET character_set_client = utf8mb4 ;
 CREATE TABLE `trip_route_exceptions` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `trip_route_id` int(11) DEFAULT NULL,
@@ -1085,14 +1106,14 @@ CREATE TABLE `trip_route_exceptions` (
 
 DROP TABLE IF EXISTS `trip_routes`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+ SET character_set_client = utf8mb4 ;
 CREATE TABLE `trip_routes` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `planned_duration` int(11) DEFAULT NULL,
   `planned_distance` int(11) DEFAULT NULL,
   `planned_route_order` int(11) DEFAULT NULL,
-  `planned_start_location` text DEFAULT NULL,
-  `planned_end_location` text DEFAULT NULL,
+  `planned_start_location` text,
+  `planned_end_location` text,
   `employee_trip_id` int(11) DEFAULT NULL,
   `trip_id` int(11) DEFAULT NULL,
   `driver_arrived_date` datetime DEFAULT NULL,
@@ -1102,29 +1123,29 @@ CREATE TABLE `trip_routes` (
   `scheduled_distance` int(11) DEFAULT NULL,
   `scheduled_duration` int(11) DEFAULT NULL,
   `scheduled_route_order` int(11) DEFAULT NULL,
-  `scheduled_start_location` text DEFAULT NULL,
-  `scheduled_end_location` text DEFAULT NULL,
-  `driver_arrived_location` text DEFAULT NULL,
-  `check_in_location` text DEFAULT NULL,
-  `drop_off_location` text DEFAULT NULL,
-  `missed_location` text DEFAULT NULL,
-  `cancel_exception` tinyint(1) DEFAULT 0,
-  `cab_type` text DEFAULT NULL,
+  `scheduled_start_location` text,
+  `scheduled_end_location` text,
+  `driver_arrived_location` text,
+  `check_in_location` text,
+  `drop_off_location` text,
+  `missed_location` text,
+  `cancel_exception` tinyint(1) DEFAULT '0',
+  `cab_type` text,
   `cab_fare` int(11) DEFAULT NULL,
-  `cab_driver_name` text DEFAULT NULL,
-  `cab_licence_number` text DEFAULT NULL,
-  `cab_start_location` text DEFAULT NULL,
-  `cab_end_location` text DEFAULT NULL,
-  `bus_rider` tinyint(1) DEFAULT 0,
-  `bus_stop_name` text DEFAULT NULL,
-  `bus_stop_address` text DEFAULT NULL,
+  `cab_driver_name` text,
+  `cab_licence_number` text,
+  `cab_start_location` text,
+  `cab_end_location` text,
+  `bus_rider` tinyint(1) DEFAULT '0',
+  `bus_stop_name` text,
+  `bus_stop_address` text,
   `missed_date` datetime DEFAULT NULL,
   `geofence_driver_arrived_date` datetime DEFAULT NULL,
   `geofence_completed_date` datetime DEFAULT NULL,
-  `geofence_driver_arrived_location` text DEFAULT NULL,
-  `geofence_completed_location` text DEFAULT NULL,
+  `geofence_driver_arrived_location` text,
+  `geofence_completed_location` text,
   `move_to_next_step_date` datetime DEFAULT NULL,
-  `move_to_next_step_location` text DEFAULT NULL,
+  `move_to_next_step_location` text,
   `pick_up_time` datetime DEFAULT NULL,
   `drop_off_time` datetime DEFAULT NULL,
   PRIMARY KEY (`id`),
@@ -1141,7 +1162,7 @@ CREATE TABLE `trip_routes` (
 
 DROP TABLE IF EXISTS `trips`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+ SET character_set_client = utf8mb4 ;
 CREATE TABLE `trips` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `driver_id` int(11) DEFAULT NULL,
@@ -1159,28 +1180,28 @@ CREATE TABLE `trips` (
   `real_duration` int(11) DEFAULT NULL,
   `completed_date` datetime DEFAULT NULL,
   `trip_accept_time` datetime DEFAULT NULL,
-  `start_location` text DEFAULT NULL,
+  `start_location` text,
   `scheduled_approximate_duration` int(11) DEFAULT NULL,
   `scheduled_approximate_distance` int(11) DEFAULT NULL,
   `scheduled_date` datetime DEFAULT NULL,
-  `cancel_status` text DEFAULT NULL,
-  `book_ola` tinyint(1) DEFAULT 0,
-  `ola_fare` text DEFAULT NULL,
-  `bus_rider` tinyint(1) DEFAULT 0,
-  `toll` decimal(10,0) DEFAULT 0,
-  `penalty` decimal(10,0) DEFAULT 0,
-  `amount` decimal(10,0) DEFAULT 0,
-  `paid` tinyint(1) DEFAULT 0,
-  `is_manual` tinyint(1) DEFAULT 0,
+  `cancel_status` text,
+  `book_ola` tinyint(1) DEFAULT '0',
+  `ola_fare` text,
+  `bus_rider` tinyint(1) DEFAULT '0',
+  `toll` decimal(10,0) DEFAULT '0',
+  `penalty` decimal(10,0) DEFAULT '0',
+  `amount` decimal(10,0) DEFAULT '0',
+  `paid` tinyint(1) DEFAULT '0',
+  `is_manual` tinyint(1) DEFAULT '0',
   `employee_cluster_id` int(11) DEFAULT NULL,
-  `trip_accept_location` text DEFAULT NULL,
-  `ba_toll` decimal(10,0) DEFAULT 0,
-  `ba_penalty` decimal(10,0) DEFAULT 0,
-  `ba_amount` decimal(10,0) DEFAULT 0,
-  `ba_paid` tinyint(1) DEFAULT 0,
-  `actual_mileage` int(11) DEFAULT 0,
+  `trip_accept_location` text,
+  `ba_toll` decimal(10,0) DEFAULT '0',
+  `ba_penalty` decimal(10,0) DEFAULT '0',
+  `ba_amount` decimal(10,0) DEFAULT '0',
+  `ba_paid` tinyint(1) DEFAULT '0',
+  `actual_mileage` int(11) DEFAULT '0',
   `driver_should_start_trip_time` datetime DEFAULT NULL,
-  `driver_should_start_trip_location` text DEFAULT NULL,
+  `driver_should_start_trip_location` text,
   `driver_should_start_trip_timestamp` datetime DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `index_trips_on_driver_id` (`driver_id`) USING BTREE,
@@ -1199,7 +1220,7 @@ CREATE TABLE `trips` (
 
 DROP TABLE IF EXISTS `users`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+ SET character_set_client = utf8mb4 ;
 CREATE TABLE `users` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `email` varchar(255) NOT NULL DEFAULT '',
@@ -1207,7 +1228,7 @@ CREATE TABLE `users` (
   `f_name` varchar(255) DEFAULT NULL,
   `m_name` varchar(255) DEFAULT NULL,
   `l_name` varchar(255) DEFAULT NULL,
-  `role` int(11) DEFAULT 0,
+  `role` int(11) DEFAULT '0',
   `entity_type` varchar(255) DEFAULT NULL,
   `entity_id` int(11) DEFAULT NULL,
   `phone` varchar(255) DEFAULT NULL,
@@ -1215,14 +1236,14 @@ CREATE TABLE `users` (
   `reset_password_token` varchar(255) DEFAULT NULL,
   `reset_password_sent_at` datetime DEFAULT NULL,
   `remember_created_at` datetime DEFAULT NULL,
-  `sign_in_count` int(11) NOT NULL DEFAULT 0,
+  `sign_in_count` int(11) NOT NULL DEFAULT '0',
   `current_sign_in_at` datetime DEFAULT NULL,
   `last_sign_in_at` datetime DEFAULT NULL,
   `current_sign_in_ip` varchar(255) DEFAULT NULL,
   `last_sign_in_ip` varchar(255) DEFAULT NULL,
   `created_at` datetime NOT NULL,
   `updated_at` datetime NOT NULL,
-  `tokens` text DEFAULT NULL,
+  `tokens` text,
   `provider` varchar(255) NOT NULL DEFAULT 'email',
   `uid` varchar(255) NOT NULL DEFAULT '',
   `avatar_file_name` varchar(255) DEFAULT NULL,
@@ -1232,8 +1253,8 @@ CREATE TABLE `users` (
   `last_active_time` datetime DEFAULT '2009-01-01 00:00:00',
   `status` int(11) DEFAULT NULL,
   `passcode` varchar(255) DEFAULT NULL,
-  `invite_count` int(11) DEFAULT 0,
-  `current_location` text DEFAULT NULL,
+  `invite_count` int(11) DEFAULT '0',
+  `current_location` text,
   PRIMARY KEY (`id`),
   UNIQUE KEY `index_users_on_email` (`email`) USING BTREE,
   UNIQUE KEY `index_users_on_phone` (`phone`) USING BTREE,
@@ -1241,7 +1262,7 @@ CREATE TABLE `users` (
   UNIQUE KEY `index_users_on_username` (`username`) USING BTREE,
   KEY `index_users_on_entity_type_and_entity_id` (`entity_type`,`entity_id`) USING BTREE,
   KEY `index_users_on_uid` (`uid`)
-) ENGINE=InnoDB AUTO_INCREMENT=2112 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2115 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1250,17 +1271,17 @@ CREATE TABLE `users` (
 
 DROP TABLE IF EXISTS `vehicle_rates`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+ SET character_set_client = utf8mb4 ;
 CREATE TABLE `vehicle_rates` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `service_id` int(11) DEFAULT NULL,
   `vehicle_capacity` int(11) DEFAULT NULL,
-  `ac` tinyint(1) DEFAULT 1,
-  `cgst` decimal(10,0) DEFAULT 0,
-  `sgst` decimal(10,0) DEFAULT 0,
-  `overage` tinyint(1) DEFAULT 0,
-  `time_on_duty` decimal(10,0) DEFAULT 0,
-  `overage_per_hour` decimal(10,0) DEFAULT 0,
+  `ac` tinyint(1) DEFAULT '1',
+  `cgst` decimal(10,0) DEFAULT '0',
+  `sgst` decimal(10,0) DEFAULT '0',
+  `overage` tinyint(1) DEFAULT '0',
+  `time_on_duty` decimal(10,0) DEFAULT '0',
+  `overage_per_hour` decimal(10,0) DEFAULT '0',
   PRIMARY KEY (`id`),
   KEY `index_vehicle_rates_on_service_id` (`service_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
@@ -1272,7 +1293,7 @@ CREATE TABLE `vehicle_rates` (
 
 DROP TABLE IF EXISTS `vehicle_trip_invoices`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+ SET character_set_client = utf8mb4 ;
 CREATE TABLE `vehicle_trip_invoices` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `trip_id` int(11) DEFAULT NULL,
@@ -1293,7 +1314,7 @@ CREATE TABLE `vehicle_trip_invoices` (
 
 DROP TABLE IF EXISTS `vehicles`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+ SET character_set_client = utf8mb4 ;
 CREATE TABLE `vehicles` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `driver_id` int(11) DEFAULT NULL,
@@ -1313,7 +1334,7 @@ CREATE TABLE `vehicles` (
   `puc_validity_date` date DEFAULT NULL,
   `fc_validity_date` date DEFAULT NULL,
   `ac` tinyint(1) DEFAULT NULL,
-  `seats` int(11) DEFAULT 0,
+  `seats` int(11) DEFAULT '0',
   `fuel_type` varchar(255) DEFAULT NULL,
   `make_year` int(10) unsigned NOT NULL,
   `induction_date` int(10) unsigned DEFAULT NULL,
@@ -1330,7 +1351,7 @@ CREATE TABLE `vehicles` (
   `photo_content_type` varchar(255) DEFAULT NULL,
   `photo_file_size` int(11) DEFAULT NULL,
   `photo_updated_at` datetime DEFAULT NULL,
-  `status` text DEFAULT NULL,
+  `status` text,
   PRIMARY KEY (`id`),
   KEY `index_vehicles_on_business_associate_id` (`business_associate_id`) USING BTREE,
   KEY `index_vehicles_on_driver_id` (`driver_id`) USING BTREE,
@@ -1344,12 +1365,12 @@ CREATE TABLE `vehicles` (
 
 DROP TABLE IF EXISTS `zone_rates`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+ SET character_set_client = utf8mb4 ;
 CREATE TABLE `zone_rates` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `rate` decimal(10,0) DEFAULT 0,
-  `guard_rate` decimal(10,0) DEFAULT 0,
-  `name` text DEFAULT NULL,
+  `rate` decimal(10,0) DEFAULT '0',
+  `guard_rate` decimal(10,0) DEFAULT '0',
+  `name` text,
   `vehicle_rate_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `index_zone_rates_on_vehicle_rate_id` (`vehicle_rate_id`)
@@ -1362,7 +1383,7 @@ CREATE TABLE `zone_rates` (
 
 DROP TABLE IF EXISTS `zones`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+ SET character_set_client = utf8mb4 ;
 CREATE TABLE `zones` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` int(11) DEFAULT NULL,
@@ -1385,4 +1406,4 @@ CREATE TABLE `zones` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-04-05 12:38:44
+-- Dump completed on 2019-02-04 15:36:11
