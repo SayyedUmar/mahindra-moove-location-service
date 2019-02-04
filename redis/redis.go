@@ -12,7 +12,7 @@ var client *redis.Client
 func SetupRedis() *redis.Client {
 	redisUrl := os.Getenv("LOCATION_REDIS_URL")
 	if redisUrl == "" {
-		redisUrl = "localhost:6379"
+		redisUrl = "grab-redis.bujlt5.0001.apse1.cache.amazonaws.com:6379"
 	}
 	redisPassword := os.Getenv("LOCATION_REDIS_PASSWORD")
 	client := redis.NewClient(&redis.Options{
