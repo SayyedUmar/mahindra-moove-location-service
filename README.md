@@ -1,34 +1,37 @@
+## Location Service
 [![CircleCI](https://circleci.com/gh/MOOVE-Network/location_service/tree/eta_service.svg?style=svg&circle-token=3342db5a1501e6add8807b75b18683feea41aec6)](https://circleci.com/gh/MOOVE-Network/location_service/tree/eta_service)
+![Platform](https://img.shields.io/badge/platform-go-green.svg)
 
 Location service provides drop in replacement for existing Rails endpoints dealing with Heartbeat and current location
 
-## :hammer: Building (without docker)
+
+## Requirements
+- Go
+
+## How to build the service
+#### :hammer: Building without docker
 
 This project uses [dep](https://github.com/golang/dep) for dependency management. Please do not check in the `vendor` directory. You can obtain `dep` like so.
-
 ```
 $ go get -u github.com/golang/dep/cmd/dep
 $ dep ensure
-
 ```
 
 This will add the dependencies to the `vendor` directory. You can then build the project with `make`.
-
 ```
 $ make linux
 ```
 
 To build for `darwin`, you can do `make mac`.
 
-## :hammer: Building with docker
+#### :hammer: Building with docker
 
 For building with docker, this project uses a multi-stage build introduced in docker 17.05.
-
 ```
 $ docker build -t moove/location_service:latest .
 ```
 
-## :rocket: Running
+## How to run the service :rocket:
 
 This service currently needs the following environment variables 
 
@@ -39,10 +42,17 @@ This service currently needs the following environment variables
 * `FCM_TOPIC_PREFIX` is the topic prefix used for messages sent with this service
 * `LOCATION_REDIS_URL` is the redis url for caching trip locations it defaults to `localhost:6379`
 
-### Configuring systemd
+#### Configuring systemd
 
 * Copy `location_service.service.example` to `/lib/systemd/system/location_service.service`. 
 * Once done, make sure to `sudo chmod 755 /lib/systemd/system/location_service.service`.
 * To enable`sudo systemctl enable location_service.service`
 * To start `sudo systemctl start location_service`
 * To look at the logs you can use `sudo journalctl -f -u location_service`
+
+
+## Author
+MOOVE-Rider iOS app code is owned and maintained by [Mahindra Logistics](https://github.com/Mahindra-Logistics)
+
+## License
+Copyright (C) 2017-2019 [Mahindra Logistics](https://github.com/Mahindra-Logistics)
