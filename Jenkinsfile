@@ -4,7 +4,7 @@ pipeline {
     stage('Build') {
       steps {
         echo 'Build Image'
-        sh 'docker build -t moove/location_service:"build-$BUILD_NUMBER" moove/location_service:latest 482532497705.dkr.ecr.ap-south-1.amazonaws.com/location_service:build-${BUILD_NUMBER} .'
+        sh 'docker build -t moove/location_service:"build-$BUILD_NUMBER" -t moove/location_service:latest -t 482532497705.dkr.ecr.ap-south-1.amazonaws.com/location_service:build-${BUILD_NUMBER} .'
       }
     }
     stage('Push To ECS') {
