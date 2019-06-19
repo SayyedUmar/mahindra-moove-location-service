@@ -46,3 +46,6 @@ This service currently needs the following environment variables
 * To enable`sudo systemctl enable location_service.service`
 * To start `sudo systemctl start location_service`
 * To look at the logs you can use `sudo journalctl -f -u location_service`
+
+
+1. AutoDeploy Test
