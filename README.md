@@ -54,4 +54,4 @@ This service currently needs the following environment variables
 MOOVE-Rider iOS app code is owned and maintained by [Mahindra Logistics](https://github.com/Mahindra-Logistics)
 
 ## License
-Copyright (C) 2017-2019 [Mahindra Logistics](https://github.com/Mahindra-Logistics)
+Copyright (C) 2017-2019 [Mahindra Logistics](https://github.com/Mahindra-Logistics) 
