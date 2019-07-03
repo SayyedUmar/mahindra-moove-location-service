@@ -55,3 +55,4 @@ MOOVE-Rider iOS app code is owned and maintained by [Mahindra Logistics](https:/
 
 ## License
 Copyright (C) 2017-2019 [Mahindra Logistics](https://github.com/Mahindra-Logistics) 
+ 
