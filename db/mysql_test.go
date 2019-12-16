@@ -90,7 +90,7 @@ func seedData(db *sqlx.DB) {
 
 func TestMain(m *testing.M) {
 	defer handleExit()
-	os.Setenv("LOCATION_DATABASE_URL", "root:@/moove_test?multiStatements=true&autocommit=false&parseTime=true")
+	os.Setenv("LOCATION_DATABASE_URL", "MOOVE_DEV:NG$Pir7ySMJ9m&p9@tcp(vaayu-uat.cjny84emnsh9.ap-south-1.rds.amazonaws.com:3306)/moove_db_uat?parseTime=true")
 	db := InitSQLConnection()
 	_, err := sqlx.LoadFile(db, "../data/mysql_structure.sql")
 	seedData(db)

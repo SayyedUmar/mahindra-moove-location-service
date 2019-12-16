@@ -1,6 +1,6 @@
 -- MySQL dump 10.16  Distrib 10.2.13-MariaDB, for osx10.13 (x86_64)
 --
--- Host: localhost    Database: moove_development
+-- Host: localhost    Database: moove_db_uat
 -- ------------------------------------------------------
 -- Server version	10.2.13-MariaDB
 

@@ -38,7 +38,7 @@ var getDriverByUserIDQuery = `
 	join users u on u.entity_id = d.id and u.entity_type = "Driver"
 	where u.id = ?`
 
-var getLastDriverLocationQuery = `select current_location from users where id=?`
+var getLastDriverLocationQuery = `select current_location from users where entity_id=? and entity_type = "Driver"`
 
 //GetDriverByID retuns Driver struct along with user for a give driver id if found otherwise will return error
 func GetDriverByID(db sqlx.Queryer, driverID int) (*Driver, error) {
