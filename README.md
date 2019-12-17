@@ -50,9 +50,9 @@ This service currently needs the following environment variables
 * To start `sudo systemctl start location_service`
 * To look at the logs you can use `sudo journalctl -f -u location_service`
 
-
 ## Author
 MOOVE-Rider iOS app code is owned and maintained by [Mahindra Logistics](https://github.com/Mahindra-Logistics)
 
 ## License
-Copyright (C) 2017-2019 [Mahindra Logistics](https://github.com/Mahindra-Logistics)
+Copyright (C) 2017-2019 [Mahindra Logistics](https://github.com/Mahindra-Logistics) 
+ 

@@ -1,7 +1,7 @@
 package models
 
 import (
-	"os"
+	"fmt"
 
 	"github.com/MOOVE-Network/location_service/models/migrations"
 	"github.com/jmoiron/sqlx"
@@ -12,11 +12,21 @@ import (
 var db *sqlx.DB
 
 func InitSQLConnection() *sqlx.DB {
-	dbUrl := os.Getenv("LOCATION_PG_DATABASE_URL")
-	if dbUrl == "" {
-		dbUrl = "postgres://localhost/location_service_dev?sslmode=disable"
-	}
-	localDb, err := sqlx.Open("postgres", dbUrl)
+	// dbUrl := os.Getenv("LOCATION_PG_DATABASE_URL")
+	// if dbUrl == "" {
+	// 	dbUrl = "postgres://localhost/location_service_dev?sslmode=disable"
+	// }
+	const (
+		host     = "moove-pg-uat10.cjny84emnsh9.ap-south-1.rds.amazonaws.com"
+		port     = 5432
+		user     = "MOOVE_DEV"
+		password = ""
+		dbname   = "moove-pg-uat10"
+	)
+	dbURL := "MOOVE_DEV:NG$Pir7ySMJ9m&p9@moove-pg-uat10.cjny84emnsh9.ap-south-1.rds.amazonaws.com/location_service?sslmode=disable"
+		//fmt.Sprintf("host=%s port=%d user=%s "+"password=%s dbname=%s sslmode=disable",host, port, user, password, dbname)
+		panic("postgres Database connecting..")
+	localDb, err := sqlx.Open("postgres", dbURL)
 	if err != nil {
 		panic("something is wrong with open")
 	}

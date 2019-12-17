@@ -1,6 +1,7 @@
 package models
 
 import (
+	"fmt"
 	"os"
 	"testing"
 )
@@ -19,7 +20,16 @@ type exit struct{ code int }
 func TestMain(m *testing.M) {
 	defer handleExit()
 	if os.Getenv("LOCATION_PG_DATABASE_URL") == "" {
-		os.Setenv("LOCATION_PG_DATABASE_URL", "postgres://localhost/location_service_test?sslmode=disable")
+		const (
+			host     = "moove-pg-uat10.cjny84emnsh9.ap-south-1.rds.amazonaws.com"
+			port     = 5432
+			user     = "MOOVE_DEV"
+			password = ""
+			dbname   = "moove-pg-uat10"
+		)
+		dbURL := "MOOVE_DEV:NG$Pir7ySMJ9m&p9@moove-pg-uat10.cjny84emnsh9.ap-south-1.rds.amazonaws.com/location_service?sslmode=disable"
+		//fmt.Sprintf("host=%s port=%d user=%s "+"password=%s dbname=%s sslmode=disable",host, port, user, password, dbname)
+		os.Setenv("LOCATION_PG_DATABASE_URL", dbURL)
 	}
 	db := InitSQLConnection()
 	SetActiveDB(db)
