@@ -1,4 +1,4 @@
-VERSION_PACKAGE=github.com/MOOVE-Network/location_service/version
+VERSION_PACKAGE=github.com/Mahindra-Logistics/moove-location-service/version
 COMMIT=`git rev-parse --short -q HEAD`
 BRANCH=`git symbolic-ref -q --short HEAD`
 STATE=`if [ -n "$(git status --porcelain)" ]; then echo 'dirty'; else echo 'clean'; fi`
