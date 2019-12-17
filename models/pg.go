@@ -1,8 +1,6 @@
 package models
 
 import (
-	"fmt"
-
 	"github.com/MOOVE-Network/location_service/models/migrations"
 	"github.com/jmoiron/sqlx"
 	_ "github.com/lib/pq"
