@@ -84,14 +84,53 @@ func IsTripRouteNotStarted(db sqlx.Queryer, id int) (bool, error) {
 //getTripRouteByID returns TripRoute for given tripRoute id
 //Caution: this does not load TripRoute.Trip
 func getTripRouteByID(db sqlx.Queryer, id int) (*TripRoute, error) {
-	row := db.QueryRowx(tripRoutesByIDQuery, id)
-	var tr TripRoute
-	err := row.StructScan(&tr)
-
+	rows, err := db.Query(tripRoutesByIDQuery, id)
 	if err != nil {
-		fmt.Println("Error during stuct scan of trip route")
-		return nil, err
+		panic(err)
 	}
+	var tr TripRoute
+	// err := row.StructScan(&tr)
+
+	/*
+		ID                     int            `db:"id"`
+		TripID                 int            `db:"trip_id"`
+		Status                 string         `db:"status"`
+		ScheduledRouteOrder    int            `db:"scheduled_route_order"`
+		ScheduledStartLocation Location       `db:"scheduled_start_location"`
+		ScheduledEndLocation   Location       `db:"scheduled_end_location"`
+		EmployeeID             int            `db:"employee_id"`
+		EmployeeUserID         int            `db:"employee_user_id"`
+		BusStopName            sql.NullString `db:"bus_stop_name"`
+		PickUpTime             null.Time      `db:"pick_up_time"`
+		DropOffTime            null.Time      `db:"drop_off_time"`
+		Date                   null.Time      `db:"date"`
+		Trip                   Trip
+	*/
+
+	for rows.Next() {
+		err := rows.Scan(&tr.ID,
+			&tr.TripID,
+			&tr.Status,
+			&tr.ScheduledRouteOrder,
+			&tr.ScheduledStartLocation,
+			&tr.ScheduledEndLocation,
+			// &tr.EmployeeID,
+			&tr.EmployeeUserID,
+			&tr.BusStopName,
+			// &tr.PickUpTime,
+			// &tr.DropOffTime,
+			&tr.Date)
+		// &tr.Trip)
+		if err != nil {
+			fmt.Println("Error during stuct scan of trip route", err)
+		}
+		// fmt.Println("================================", tl)
+	}
+
+	// if err != nil {
+	// 	fmt.Println("Error during stuct scan of trip route")
+	// 	return nil, err
+	// }
 
 	return &tr, nil
 }

@@ -1,6 +1,7 @@
 package db
 
 import (
+	"fmt"
 	"time"
 
 	"github.com/jmoiron/sqlx"
@@ -44,8 +45,32 @@ func (tl *TripLocation) Save(db NamedExecer) error {
 // LatestTripLocation returns the latest trip location of the trip
 func LatestTripLocation(q sqlx.Queryer, tripID int) (*TripLocation, error) {
 	var tl TripLocation
-	row := q.QueryRowx("select * from trip_locations where trip_id=? order by id desc limit 1", tripID)
-	err := row.StructScan(&tl)
+	rows, err := q.Query("select * from trip_locations where trip_id=? order by id desc limit 1", tripID)
+	if err != nil {
+		panic(err)
+	}
+	// fmt.Println(rows)
+
+	for rows.Next() {
+		err := rows.Scan(&tl.ID, &tl.TripID, &tl.Location, &tl.Time, &tl.Speed, &tl.Distance, &tl.CreatedAt, &tl.UpdatedAt)
+		if err != nil {
+			fmt.Println(err)
+		}
+		// fmt.Println("================================", tl)
+	}
+
+	/*
+		ID        int       `db:"id"`
+		TripID    int       `db:"trip_id"`
+		Location  Location  `db:"location"`
+		Time      time.Time `db:"time"`
+		Speed     *string   `db:"speed"`
+		Distance  int       `db:"distance"`
+		CreatedAt time.Time `db:"created_at"`
+		UpdatedAt time.Time `db:"updated_at"`
+	*/
+
+	// err := row.StructScan(&tl)
 	return &tl, err
 }
 
