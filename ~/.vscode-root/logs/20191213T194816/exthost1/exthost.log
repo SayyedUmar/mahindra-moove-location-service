@@ -1,0 +1,41 @@
+[2019-12-13 19:48:19.103] [exthost] [info] extension host started
+[2019-12-13 19:48:19.143] [exthost] [info] ExtensionService#_doActivateExtension ms-vscode.Go {"startup":false,"extensionId":{"value":"ms-vscode.Go","_lower":"ms-vscode.go"},"activationEvent":"onLanguage:go"}
+[2019-12-13 19:48:19.144] [exthost] [info] ExtensionService#loadCommonJSModule file:///home/sachin/.vscode/extensions/ms-vscode.go-0.11.9/out/src/goMain
+[2019-12-13 19:48:19.349] [exthost] [info] ExtensionService#_doActivateExtension vscode.debug-auto-launch {"startup":true,"extensionId":{"value":"vscode.debug-auto-launch","_lower":"vscode.debug-auto-launch"},"activationEvent":"*"}
+[2019-12-13 19:48:19.349] [exthost] [info] ExtensionService#loadCommonJSModule file:///usr/share/code/resources/app/extensions/debug-auto-launch/dist/extension
+[2019-12-13 19:48:19.352] [exthost] [info] ExtensionService#_doActivateExtension vscode.emmet {"startup":true,"extensionId":{"value":"vscode.emmet","_lower":"vscode.emmet"},"activationEvent":"*"}
+[2019-12-13 19:48:19.352] [exthost] [info] ExtensionService#loadCommonJSModule file:///usr/share/code/resources/app/extensions/emmet/dist/extension
+[2019-12-13 19:48:19.372] [exthost] [info] ExtensionService#_doActivateExtension vscode.git {"startup":true,"extensionId":{"value":"vscode.git","_lower":"vscode.git"},"activationEvent":"*"}
+[2019-12-13 19:48:19.372] [exthost] [info] ExtensionService#loadCommonJSModule file:///usr/share/code/resources/app/extensions/git/dist/main
+[2019-12-13 19:48:19.409] [exthost] [info] ExtensionService#_doActivateExtension vscode.merge-conflict {"startup":true,"extensionId":{"value":"vscode.merge-conflict","_lower":"vscode.merge-conflict"},"activationEvent":"*"}
+[2019-12-13 19:48:19.409] [exthost] [info] ExtensionService#loadCommonJSModule file:///usr/share/code/resources/app/extensions/merge-conflict/dist/extension
+[2019-12-13 19:48:19.412] [exthost] [info] ExtensionService#_doActivateExtension eamodio.gitlens {"startup":true,"extensionId":{"value":"eamodio.gitlens","_lower":"eamodio.gitlens"},"activationEvent":"*"}
+[2019-12-13 19:48:19.412] [exthost] [info] ExtensionService#loadCommonJSModule file:///home/sachin/.vscode/extensions/eamodio.gitlens-10.2.0/dist/extension
+[2019-12-13 19:48:19.432] [exthost] [info] ExtensionService#_doActivateExtension esbenp.prettier-vscode {"startup":true,"extensionId":{"value":"esbenp.prettier-vscode","_lower":"esbenp.prettier-vscode"},"activationEvent":"*"}
+[2019-12-13 19:48:19.432] [exthost] [info] ExtensionService#loadCommonJSModule file:///home/sachin/.vscode/extensions/esbenp.prettier-vscode-3.11.0/dist/extension
+[2019-12-13 19:48:19.471] [exthost] [info] ExtensionService#_doActivateExtension HookyQR.beautify {"startup":true,"extensionId":{"value":"HookyQR.beautify","_lower":"hookyqr.beautify"},"activationEvent":"*"}
+[2019-12-13 19:48:19.471] [exthost] [info] ExtensionService#loadCommonJSModule file:///home/sachin/.vscode/extensions/hookyqr.beautify-1.5.0/extension
+[2019-12-13 19:48:19.495] [exthost] [info] eager extensions activated
+[2019-12-13 19:49:02.082] [exthost] [info] ExtensionService#_doActivateExtension ms-azuretools.vscode-docker {"startup":false,"extensionId":{"value":"ms-azuretools.vscode-docker","_lower":"ms-azuretools.vscode-docker"},"activationEvent":"onLanguage:dockerfile"}
+[2019-12-13 19:49:02.083] [exthost] [info] ExtensionService#loadCommonJSModule file:///home/sachin/.vscode/extensions/ms-azuretools.vscode-docker-0.9.0/main
+[2019-12-13 19:54:41.256] [exthost] [error] [ms-vscode.Go] provider FAILED
+[2019-12-13 19:54:41.257] [exthost] [error] Error: selectionRange must be contained in fullRange
+	at Function.validate (/usr/share/code/resources/app/out/vs/workbench/services/extensions/node/extensionHostProcess.js:365:679)
+	at new w (/usr/share/code/resources/app/out/vs/workbench/services/extensions/node/extensionHostProcess.js:365:547)
+	at new w (/usr/share/code/resources/app/out/vs/workbench/services/extensions/node/extensionHostProcess.js:354:169)
+	at asDocumentSymbol (/home/sachin/.vscode/extensions/ms-vscode.go-0.11.9/node_modules/vscode-languageclient/lib/protocolConverter.js:396:22)
+	at Array.map (<anonymous>)
+	at Object.asDocumentSymbols (/home/sachin/.vscode/extensions/ms-vscode.go-0.11.9/node_modules/vscode-languageclient/lib/protocolConverter.js:393:23)
+	at /home/sachin/.vscode/extensions/ms-vscode.go-0.11.9/node_modules/vscode-languageclient/lib/client.js:1002:62
+[2019-12-13 19:58:52.563] [exthost] [info] ExtensionService#_doActivateExtension vscode.configuration-editing {"startup":false,"extensionId":{"value":"vscode.configuration-editing","_lower":"vscode.configuration-editing"},"activationEvent":"onLanguage:json"}
+[2019-12-13 19:58:52.563] [exthost] [info] ExtensionService#loadCommonJSModule file:///usr/share/code/resources/app/extensions/configuration-editing/dist/extension
+[2019-12-13 19:58:52.591] [exthost] [info] ExtensionService#_doActivateExtension vscode.extension-editing {"startup":false,"extensionId":{"value":"vscode.extension-editing","_lower":"vscode.extension-editing"},"activationEvent":"onLanguage:json"}
+[2019-12-13 19:58:52.591] [exthost] [info] ExtensionService#loadCommonJSModule file:///usr/share/code/resources/app/extensions/extension-editing/dist/extension
+[2019-12-13 19:58:52.638] [exthost] [info] ExtensionService#_doActivateExtension vscode.json-language-features {"startup":false,"extensionId":{"value":"vscode.json-language-features","_lower":"vscode.json-language-features"},"activationEvent":"onLanguage:json"}
+[2019-12-13 19:58:52.638] [exthost] [info] ExtensionService#loadCommonJSModule file:///usr/share/code/resources/app/extensions/json-language-features/client/dist/jsonMain
+[2019-12-13 19:58:52.740] [exthost] [info] ExtensionService#_doActivateExtension vscode.npm {"startup":false,"extensionId":{"value":"vscode.npm","_lower":"vscode.npm"},"activationEvent":"onLanguage:json"}
+[2019-12-13 19:58:52.740] [exthost] [info] ExtensionService#loadCommonJSModule file:///usr/share/code/resources/app/extensions/npm/dist/main
+[2019-12-13 19:58:52.782] [exthost] [info] ExtensionService#_doActivateExtension vscode.typescript-language-features {"startup":false,"extensionId":{"value":"vscode.typescript-language-features","_lower":"vscode.typescript-language-features"},"activationEvent":"onLanguage:javascript"}
+[2019-12-13 19:58:52.782] [exthost] [info] ExtensionService#loadCommonJSModule file:///usr/share/code/resources/app/extensions/typescript-language-features/dist/extension
+[2019-12-13 19:58:52.842] [exthost] [info] ExtensionService#_doActivateExtension VisualStudioExptTeam.vscodeintellicode {"startup":false,"extensionId":{"value":"VisualStudioExptTeam.vscodeintellicode","_lower":"visualstudioexptteam.vscodeintellicode"},"activationEvent":"onLanguage:javascript"}
+[2019-12-13 19:58:52.842] [exthost] [info] ExtensionService#loadCommonJSModule file:///home/sachin/.vscode/extensions/visualstudioexptteam.vscodeintellicode-1.2.0/dist/intellicode

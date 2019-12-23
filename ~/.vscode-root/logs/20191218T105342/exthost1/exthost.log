@@ -1,0 +1,20 @@
+[2019-12-18 10:54:06.393] [exthost] [info] extension host started
+[2019-12-18 10:54:06.435] [exthost] [info] ExtensionService#_doActivateExtension ms-vscode.Go {"startup":false,"extensionId":{"value":"ms-vscode.Go","_lower":"ms-vscode.go"},"activationEvent":"onLanguage:go"}
+[2019-12-18 10:54:06.436] [exthost] [info] ExtensionService#loadCommonJSModule file:///home/sachin/.vscode/extensions/ms-vscode.go-0.11.9/out/src/goMain
+[2019-12-18 10:54:19.954] [exthost] [info] ExtensionService#_doActivateExtension vscode.debug-auto-launch {"startup":true,"extensionId":{"value":"vscode.debug-auto-launch","_lower":"vscode.debug-auto-launch"},"activationEvent":"*"}
+[2019-12-18 10:54:19.954] [exthost] [info] ExtensionService#loadCommonJSModule file:///usr/share/code/resources/app/extensions/debug-auto-launch/dist/extension
+[2019-12-18 10:54:20.053] [exthost] [info] ExtensionService#_doActivateExtension vscode.emmet {"startup":true,"extensionId":{"value":"vscode.emmet","_lower":"vscode.emmet"},"activationEvent":"*"}
+[2019-12-18 10:54:20.054] [exthost] [info] ExtensionService#loadCommonJSModule file:///usr/share/code/resources/app/extensions/emmet/dist/extension
+[2019-12-18 10:54:20.232] [exthost] [info] ExtensionService#_doActivateExtension vscode.git {"startup":true,"extensionId":{"value":"vscode.git","_lower":"vscode.git"},"activationEvent":"*"}
+[2019-12-18 10:54:20.232] [exthost] [info] ExtensionService#loadCommonJSModule file:///usr/share/code/resources/app/extensions/git/dist/main
+[2019-12-18 10:54:20.590] [exthost] [info] ExtensionService#_doActivateExtension vscode.merge-conflict {"startup":true,"extensionId":{"value":"vscode.merge-conflict","_lower":"vscode.merge-conflict"},"activationEvent":"*"}
+[2019-12-18 10:54:20.590] [exthost] [info] ExtensionService#loadCommonJSModule file:///usr/share/code/resources/app/extensions/merge-conflict/dist/extension
+[2019-12-18 10:54:20.741] [exthost] [info] ExtensionService#_doActivateExtension eamodio.gitlens {"startup":true,"extensionId":{"value":"eamodio.gitlens","_lower":"eamodio.gitlens"},"activationEvent":"*"}
+[2019-12-18 10:54:20.741] [exthost] [info] ExtensionService#loadCommonJSModule file:///home/sachin/.vscode/extensions/eamodio.gitlens-10.2.0/dist/extension
+[2019-12-18 10:54:20.996] [exthost] [info] ExtensionService#_doActivateExtension esbenp.prettier-vscode {"startup":true,"extensionId":{"value":"esbenp.prettier-vscode","_lower":"esbenp.prettier-vscode"},"activationEvent":"*"}
+[2019-12-18 10:54:20.997] [exthost] [info] ExtensionService#loadCommonJSModule file:///home/sachin/.vscode/extensions/esbenp.prettier-vscode-3.16.1/dist/extension
+[2019-12-18 10:54:21.384] [exthost] [info] ExtensionService#_doActivateExtension HookyQR.beautify {"startup":true,"extensionId":{"value":"HookyQR.beautify","_lower":"hookyqr.beautify"},"activationEvent":"*"}
+[2019-12-18 10:54:21.384] [exthost] [info] ExtensionService#loadCommonJSModule file:///home/sachin/.vscode/extensions/hookyqr.beautify-1.5.0/extension
+[2019-12-18 10:54:23.166] [exthost] [info] eager extensions activated
+[2019-12-18 12:43:27.552] [exthost] [info] ExtensionService#_doActivateExtension ms-azuretools.vscode-docker {"startup":false,"extensionId":{"value":"ms-azuretools.vscode-docker","_lower":"ms-azuretools.vscode-docker"},"activationEvent":"onLanguage:dockerfile"}
+[2019-12-18 12:43:27.553] [exthost] [info] ExtensionService#loadCommonJSModule file:///home/sachin/.vscode/extensions/ms-azuretools.vscode-docker-0.9.0/main

@@ -1,0 +1,94 @@
+Starting linting the current package at /home/sachin/Desktop/workspace2/moove-location-service/web
+/home/sachin/Desktop/workspace2/moove-location-service/web>Finished running tool: /home/sachin/go/bin/golint
+/home/sachin/Desktop/workspace2/moove-location-service/web/api.go:34: exported function WriteHeartBeat should have comment or be unexported
+/home/sachin/Desktop/workspace2/moove-location-service/web/api.go:62: should omit values from range; this loop is equivalent to `for range ...`
+/home/sachin/Desktop/workspace2/moove-location-service/web/api.go:88: should omit values from range; this loop is equivalent to `for range ...`
+/home/sachin/Desktop/workspace2/moove-location-service/web/api.go:121: should omit values from range; this loop is equivalent to `for range ...`
+/home/sachin/Desktop/workspace2/moove-location-service/web/api.go:143: should omit values from range; this loop is equivalent to `for range ...`
+/home/sachin/Desktop/workspace2/moove-location-service/web/api.go:257: should omit values from range; this loop is equivalent to `for range ...`
+/home/sachin/Desktop/workspace2/moove-location-service/web/auth.go:14: exported function TokenAuth should have comment or be unexported
+/home/sachin/Desktop/workspace2/moove-location-service/web/auth.go:20: exported function SessionAuth should have comment or be unexported
+/home/sachin/Desktop/workspace2/moove-location-service/web/auth.go:39: should not use basic type string as key in context.WithValue
+/home/sachin/Desktop/workspace2/moove-location-service/web/auth.go:50: var userId should be userID
+/home/sachin/Desktop/workspace2/moove-location-service/web/auth.go:55: should not use basic type string as key in context.WithValue
+/home/sachin/Desktop/workspace2/moove-location-service/web/auth.go:59: exported function Auth should have comment or be unexported
+/home/sachin/Desktop/workspace2/moove-location-service/web/rails_compat.go:19: don't use ALL_CAPS in Go names; use CamelCase
+/home/sachin/Desktop/workspace2/moove-location-service/web/rails_compat.go:19: exported const WARDEN_FORMAT_ERROR should have comment or be unexported
+/home/sachin/Desktop/workspace2/moove-location-service/web/rails_compat.go:93: func ExtractUserId should be ExtractUserID
+/home/sachin/Desktop/workspace2/moove-location-service/web/rails_compat.go:110: var userId should be userID
+/home/sachin/Desktop/workspace2/moove-location-service/web/server.go:19: exported function LogRequestsMiddleware should have comment or be unexported
+/home/sachin/Desktop/workspace2/moove-location-service/web/server.go:26: exported function EchoVersion should have comment or be unexported
+/home/sachin/Desktop/workspace2/moove-location-service/web/server.go:35: exported type RollbarLogger should have comment or be unexported
+/home/sachin/Desktop/workspace2/moove-location-service/web/server.go:38: exported method RollbarLogger.Println should have comment or be unexported
+/home/sachin/Desktop/workspace2/moove-location-service/web/server.go:50: exported function SetupRouter should have comment or be unexported
+/home/sachin/Desktop/workspace2/moove-location-service/web/server.go:64: exported function SetupServer should have comment or be unexported
+/home/sachin/Desktop/workspace2/moove-location-service/web/socket.go:27: exported function LocationSocket should have comment or be unexported
+/home/sachin/Desktop/workspace2/moove-location-service/web/socket.go:35: var strId should be strID
+/home/sachin/Desktop/workspace2/moove-location-service/web/socket.go:74: exported type Location should have comment or be unexported
+/home/sachin/Desktop/workspace2/moove-location-service/web/socket_helpers.go:56: exported method Hub.Run should have comment or be unexported
+/home/sachin/Desktop/workspace2/moove-location-service/web/socket_helpers.go:70: should omit 2nd value from range; this loop is equivalent to `for k := range ...`
+/home/sachin/Desktop/workspace2/moove-location-service/web/socket_helpers.go:83: exported method Hub.Subscribe should have comment or be unexported
+/home/sachin/Desktop/workspace2/moove-location-service/web/socket_helpers.go:87: exported method Hub.Send should have comment or be unexported
+/home/sachin/Desktop/workspace2/moove-location-service/web/socket_helpers.go:91: exported type Client should have comment or be unexported
+/home/sachin/Desktop/workspace2/moove-location-service/web/socket_helpers.go:104: exported function NewClient should have comment or be unexported
+/home/sachin/Desktop/workspace2/moove-location-service/web/trips.go:41: exported function GetTripETA should have comment or be unexported
+/home/sachin/Desktop/workspace2/moove-location-service/web/trips.go:73: exported function GetStartTripETA should have comment or be unexported
+/home/sachin/Desktop/workspace2/moove-location-service/web/trips.go:102: exported function TripSummary should have comment or be unexported
+/home/sachin/Desktop/workspace2/moove-location-service/web/trips.go:168: var encodedJson should be encodedJSON
+/home/sachin/Desktop/workspace2/moove-location-service/web/update_current_location.go:16: exported type UCLRequest should have comment or be unexported
+/home/sachin/Desktop/workspace2/moove-location-service/web/update_current_location.go:20: exported type Dict should have comment or be unexported
+/home/sachin/Desktop/workspace2/moove-location-service/web/update_current_location.go:23: exported type TripLocation should have comment or be unexported
+/home/sachin/Desktop/workspace2/moove-location-service/web/update_current_location.go:35: exported method TripLocation.ToDB should have comment or be unexported
+/home/sachin/Desktop/workspace2/moove-location-service/web/update_current_location.go:39: var tripId should be tripID
+/home/sachin/Desktop/workspace2/moove-location-service/web/update_current_location.go:85: exported function UpdateCurrentLocation should have comment or be unexported
+/home/sachin/Desktop/workspace2/moove-location-service/web/utils.go:10: exported type Error should have comment or be unexported
+/home/sachin/Desktop/workspace2/moove-location-service/web/utils.go:14: exported function ErrorWithMessage should have comment or be unexported
+/home/sachin/Desktop/workspace2/moove-location-service/web/utils.go:18: exported method Error.Respond should have comment or be unexported
+
+Starting linting the current package at /home/sachin/Desktop/workspace2/moove-location-service/web
+/home/sachin/Desktop/workspace2/moove-location-service/web>Finished running tool: /home/sachin/go/bin/golint
+/home/sachin/Desktop/workspace2/moove-location-service/web/api.go:34: exported function WriteHeartBeat should have comment or be unexported
+/home/sachin/Desktop/workspace2/moove-location-service/web/api.go:62: should omit values from range; this loop is equivalent to `for range ...`
+/home/sachin/Desktop/workspace2/moove-location-service/web/api.go:88: should omit values from range; this loop is equivalent to `for range ...`
+/home/sachin/Desktop/workspace2/moove-location-service/web/api.go:121: should omit values from range; this loop is equivalent to `for range ...`
+/home/sachin/Desktop/workspace2/moove-location-service/web/api.go:143: should omit values from range; this loop is equivalent to `for range ...`
+/home/sachin/Desktop/workspace2/moove-location-service/web/api.go:257: should omit values from range; this loop is equivalent to `for range ...`
+/home/sachin/Desktop/workspace2/moove-location-service/web/auth.go:14: exported function TokenAuth should have comment or be unexported
+/home/sachin/Desktop/workspace2/moove-location-service/web/auth.go:20: exported function SessionAuth should have comment or be unexported
+/home/sachin/Desktop/workspace2/moove-location-service/web/auth.go:39: should not use basic type string as key in context.WithValue
+/home/sachin/Desktop/workspace2/moove-location-service/web/auth.go:50: var userId should be userID
+/home/sachin/Desktop/workspace2/moove-location-service/web/auth.go:55: should not use basic type string as key in context.WithValue
+/home/sachin/Desktop/workspace2/moove-location-service/web/auth.go:59: exported function Auth should have comment or be unexported
+/home/sachin/Desktop/workspace2/moove-location-service/web/rails_compat.go:19: don't use ALL_CAPS in Go names; use CamelCase
+/home/sachin/Desktop/workspace2/moove-location-service/web/rails_compat.go:19: exported const WARDEN_FORMAT_ERROR should have comment or be unexported
+/home/sachin/Desktop/workspace2/moove-location-service/web/rails_compat.go:93: func ExtractUserId should be ExtractUserID
+/home/sachin/Desktop/workspace2/moove-location-service/web/rails_compat.go:110: var userId should be userID
+/home/sachin/Desktop/workspace2/moove-location-service/web/server.go:19: exported function LogRequestsMiddleware should have comment or be unexported
+/home/sachin/Desktop/workspace2/moove-location-service/web/server.go:26: exported function EchoVersion should have comment or be unexported
+/home/sachin/Desktop/workspace2/moove-location-service/web/server.go:35: exported type RollbarLogger should have comment or be unexported
+/home/sachin/Desktop/workspace2/moove-location-service/web/server.go:38: exported method RollbarLogger.Println should have comment or be unexported
+/home/sachin/Desktop/workspace2/moove-location-service/web/server.go:50: exported function SetupRouter should have comment or be unexported
+/home/sachin/Desktop/workspace2/moove-location-service/web/server.go:64: exported function SetupServer should have comment or be unexported
+/home/sachin/Desktop/workspace2/moove-location-service/web/socket.go:27: exported function LocationSocket should have comment or be unexported
+/home/sachin/Desktop/workspace2/moove-location-service/web/socket.go:35: var strId should be strID
+/home/sachin/Desktop/workspace2/moove-location-service/web/socket.go:74: exported type Location should have comment or be unexported
+/home/sachin/Desktop/workspace2/moove-location-service/web/socket_helpers.go:56: exported method Hub.Run should have comment or be unexported
+/home/sachin/Desktop/workspace2/moove-location-service/web/socket_helpers.go:70: should omit 2nd value from range; this loop is equivalent to `for k := range ...`
+/home/sachin/Desktop/workspace2/moove-location-service/web/socket_helpers.go:83: exported method Hub.Subscribe should have comment or be unexported
+/home/sachin/Desktop/workspace2/moove-location-service/web/socket_helpers.go:87: exported method Hub.Send should have comment or be unexported
+/home/sachin/Desktop/workspace2/moove-location-service/web/socket_helpers.go:91: exported type Client should have comment or be unexported
+/home/sachin/Desktop/workspace2/moove-location-service/web/socket_helpers.go:104: exported function NewClient should have comment or be unexported
+/home/sachin/Desktop/workspace2/moove-location-service/web/trips.go:41: exported function GetTripETA should have comment or be unexported
+/home/sachin/Desktop/workspace2/moove-location-service/web/trips.go:73: exported function GetStartTripETA should have comment or be unexported
+/home/sachin/Desktop/workspace2/moove-location-service/web/trips.go:102: exported function TripSummary should have comment or be unexported
+/home/sachin/Desktop/workspace2/moove-location-service/web/trips.go:168: var encodedJson should be encodedJSON
+/home/sachin/Desktop/workspace2/moove-location-service/web/update_current_location.go:16: exported type UCLRequest should have comment or be unexported
+/home/sachin/Desktop/workspace2/moove-location-service/web/update_current_location.go:20: exported type Dict should have comment or be unexported
+/home/sachin/Desktop/workspace2/moove-location-service/web/update_current_location.go:23: exported type TripLocation should have comment or be unexported
+/home/sachin/Desktop/workspace2/moove-location-service/web/update_current_location.go:35: exported method TripLocation.ToDB should have comment or be unexported
+/home/sachin/Desktop/workspace2/moove-location-service/web/update_current_location.go:39: var tripId should be tripID
+/home/sachin/Desktop/workspace2/moove-location-service/web/update_current_location.go:85: exported function UpdateCurrentLocation should have comment or be unexported
+/home/sachin/Desktop/workspace2/moove-location-service/web/utils.go:10: exported type Error should have comment or be unexported
+/home/sachin/Desktop/workspace2/moove-location-service/web/utils.go:14: exported function ErrorWithMessage should have comment or be unexported
+/home/sachin/Desktop/workspace2/moove-location-service/web/utils.go:18: exported method Error.Respond should have comment or be unexported
+

@@ -1,0 +1,41 @@
+Looking for git in: git
+Using git 2.17.1 from git
+> git rev-parse --show-toplevel
+> git rev-parse --git-dir
+Open repository: /home/sachin/Desktop/workspace2/moove-location-service
+> git status -z -u
+> git symbolic-ref --short HEAD
+> git rev-parse master
+> git rev-parse --symbolic-full-name master@{u}
+> git rev-list --left-right master...refs/remotes/origin/master
+> git for-each-ref --format %(refname) %(objectname) --sort -committerdate
+> git remote --verbose
+> git config --get commit.template
+> git show :web/server.go
+> git check-ignore -v -z --stdin
+> git show :web/trips.go
+> git show :web/server.go
+> git show :main.go
+> git check-ignore -v -z --stdin
+> git check-ignore -v -z --stdin
+> git check-ignore -v -z --stdin
+> git check-ignore -v -z --stdin
+> git check-ignore -v -z --stdin
+> git check-ignore -v -z --stdin
+> git check-ignore -v -z --stdin
+> git ls-tree -l HEAD -- /home/sachin/Desktop/workspace2/moove-location-service/web/trips.go
+> git show 8800a6d644e5144dd40cbc23cc430ec0c8ff9e4f
+> git show HEAD:web/trips.go
+> git status -z -u
+> git symbolic-ref --short HEAD
+> git rev-parse master
+> git rev-parse --symbolic-full-name master@{u}
+> git rev-list --left-right master...refs/remotes/origin/master
+> git for-each-ref --format %(refname) %(objectname) --sort -committerdate
+> git remote --verbose
+> git config --get commit.template
+> git show :models/pg.go
+> git check-ignore -v -z --stdin
+> git ls-tree -l HEAD -- /home/sachin/Desktop/workspace2/moove-location-service/main.go
+> git show 1c5a5922253c7b861541d83ab3d93740816ab3d6
+> git show HEAD:main.go

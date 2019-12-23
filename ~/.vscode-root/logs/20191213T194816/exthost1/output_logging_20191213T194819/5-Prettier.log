@@ -1,0 +1,32 @@
+["INFO" - 7:48:19 pm] Extension Name: "prettier-vscode".
+["INFO" - 7:48:19 pm] Extension Version: "3.11.0".
+["INFO" - 7:48:19 pm] Enabling prettier in workspace 'moove-location-service' for languages:
+[
+  "javascript",
+  "mongo",
+  "javascriptreact",
+  "typescript",
+  "typescriptreact",
+  "json",
+  "jsonc",
+  "json5",
+  "css",
+  "postcss",
+  "less",
+  "scss",
+  "graphql",
+  "markdown",
+  "mdx",
+  "html",
+  "vue",
+  "yaml"
+]
+["INFO" - 7:48:19 pm] Enabling prettier for range supported languages
+[
+  "javascript",
+  "javascriptreact",
+  "typescript",
+  "typescriptreact",
+  "json",
+  "graphql"
+]

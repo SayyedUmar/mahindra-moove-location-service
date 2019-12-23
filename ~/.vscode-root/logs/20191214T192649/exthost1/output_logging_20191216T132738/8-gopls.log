@@ -1,0 +1,100 @@
+[Error - 1:27:38 pm] Request textDocument/codeAction failed.
+Error: Connection got disposed.
+	at Object.dispose (/home/sachin/.vscode/extensions/ms-vscode.go-0.11.9/node_modules/vscode-jsonrpc/lib/main.js:876:25)
+	at Object.dispose (/home/sachin/.vscode/extensions/ms-vscode.go-0.11.9/node_modules/vscode-languageclient/lib/client.js:71:35)
+	at /home/sachin/.vscode/extensions/ms-vscode.go-0.11.9/node_modules/vscode-languageclient/lib/client.js:2065:28
+[Error - 1:27:38 pm] Request textDocument/codeAction failed.
+Error: Connection got disposed.
+	at Object.dispose (/home/sachin/.vscode/extensions/ms-vscode.go-0.11.9/node_modules/vscode-jsonrpc/lib/main.js:876:25)
+	at Object.dispose (/home/sachin/.vscode/extensions/ms-vscode.go-0.11.9/node_modules/vscode-languageclient/lib/client.js:71:35)
+	at /home/sachin/.vscode/extensions/ms-vscode.go-0.11.9/node_modules/vscode-languageclient/lib/client.js:2065:28
+[Error - 1:27:38 pm] Request textDocument/codeAction failed.
+Error: Connection got disposed.
+	at Object.dispose (/home/sachin/.vscode/extensions/ms-vscode.go-0.11.9/node_modules/vscode-jsonrpc/lib/main.js:876:25)
+	at Object.dispose (/home/sachin/.vscode/extensions/ms-vscode.go-0.11.9/node_modules/vscode-languageclient/lib/client.js:71:35)
+	at /home/sachin/.vscode/extensions/ms-vscode.go-0.11.9/node_modules/vscode-languageclient/lib/client.js:2065:28
+[Error - 1:27:38 pm] Request textDocument/codeAction failed.
+Error: Connection got disposed.
+	at Object.dispose (/home/sachin/.vscode/extensions/ms-vscode.go-0.11.9/node_modules/vscode-jsonrpc/lib/main.js:876:25)
+	at Object.dispose (/home/sachin/.vscode/extensions/ms-vscode.go-0.11.9/node_modules/vscode-languageclient/lib/client.js:71:35)
+	at /home/sachin/.vscode/extensions/ms-vscode.go-0.11.9/node_modules/vscode-languageclient/lib/client.js:2065:28
+[Error - 1:27:38 pm] Request textDocument/formatting failed.
+Error: Connection got disposed.
+	at Object.dispose (/home/sachin/.vscode/extensions/ms-vscode.go-0.11.9/node_modules/vscode-jsonrpc/lib/main.js:876:25)
+	at Object.dispose (/home/sachin/.vscode/extensions/ms-vscode.go-0.11.9/node_modules/vscode-languageclient/lib/client.js:71:35)
+	at /home/sachin/.vscode/extensions/ms-vscode.go-0.11.9/node_modules/vscode-languageclient/lib/client.js:2065:28
+[Error - 1:27:38 pm] Request textDocument/codeAction failed.
+Error: Connection got disposed.
+	at Object.dispose (/home/sachin/.vscode/extensions/ms-vscode.go-0.11.9/node_modules/vscode-jsonrpc/lib/main.js:876:25)
+	at Object.dispose (/home/sachin/.vscode/extensions/ms-vscode.go-0.11.9/node_modules/vscode-languageclient/lib/client.js:71:35)
+	at /home/sachin/.vscode/extensions/ms-vscode.go-0.11.9/node_modules/vscode-languageclient/lib/client.js:2065:28
+[Error - 1:27:38 pm] Request textDocument/formatting failed.
+Error: Connection got disposed.
+	at Object.dispose (/home/sachin/.vscode/extensions/ms-vscode.go-0.11.9/node_modules/vscode-jsonrpc/lib/main.js:876:25)
+	at Object.dispose (/home/sachin/.vscode/extensions/ms-vscode.go-0.11.9/node_modules/vscode-languageclient/lib/client.js:71:35)
+	at /home/sachin/.vscode/extensions/ms-vscode.go-0.11.9/node_modules/vscode-languageclient/lib/client.js:2065:28
+[Error - 1:27:38 pm] Request textDocument/codeAction failed.
+Error: Connection got disposed.
+	at Object.dispose (/home/sachin/.vscode/extensions/ms-vscode.go-0.11.9/node_modules/vscode-jsonrpc/lib/main.js:876:25)
+	at Object.dispose (/home/sachin/.vscode/extensions/ms-vscode.go-0.11.9/node_modules/vscode-languageclient/lib/client.js:71:35)
+	at /home/sachin/.vscode/extensions/ms-vscode.go-0.11.9/node_modules/vscode-languageclient/lib/client.js:2065:28
+[Error - 1:27:38 pm] Request textDocument/codeAction failed.
+Error: Connection got disposed.
+	at Object.dispose (/home/sachin/.vscode/extensions/ms-vscode.go-0.11.9/node_modules/vscode-jsonrpc/lib/main.js:876:25)
+	at Object.dispose (/home/sachin/.vscode/extensions/ms-vscode.go-0.11.9/node_modules/vscode-languageclient/lib/client.js:71:35)
+	at /home/sachin/.vscode/extensions/ms-vscode.go-0.11.9/node_modules/vscode-languageclient/lib/client.js:2065:28
+[Error - 1:27:38 pm] Request textDocument/codeAction failed.
+Error: Connection got disposed.
+	at Object.dispose (/home/sachin/.vscode/extensions/ms-vscode.go-0.11.9/node_modules/vscode-jsonrpc/lib/main.js:876:25)
+	at Object.dispose (/home/sachin/.vscode/extensions/ms-vscode.go-0.11.9/node_modules/vscode-languageclient/lib/client.js:71:35)
+	at /home/sachin/.vscode/extensions/ms-vscode.go-0.11.9/node_modules/vscode-languageclient/lib/client.js:2065:28
+[Error - 1:27:38 pm] Request textDocument/codeAction failed.
+Error: Connection got disposed.
+	at Object.dispose (/home/sachin/.vscode/extensions/ms-vscode.go-0.11.9/node_modules/vscode-jsonrpc/lib/main.js:876:25)
+	at Object.dispose (/home/sachin/.vscode/extensions/ms-vscode.go-0.11.9/node_modules/vscode-languageclient/lib/client.js:71:35)
+	at /home/sachin/.vscode/extensions/ms-vscode.go-0.11.9/node_modules/vscode-languageclient/lib/client.js:2065:28
+[Error - 1:27:38 pm] Request textDocument/documentHighlight failed.
+Error: Connection got disposed.
+	at Object.dispose (/home/sachin/.vscode/extensions/ms-vscode.go-0.11.9/node_modules/vscode-jsonrpc/lib/main.js:876:25)
+	at Object.dispose (/home/sachin/.vscode/extensions/ms-vscode.go-0.11.9/node_modules/vscode-languageclient/lib/client.js:71:35)
+	at /home/sachin/.vscode/extensions/ms-vscode.go-0.11.9/node_modules/vscode-languageclient/lib/client.js:2065:28
+[Error - 1:27:38 pm] Request textDocument/codeAction failed.
+Error: Connection got disposed.
+	at Object.dispose (/home/sachin/.vscode/extensions/ms-vscode.go-0.11.9/node_modules/vscode-jsonrpc/lib/main.js:876:25)
+	at Object.dispose (/home/sachin/.vscode/extensions/ms-vscode.go-0.11.9/node_modules/vscode-languageclient/lib/client.js:71:35)
+	at /home/sachin/.vscode/extensions/ms-vscode.go-0.11.9/node_modules/vscode-languageclient/lib/client.js:2065:28
+[Error - 1:27:38 pm] Request textDocument/codeAction failed.
+Error: Connection got disposed.
+	at Object.dispose (/home/sachin/.vscode/extensions/ms-vscode.go-0.11.9/node_modules/vscode-jsonrpc/lib/main.js:876:25)
+	at Object.dispose (/home/sachin/.vscode/extensions/ms-vscode.go-0.11.9/node_modules/vscode-languageclient/lib/client.js:71:35)
+	at /home/sachin/.vscode/extensions/ms-vscode.go-0.11.9/node_modules/vscode-languageclient/lib/client.js:2065:28
+[Error - 1:27:38 pm] Request textDocument/foldingRange failed.
+Error: Connection got disposed.
+	at Object.dispose (/home/sachin/.vscode/extensions/ms-vscode.go-0.11.9/node_modules/vscode-jsonrpc/lib/main.js:876:25)
+	at Object.dispose (/home/sachin/.vscode/extensions/ms-vscode.go-0.11.9/node_modules/vscode-languageclient/lib/client.js:71:35)
+	at /home/sachin/.vscode/extensions/ms-vscode.go-0.11.9/node_modules/vscode-languageclient/lib/client.js:2065:28
+[Error - 1:27:38 pm] Request textDocument/hover failed.
+Error: Connection got disposed.
+	at Object.dispose (/home/sachin/.vscode/extensions/ms-vscode.go-0.11.9/node_modules/vscode-jsonrpc/lib/main.js:876:25)
+	at Object.dispose (/home/sachin/.vscode/extensions/ms-vscode.go-0.11.9/node_modules/vscode-languageclient/lib/client.js:71:35)
+	at /home/sachin/.vscode/extensions/ms-vscode.go-0.11.9/node_modules/vscode-languageclient/lib/client.js:2065:28
+[Error - 1:27:38 pm] Request textDocument/hover failed.
+Error: Connection got disposed.
+	at Object.dispose (/home/sachin/.vscode/extensions/ms-vscode.go-0.11.9/node_modules/vscode-jsonrpc/lib/main.js:876:25)
+	at Object.dispose (/home/sachin/.vscode/extensions/ms-vscode.go-0.11.9/node_modules/vscode-languageclient/lib/client.js:71:35)
+	at /home/sachin/.vscode/extensions/ms-vscode.go-0.11.9/node_modules/vscode-languageclient/lib/client.js:2065:28
+[Error - 1:27:38 pm] Request textDocument/formatting failed.
+Error: Connection got disposed.
+	at Object.dispose (/home/sachin/.vscode/extensions/ms-vscode.go-0.11.9/node_modules/vscode-jsonrpc/lib/main.js:876:25)
+	at Object.dispose (/home/sachin/.vscode/extensions/ms-vscode.go-0.11.9/node_modules/vscode-languageclient/lib/client.js:71:35)
+	at /home/sachin/.vscode/extensions/ms-vscode.go-0.11.9/node_modules/vscode-languageclient/lib/client.js:2065:28
+[Error - 1:27:38 pm] Request textDocument/codeAction failed.
+Error: Connection got disposed.
+	at Object.dispose (/home/sachin/.vscode/extensions/ms-vscode.go-0.11.9/node_modules/vscode-jsonrpc/lib/main.js:876:25)
+	at Object.dispose (/home/sachin/.vscode/extensions/ms-vscode.go-0.11.9/node_modules/vscode-languageclient/lib/client.js:71:35)
+	at /home/sachin/.vscode/extensions/ms-vscode.go-0.11.9/node_modules/vscode-languageclient/lib/client.js:2065:28
+[Error - 1:27:38 pm] Request textDocument/codeAction failed.
+Error: Connection got disposed.
+	at Object.dispose (/home/sachin/.vscode/extensions/ms-vscode.go-0.11.9/node_modules/vscode-jsonrpc/lib/main.js:876:25)
+	at Object.dispose (/home/sachin/.vscode/extensions/ms-vscode.go-0.11.9/node_modules/vscode-languageclient/lib/client.js:71:35)
+	at /home/sachin/.vscode/extensions/ms-vscode.go-0.11.9/node_modules/vscode-languageclient/lib/client.js:2065:28

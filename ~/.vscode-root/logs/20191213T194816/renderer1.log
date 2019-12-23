@@ -1,0 +1,8 @@
+[2019-12-13 19:54:41.258] [renderer1] [error] selectionRange must be contained in fullRange: Error: selectionRange must be contained in fullRange
+	at Function.validate (/usr/share/code/resources/app/out/vs/workbench/services/extensions/node/extensionHostProcess.js:365:679)
+	at new w (/usr/share/code/resources/app/out/vs/workbench/services/extensions/node/extensionHostProcess.js:365:547)
+	at new w (/usr/share/code/resources/app/out/vs/workbench/services/extensions/node/extensionHostProcess.js:354:169)
+	at asDocumentSymbol (/home/sachin/.vscode/extensions/ms-vscode.go-0.11.9/node_modules/vscode-languageclient/lib/protocolConverter.js:396:22)
+	at Array.map (<anonymous>)
+	at Object.asDocumentSymbols (/home/sachin/.vscode/extensions/ms-vscode.go-0.11.9/node_modules/vscode-languageclient/lib/protocolConverter.js:393:23)
+	at /home/sachin/.vscode/extensions/ms-vscode.go-0.11.9/node_modules/vscode-languageclient/lib/client.js:1002:62

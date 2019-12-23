@@ -1,0 +1,1017 @@
+[2019-12-19 01:49:49.486] [renderer1] [error] TreeError [MarkersPanel] Tree element not found: [object Object]: Error: TreeError [MarkersPanel] Tree element not found: [object Object]
+    at t.ObjectTreeModel.getElementLocation (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:133:120)
+    at t.ObjectTreeModel.isCollapsed (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:132:250)
+    at W.isCollapsed (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:1043:391)
+    at z.revealMarkersForCurrentActiveEditor (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:5926:628)
+    at z.autoReveal (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:5926:485)
+    at z.onActiveEditorChanged (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:5923:776)
+    at file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:5922:754
+    at file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:111:709
+    at c.fire (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:115:286)
+    at e.doEmitActiveEditorChangeEvent (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:4909:172)
+    at e.handleActiveEditorChange (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:4908:992)
+    at file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:4909:282
+    at c.fire (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:115:286)
+    at file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:5569:875
+    at processTicksAndRejections (internal/process/task_queues.js:89:5)
+    at async e.openEditor (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:5568:750)
+    at async e.doOpenEditor (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:4911:304)
+[2019-12-19 01:56:18.307] [renderer1] [error] TreeError [MarkersPanel] Tree element not found: [object Object]: Error: TreeError [MarkersPanel] Tree element not found: [object Object]
+    at t.ObjectTreeModel.getElementLocation (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:133:120)
+    at t.ObjectTreeModel.isCollapsed (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:132:250)
+    at W.isCollapsed (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:1043:391)
+    at z.revealMarkersForCurrentActiveEditor (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:5926:628)
+    at z.autoReveal (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:5926:485)
+    at z.onActiveEditorChanged (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:5923:776)
+    at file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:5922:754
+    at file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:111:709
+    at c.fire (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:115:286)
+    at e.doEmitActiveEditorChangeEvent (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:4909:172)
+    at e.handleActiveEditorChange (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:4908:992)
+    at file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:4909:282
+    at c.fire (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:115:286)
+    at file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:5569:875
+    at processTicksAndRejections (internal/process/task_queues.js:89:5)
+    at async e.openEditor (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:5568:750)
+    at async e.doOpenEditor (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:4911:304)
+    at async h.doOpenCodeEditor (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:3187:39)
+    at async D._onResult (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:2475:410)
+[2019-12-19 02:08:23.109] [renderer1] [error] TreeError [MarkersPanel] Tree element not found: [object Object]: Error: TreeError [MarkersPanel] Tree element not found: [object Object]
+    at t.ObjectTreeModel.getElementLocation (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:133:120)
+    at t.ObjectTreeModel.isCollapsed (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:132:250)
+    at W.isCollapsed (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:1043:391)
+    at z.revealMarkersForCurrentActiveEditor (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:5926:628)
+    at z.autoReveal (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:5926:485)
+    at z.onActiveEditorChanged (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:5923:776)
+    at file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:5922:754
+    at file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:111:709
+    at c.fire (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:115:286)
+    at e.doEmitActiveEditorChangeEvent (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:4909:172)
+    at e.handleActiveEditorChange (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:4908:992)
+    at file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:4909:282
+    at c.fire (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:115:286)
+    at file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:5569:875
+    at async e.openEditor (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:5568:750)
+[2019-12-19 02:09:13.488] [renderer1] [error] File not found (/MOOVE-Network/location_service/models.InitSQLConnection): Error: File not found (/MOOVE-Network/location_service/models.InitSQLConnection)
+    at S.resolve (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:1555:706)
+[2019-12-19 02:09:54.711] [renderer1] [error] File not found (/MOOVE-Network/location_service/models.InitSQLConnection): Error: File not found (/MOOVE-Network/location_service/models.InitSQLConnection)
+    at S.resolve (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:1555:706)
+[2019-12-19 02:10:13.077] [renderer1] [error] File not found (/MOOVE-Network/location_service/models.InitSQLConnection): Error: File not found (/MOOVE-Network/location_service/models.InitSQLConnection)
+    at S.resolve (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:1555:706)
+[2019-12-19 02:10:21.317] [renderer1] [error] TreeError [MarkersPanel] Tree element not found: [object Object]: Error: TreeError [MarkersPanel] Tree element not found: [object Object]
+    at t.ObjectTreeModel.getElementLocation (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:133:120)
+    at t.ObjectTreeModel.isCollapsed (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:132:250)
+    at W.isCollapsed (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:1043:391)
+    at z.revealMarkersForCurrentActiveEditor (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:5926:628)
+    at z.autoReveal (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:5926:485)
+    at z.onActiveEditorChanged (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:5923:776)
+    at file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:5922:754
+    at file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:111:709
+    at c.fire (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:115:286)
+    at e.doEmitActiveEditorChangeEvent (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:4909:172)
+    at e.handleActiveEditorChange (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:4908:992)
+    at file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:4909:282
+    at c.fire (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:115:286)
+    at file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:5569:875
+    at processTicksAndRejections (internal/process/task_queues.js:89:5)
+    at async e.openEditor (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:5568:750)
+    at async e.doOpenEditor (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:4911:304)
+    at async h.doOpenCodeEditor (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:3187:39)
+    at async D._onResult (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:2475:410)
+[2019-12-19 02:10:32.980] [renderer1] [error] TreeError [MarkersPanel] Tree element not found: [object Object]: Error: TreeError [MarkersPanel] Tree element not found: [object Object]
+    at t.ObjectTreeModel.getElementLocation (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:133:120)
+    at t.ObjectTreeModel.isCollapsed (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:132:250)
+    at W.isCollapsed (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:1043:391)
+    at z.revealMarkersForCurrentActiveEditor (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:5926:628)
+    at z.autoReveal (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:5926:485)
+    at z.onActiveEditorChanged (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:5923:776)
+    at file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:5922:754
+    at file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:111:709
+    at c.fire (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:115:286)
+    at e.doEmitActiveEditorChangeEvent (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:4909:172)
+    at e.handleActiveEditorChange (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:4908:992)
+    at file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:4909:282
+    at c.fire (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:115:286)
+    at file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:5569:875
+    at processTicksAndRejections (internal/process/task_queues.js:89:5)
+    at async e.openEditor (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:5568:750)
+    at async e.doOpenEditor (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:4911:304)
+    at async h.doOpenCodeEditor (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:3187:39)
+    at async D._onResult (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:2475:410)
+[2019-12-19 02:10:39.468] [renderer1] [error] timeout after 500 ms: Error: timeout after 500 ms
+    at t.RawDebugSession.handleErrorResponse (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:2798:1003)
+    at file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:2798:434
+    at async t.RawDebugSession.shutdown (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:2796:536)
+[2019-12-19 02:10:42.686] [renderer1] [error] TreeError [MarkersPanel] Tree element not found: [object Object]: Error: TreeError [MarkersPanel] Tree element not found: [object Object]
+    at t.ObjectTreeModel.getElementLocation (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:133:120)
+    at t.ObjectTreeModel.isCollapsed (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:132:250)
+    at W.isCollapsed (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:1043:391)
+    at z.revealMarkersForCurrentActiveEditor (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:5926:628)
+    at z.autoReveal (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:5926:485)
+    at z.onActiveEditorChanged (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:5923:776)
+    at file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:5922:754
+    at file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:111:709
+    at c.fire (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:115:286)
+    at e.doEmitActiveEditorChangeEvent (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:4909:172)
+    at e.handleActiveEditorChange (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:4908:992)
+    at file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:4909:282
+    at c.fire (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:115:286)
+    at file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:5569:875
+    at async e.openEditor (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:5568:750)
+[2019-12-19 02:10:47.315] [renderer1] [error] TreeError [MarkersPanel] Tree element not found: [object Object]: Error: TreeError [MarkersPanel] Tree element not found: [object Object]
+    at t.ObjectTreeModel.getElementLocation (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:133:120)
+    at t.ObjectTreeModel.isCollapsed (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:132:250)
+    at W.isCollapsed (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:1043:391)
+    at z.revealMarkersForCurrentActiveEditor (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:5926:628)
+    at z.autoReveal (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:5926:485)
+    at z.onActiveEditorChanged (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:5923:776)
+    at file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:5922:754
+    at file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:111:709
+    at c.fire (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:115:286)
+    at e.doEmitActiveEditorChangeEvent (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:4909:172)
+    at e.handleActiveEditorChange (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:4908:992)
+    at file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:4909:282
+    at c.fire (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:115:286)
+    at file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:5569:875
+    at processTicksAndRejections (internal/process/task_queues.js:89:5)
+    at async e.openEditor (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:5568:750)
+    at async e.doOpenEditor (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:4911:304)
+    at async q.focusStackFrame (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:5202:277)
+    at async n (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:5181:221)
+[2019-12-19 02:11:05.965] [renderer1] [error] File not found (/MOOVE-Network/location_service/models.InitSQLConnection): Error: File not found (/MOOVE-Network/location_service/models.InitSQLConnection)
+    at S.resolve (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:1555:706)
+[2019-12-19 02:11:09.171] [renderer1] [error] TreeError [MarkersPanel] Tree element not found: [object Object]: Error: TreeError [MarkersPanel] Tree element not found: [object Object]
+    at t.ObjectTreeModel.getElementLocation (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:133:120)
+    at t.ObjectTreeModel.isCollapsed (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:132:250)
+    at W.isCollapsed (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:1043:391)
+    at z.revealMarkersForCurrentActiveEditor (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:5926:628)
+    at z.autoReveal (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:5926:485)
+    at z.onActiveEditorChanged (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:5923:776)
+    at file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:5922:754
+    at file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:111:709
+    at c.fire (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:115:286)
+    at e.doEmitActiveEditorChangeEvent (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:4909:172)
+    at e.handleActiveEditorChange (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:4908:992)
+    at file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:4909:282
+    at c.fire (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:115:286)
+    at file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:5569:875
+    at async e.openEditor (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:5568:750)
+[2019-12-19 02:11:46.485] [renderer1] [error] TreeError [MarkersPanel] Tree element not found: [object Object]: Error: TreeError [MarkersPanel] Tree element not found: [object Object]
+    at t.ObjectTreeModel.getElementLocation (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:133:120)
+    at t.ObjectTreeModel.isCollapsed (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:132:250)
+    at W.isCollapsed (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:1043:391)
+    at z.revealMarkersForCurrentActiveEditor (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:5926:628)
+    at z.autoReveal (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:5926:485)
+    at z.onActiveEditorChanged (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:5923:776)
+    at file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:5922:754
+    at file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:111:709
+    at c.fire (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:115:286)
+    at e.doEmitActiveEditorChangeEvent (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:4909:172)
+    at e.handleActiveEditorChange (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:4908:992)
+    at file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:4909:282
+    at c.fire (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:115:286)
+    at file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:5569:875
+    at processTicksAndRejections (internal/process/task_queues.js:89:5)
+    at async e.openEditor (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:5568:750)
+    at async e.doOpenEditor (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:4911:304)
+    at async h.doOpenCodeEditor (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:3187:39)
+    at async D._onResult (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:2475:410)
+[2019-12-19 02:11:59.600] [renderer1] [error] TreeError [MarkersPanel] Tree element not found: [object Object]: Error: TreeError [MarkersPanel] Tree element not found: [object Object]
+    at t.ObjectTreeModel.getElementLocation (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:133:120)
+    at t.ObjectTreeModel.isCollapsed (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:132:250)
+    at W.isCollapsed (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:1043:391)
+    at z.revealMarkersForCurrentActiveEditor (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:5926:628)
+    at z.autoReveal (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:5926:485)
+    at z.onActiveEditorChanged (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:5923:776)
+    at file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:5922:754
+    at file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:111:709
+    at c.fire (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:115:286)
+    at e.doEmitActiveEditorChangeEvent (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:4909:172)
+    at e.handleActiveEditorChange (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:4908:992)
+    at file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:4909:282
+    at c.fire (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:115:286)
+    at file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:5569:875
+    at processTicksAndRejections (internal/process/task_queues.js:89:5)
+    at async e.openEditor (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:5568:750)
+    at async e.doOpenEditor (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:4911:304)
+    at async h.doOpenCodeEditor (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:3187:39)
+    at async D._onResult (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:2475:410)
+[2019-12-19 02:20:57.680] [renderer1] [error] TreeError [MarkersPanel] Tree element not found: [object Object]: Error: TreeError [MarkersPanel] Tree element not found: [object Object]
+    at t.ObjectTreeModel.getElementLocation (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:133:120)
+    at t.ObjectTreeModel.isCollapsed (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:132:250)
+    at W.isCollapsed (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:1043:391)
+    at z.revealMarkersForCurrentActiveEditor (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:5926:628)
+    at z.autoReveal (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:5926:485)
+    at z.onActiveEditorChanged (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:5923:776)
+    at file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:5922:754
+    at file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:111:709
+    at c.fire (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:115:286)
+    at e.doEmitActiveEditorChangeEvent (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:4909:172)
+    at e.handleActiveEditorChange (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:4908:992)
+    at file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:4909:282
+    at c.fire (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:115:286)
+    at file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:5569:875
+    at async e.openEditor (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:5568:750)
+[2019-12-19 02:21:25.860] [renderer1] [error] TreeError [MarkersPanel] Tree element not found: [object Object]: Error: TreeError [MarkersPanel] Tree element not found: [object Object]
+    at t.ObjectTreeModel.getElementLocation (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:133:120)
+    at t.ObjectTreeModel.isCollapsed (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:132:250)
+    at W.isCollapsed (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:1043:391)
+    at z.revealMarkersForCurrentActiveEditor (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:5926:628)
+    at z.autoReveal (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:5926:485)
+    at z.onActiveEditorChanged (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:5923:776)
+    at file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:5922:754
+    at file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:111:709
+    at c.fire (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:115:286)
+    at e.doEmitActiveEditorChangeEvent (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:4909:172)
+    at e.handleActiveEditorChange (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:4908:992)
+    at file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:4909:282
+    at c.fire (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:115:286)
+    at file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:5569:875
+    at async e.openEditor (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:5568:750)
+[2019-12-19 02:22:31.667] [renderer1] [error] TreeError [MarkersPanel] Tree element not found: [object Object]: Error: TreeError [MarkersPanel] Tree element not found: [object Object]
+    at t.ObjectTreeModel.getElementLocation (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:133:120)
+    at t.ObjectTreeModel.isCollapsed (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:132:250)
+    at W.isCollapsed (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:1043:391)
+    at z.revealMarkersForCurrentActiveEditor (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:5926:628)
+    at z.autoReveal (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:5926:485)
+    at z.onActiveEditorChanged (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:5923:776)
+    at file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:5922:754
+    at file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:111:709
+    at c.fire (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:115:286)
+    at e.doEmitActiveEditorChangeEvent (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:4909:172)
+    at e.handleActiveEditorChange (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:4908:992)
+    at file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:4909:282
+    at c.fire (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:115:286)
+    at file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:5569:875
+    at async e.openEditor (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:5568:750)
+[2019-12-19 02:22:53.778] [renderer1] [error] TreeError [MarkersPanel] Tree element not found: [object Object]: Error: TreeError [MarkersPanel] Tree element not found: [object Object]
+    at t.ObjectTreeModel.getElementLocation (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:133:120)
+    at t.ObjectTreeModel.isCollapsed (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:132:250)
+    at W.isCollapsed (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:1043:391)
+    at z.revealMarkersForCurrentActiveEditor (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:5926:628)
+    at z.autoReveal (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:5926:485)
+    at z.onActiveEditorChanged (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:5923:776)
+    at file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:5922:754
+    at file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:111:709
+    at c.fire (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:115:286)
+    at e.doEmitActiveEditorChangeEvent (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:4909:172)
+    at e.handleActiveEditorChange (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:4908:992)
+    at file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:4909:282
+    at c.fire (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:115:286)
+    at file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:5569:875
+    at async e.openEditor (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:5568:750)
+[2019-12-19 02:23:51.310] [renderer1] [warning] Aborted codeActionsOnSave after 750ms
+[2019-12-19 02:23:56.111] [renderer1] [error] selectionRange must be contained in fullRange: Error: selectionRange must be contained in fullRange
+	at Function.validate (/usr/share/code/resources/app/out/vs/workbench/services/extensions/node/extensionHostProcess.js:365:679)
+	at new w (/usr/share/code/resources/app/out/vs/workbench/services/extensions/node/extensionHostProcess.js:365:547)
+	at new w (/usr/share/code/resources/app/out/vs/workbench/services/extensions/node/extensionHostProcess.js:354:169)
+	at asDocumentSymbol (/home/sachin/.vscode/extensions/ms-vscode.go-0.11.9/node_modules/vscode-languageclient/lib/protocolConverter.js:396:22)
+	at Array.map (<anonymous>)
+	at Object.asDocumentSymbols (/home/sachin/.vscode/extensions/ms-vscode.go-0.11.9/node_modules/vscode-languageclient/lib/protocolConverter.js:393:23)
+	at /home/sachin/.vscode/extensions/ms-vscode.go-0.11.9/node_modules/vscode-languageclient/lib/client.js:1002:62
+[2019-12-19 02:24:00.846] [renderer1] [error] selectionRange must be contained in fullRange: Error: selectionRange must be contained in fullRange
+	at Function.validate (/usr/share/code/resources/app/out/vs/workbench/services/extensions/node/extensionHostProcess.js:365:679)
+	at new w (/usr/share/code/resources/app/out/vs/workbench/services/extensions/node/extensionHostProcess.js:365:547)
+	at new w (/usr/share/code/resources/app/out/vs/workbench/services/extensions/node/extensionHostProcess.js:354:169)
+	at asDocumentSymbol (/home/sachin/.vscode/extensions/ms-vscode.go-0.11.9/node_modules/vscode-languageclient/lib/protocolConverter.js:396:22)
+	at Array.map (<anonymous>)
+	at Object.asDocumentSymbols (/home/sachin/.vscode/extensions/ms-vscode.go-0.11.9/node_modules/vscode-languageclient/lib/protocolConverter.js:393:23)
+	at /home/sachin/.vscode/extensions/ms-vscode.go-0.11.9/node_modules/vscode-languageclient/lib/client.js:1002:62
+[2019-12-19 02:24:03.173] [renderer1] [error] selectionRange must be contained in fullRange: Error: selectionRange must be contained in fullRange
+	at Function.validate (/usr/share/code/resources/app/out/vs/workbench/services/extensions/node/extensionHostProcess.js:365:679)
+	at new w (/usr/share/code/resources/app/out/vs/workbench/services/extensions/node/extensionHostProcess.js:365:547)
+	at new w (/usr/share/code/resources/app/out/vs/workbench/services/extensions/node/extensionHostProcess.js:354:169)
+	at asDocumentSymbol (/home/sachin/.vscode/extensions/ms-vscode.go-0.11.9/node_modules/vscode-languageclient/lib/protocolConverter.js:396:22)
+	at Array.map (<anonymous>)
+	at Object.asDocumentSymbols (/home/sachin/.vscode/extensions/ms-vscode.go-0.11.9/node_modules/vscode-languageclient/lib/protocolConverter.js:393:23)
+	at /home/sachin/.vscode/extensions/ms-vscode.go-0.11.9/node_modules/vscode-languageclient/lib/client.js:1002:62
+[2019-12-19 02:24:08.830] [renderer1] [error] selectionRange must be contained in fullRange: Error: selectionRange must be contained in fullRange
+	at Function.validate (/usr/share/code/resources/app/out/vs/workbench/services/extensions/node/extensionHostProcess.js:365:679)
+	at new w (/usr/share/code/resources/app/out/vs/workbench/services/extensions/node/extensionHostProcess.js:365:547)
+	at new w (/usr/share/code/resources/app/out/vs/workbench/services/extensions/node/extensionHostProcess.js:354:169)
+	at asDocumentSymbol (/home/sachin/.vscode/extensions/ms-vscode.go-0.11.9/node_modules/vscode-languageclient/lib/protocolConverter.js:396:22)
+	at Array.map (<anonymous>)
+	at Object.asDocumentSymbols (/home/sachin/.vscode/extensions/ms-vscode.go-0.11.9/node_modules/vscode-languageclient/lib/protocolConverter.js:393:23)
+	at /home/sachin/.vscode/extensions/ms-vscode.go-0.11.9/node_modules/vscode-languageclient/lib/client.js:1002:62
+[2019-12-19 02:24:10.877] [renderer1] [error] selectionRange must be contained in fullRange: Error: selectionRange must be contained in fullRange
+	at Function.validate (/usr/share/code/resources/app/out/vs/workbench/services/extensions/node/extensionHostProcess.js:365:679)
+	at new w (/usr/share/code/resources/app/out/vs/workbench/services/extensions/node/extensionHostProcess.js:365:547)
+	at new w (/usr/share/code/resources/app/out/vs/workbench/services/extensions/node/extensionHostProcess.js:354:169)
+	at asDocumentSymbol (/home/sachin/.vscode/extensions/ms-vscode.go-0.11.9/node_modules/vscode-languageclient/lib/protocolConverter.js:396:22)
+	at Array.map (<anonymous>)
+	at Object.asDocumentSymbols (/home/sachin/.vscode/extensions/ms-vscode.go-0.11.9/node_modules/vscode-languageclient/lib/protocolConverter.js:393:23)
+	at /home/sachin/.vscode/extensions/ms-vscode.go-0.11.9/node_modules/vscode-languageclient/lib/client.js:1002:62
+[2019-12-19 02:24:20.677] [renderer1] [error] selectionRange must be contained in fullRange: Error: selectionRange must be contained in fullRange
+	at Function.validate (/usr/share/code/resources/app/out/vs/workbench/services/extensions/node/extensionHostProcess.js:365:679)
+	at new w (/usr/share/code/resources/app/out/vs/workbench/services/extensions/node/extensionHostProcess.js:365:547)
+	at new w (/usr/share/code/resources/app/out/vs/workbench/services/extensions/node/extensionHostProcess.js:354:169)
+	at asDocumentSymbol (/home/sachin/.vscode/extensions/ms-vscode.go-0.11.9/node_modules/vscode-languageclient/lib/protocolConverter.js:396:22)
+	at Array.map (<anonymous>)
+	at Object.asDocumentSymbols (/home/sachin/.vscode/extensions/ms-vscode.go-0.11.9/node_modules/vscode-languageclient/lib/protocolConverter.js:393:23)
+	at /home/sachin/.vscode/extensions/ms-vscode.go-0.11.9/node_modules/vscode-languageclient/lib/client.js:1002:62
+[2019-12-19 02:24:29.464] [renderer1] [error] selectionRange must be contained in fullRange: Error: selectionRange must be contained in fullRange
+	at Function.validate (/usr/share/code/resources/app/out/vs/workbench/services/extensions/node/extensionHostProcess.js:365:679)
+	at new w (/usr/share/code/resources/app/out/vs/workbench/services/extensions/node/extensionHostProcess.js:365:547)
+	at new w (/usr/share/code/resources/app/out/vs/workbench/services/extensions/node/extensionHostProcess.js:354:169)
+	at asDocumentSymbol (/home/sachin/.vscode/extensions/ms-vscode.go-0.11.9/node_modules/vscode-languageclient/lib/protocolConverter.js:396:22)
+	at Array.map (<anonymous>)
+	at Object.asDocumentSymbols (/home/sachin/.vscode/extensions/ms-vscode.go-0.11.9/node_modules/vscode-languageclient/lib/protocolConverter.js:393:23)
+	at /home/sachin/.vscode/extensions/ms-vscode.go-0.11.9/node_modules/vscode-languageclient/lib/client.js:1002:62
+[2019-12-19 02:24:36.089] [renderer1] [error] selectionRange must be contained in fullRange: Error: selectionRange must be contained in fullRange
+	at Function.validate (/usr/share/code/resources/app/out/vs/workbench/services/extensions/node/extensionHostProcess.js:365:679)
+	at new w (/usr/share/code/resources/app/out/vs/workbench/services/extensions/node/extensionHostProcess.js:365:547)
+	at new w (/usr/share/code/resources/app/out/vs/workbench/services/extensions/node/extensionHostProcess.js:354:169)
+	at asDocumentSymbol (/home/sachin/.vscode/extensions/ms-vscode.go-0.11.9/node_modules/vscode-languageclient/lib/protocolConverter.js:396:22)
+	at Array.map (<anonymous>)
+	at Object.asDocumentSymbols (/home/sachin/.vscode/extensions/ms-vscode.go-0.11.9/node_modules/vscode-languageclient/lib/protocolConverter.js:393:23)
+	at /home/sachin/.vscode/extensions/ms-vscode.go-0.11.9/node_modules/vscode-languageclient/lib/client.js:1002:62
+[2019-12-19 02:24:40.500] [renderer1] [error] selectionRange must be contained in fullRange: Error: selectionRange must be contained in fullRange
+	at Function.validate (/usr/share/code/resources/app/out/vs/workbench/services/extensions/node/extensionHostProcess.js:365:679)
+	at new w (/usr/share/code/resources/app/out/vs/workbench/services/extensions/node/extensionHostProcess.js:365:547)
+	at new w (/usr/share/code/resources/app/out/vs/workbench/services/extensions/node/extensionHostProcess.js:354:169)
+	at asDocumentSymbol (/home/sachin/.vscode/extensions/ms-vscode.go-0.11.9/node_modules/vscode-languageclient/lib/protocolConverter.js:396:22)
+	at Array.map (<anonymous>)
+	at Object.asDocumentSymbols (/home/sachin/.vscode/extensions/ms-vscode.go-0.11.9/node_modules/vscode-languageclient/lib/protocolConverter.js:393:23)
+	at /home/sachin/.vscode/extensions/ms-vscode.go-0.11.9/node_modules/vscode-languageclient/lib/client.js:1002:62
+[2019-12-19 02:24:45.957] [renderer1] [error] selectionRange must be contained in fullRange: Error: selectionRange must be contained in fullRange
+	at Function.validate (/usr/share/code/resources/app/out/vs/workbench/services/extensions/node/extensionHostProcess.js:365:679)
+	at new w (/usr/share/code/resources/app/out/vs/workbench/services/extensions/node/extensionHostProcess.js:365:547)
+	at new w (/usr/share/code/resources/app/out/vs/workbench/services/extensions/node/extensionHostProcess.js:354:169)
+	at asDocumentSymbol (/home/sachin/.vscode/extensions/ms-vscode.go-0.11.9/node_modules/vscode-languageclient/lib/protocolConverter.js:396:22)
+	at Array.map (<anonymous>)
+	at Object.asDocumentSymbols (/home/sachin/.vscode/extensions/ms-vscode.go-0.11.9/node_modules/vscode-languageclient/lib/protocolConverter.js:393:23)
+	at /home/sachin/.vscode/extensions/ms-vscode.go-0.11.9/node_modules/vscode-languageclient/lib/client.js:1002:62
+[2019-12-19 02:24:55.391] [renderer1] [error] selectionRange must be contained in fullRange: Error: selectionRange must be contained in fullRange
+	at Function.validate (/usr/share/code/resources/app/out/vs/workbench/services/extensions/node/extensionHostProcess.js:365:679)
+	at new w (/usr/share/code/resources/app/out/vs/workbench/services/extensions/node/extensionHostProcess.js:365:547)
+	at new w (/usr/share/code/resources/app/out/vs/workbench/services/extensions/node/extensionHostProcess.js:354:169)
+	at asDocumentSymbol (/home/sachin/.vscode/extensions/ms-vscode.go-0.11.9/node_modules/vscode-languageclient/lib/protocolConverter.js:396:22)
+	at Array.map (<anonymous>)
+	at Object.asDocumentSymbols (/home/sachin/.vscode/extensions/ms-vscode.go-0.11.9/node_modules/vscode-languageclient/lib/protocolConverter.js:393:23)
+	at /home/sachin/.vscode/extensions/ms-vscode.go-0.11.9/node_modules/vscode-languageclient/lib/client.js:1002:62
+[2019-12-19 02:25:02.138] [renderer1] [error] selectionRange must be contained in fullRange: Error: selectionRange must be contained in fullRange
+	at Function.validate (/usr/share/code/resources/app/out/vs/workbench/services/extensions/node/extensionHostProcess.js:365:679)
+	at new w (/usr/share/code/resources/app/out/vs/workbench/services/extensions/node/extensionHostProcess.js:365:547)
+	at new w (/usr/share/code/resources/app/out/vs/workbench/services/extensions/node/extensionHostProcess.js:354:169)
+	at asDocumentSymbol (/home/sachin/.vscode/extensions/ms-vscode.go-0.11.9/node_modules/vscode-languageclient/lib/protocolConverter.js:396:22)
+	at Array.map (<anonymous>)
+	at Object.asDocumentSymbols (/home/sachin/.vscode/extensions/ms-vscode.go-0.11.9/node_modules/vscode-languageclient/lib/protocolConverter.js:393:23)
+	at /home/sachin/.vscode/extensions/ms-vscode.go-0.11.9/node_modules/vscode-languageclient/lib/client.js:1002:62
+[2019-12-19 02:25:07.144] [renderer1] [error] selectionRange must be contained in fullRange: Error: selectionRange must be contained in fullRange
+	at Function.validate (/usr/share/code/resources/app/out/vs/workbench/services/extensions/node/extensionHostProcess.js:365:679)
+	at new w (/usr/share/code/resources/app/out/vs/workbench/services/extensions/node/extensionHostProcess.js:365:547)
+	at new w (/usr/share/code/resources/app/out/vs/workbench/services/extensions/node/extensionHostProcess.js:354:169)
+	at asDocumentSymbol (/home/sachin/.vscode/extensions/ms-vscode.go-0.11.9/node_modules/vscode-languageclient/lib/protocolConverter.js:396:22)
+	at Array.map (<anonymous>)
+	at Object.asDocumentSymbols (/home/sachin/.vscode/extensions/ms-vscode.go-0.11.9/node_modules/vscode-languageclient/lib/protocolConverter.js:393:23)
+	at /home/sachin/.vscode/extensions/ms-vscode.go-0.11.9/node_modules/vscode-languageclient/lib/client.js:1002:62
+[2019-12-19 02:25:12.724] [renderer1] [error] selectionRange must be contained in fullRange: Error: selectionRange must be contained in fullRange
+	at Function.validate (/usr/share/code/resources/app/out/vs/workbench/services/extensions/node/extensionHostProcess.js:365:679)
+	at new w (/usr/share/code/resources/app/out/vs/workbench/services/extensions/node/extensionHostProcess.js:365:547)
+	at new w (/usr/share/code/resources/app/out/vs/workbench/services/extensions/node/extensionHostProcess.js:354:169)
+	at asDocumentSymbol (/home/sachin/.vscode/extensions/ms-vscode.go-0.11.9/node_modules/vscode-languageclient/lib/protocolConverter.js:396:22)
+	at Array.map (<anonymous>)
+	at Object.asDocumentSymbols (/home/sachin/.vscode/extensions/ms-vscode.go-0.11.9/node_modules/vscode-languageclient/lib/protocolConverter.js:393:23)
+	at /home/sachin/.vscode/extensions/ms-vscode.go-0.11.9/node_modules/vscode-languageclient/lib/client.js:1002:62
+[2019-12-19 02:26:45.292] [renderer1] [error] selectionRange must be contained in fullRange: Error: selectionRange must be contained in fullRange
+	at Function.validate (/usr/share/code/resources/app/out/vs/workbench/services/extensions/node/extensionHostProcess.js:365:679)
+	at new w (/usr/share/code/resources/app/out/vs/workbench/services/extensions/node/extensionHostProcess.js:365:547)
+	at new w (/usr/share/code/resources/app/out/vs/workbench/services/extensions/node/extensionHostProcess.js:354:169)
+	at asDocumentSymbol (/home/sachin/.vscode/extensions/ms-vscode.go-0.11.9/node_modules/vscode-languageclient/lib/protocolConverter.js:396:22)
+	at Array.map (<anonymous>)
+	at Object.asDocumentSymbols (/home/sachin/.vscode/extensions/ms-vscode.go-0.11.9/node_modules/vscode-languageclient/lib/protocolConverter.js:393:23)
+	at /home/sachin/.vscode/extensions/ms-vscode.go-0.11.9/node_modules/vscode-languageclient/lib/client.js:1002:62
+[2019-12-19 02:26:47.520] [renderer1] [error] selectionRange must be contained in fullRange: Error: selectionRange must be contained in fullRange
+	at Function.validate (/usr/share/code/resources/app/out/vs/workbench/services/extensions/node/extensionHostProcess.js:365:679)
+	at new w (/usr/share/code/resources/app/out/vs/workbench/services/extensions/node/extensionHostProcess.js:365:547)
+	at new w (/usr/share/code/resources/app/out/vs/workbench/services/extensions/node/extensionHostProcess.js:354:169)
+	at asDocumentSymbol (/home/sachin/.vscode/extensions/ms-vscode.go-0.11.9/node_modules/vscode-languageclient/lib/protocolConverter.js:396:22)
+	at Array.map (<anonymous>)
+	at Object.asDocumentSymbols (/home/sachin/.vscode/extensions/ms-vscode.go-0.11.9/node_modules/vscode-languageclient/lib/protocolConverter.js:393:23)
+	at /home/sachin/.vscode/extensions/ms-vscode.go-0.11.9/node_modules/vscode-languageclient/lib/client.js:1002:62
+[2019-12-19 02:27:05.220] [renderer1] [error] TreeError [MarkersPanel] Tree element not found: [object Object]: Error: TreeError [MarkersPanel] Tree element not found: [object Object]
+    at t.ObjectTreeModel.getElementLocation (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:133:120)
+    at t.ObjectTreeModel.isCollapsed (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:132:250)
+    at W.isCollapsed (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:1043:391)
+    at z.revealMarkersForCurrentActiveEditor (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:5926:628)
+    at z.autoReveal (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:5926:485)
+    at z.onActiveEditorChanged (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:5923:776)
+    at file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:5922:754
+    at file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:111:709
+    at c.fire (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:115:286)
+    at e.doEmitActiveEditorChangeEvent (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:4909:172)
+    at e.handleActiveEditorChange (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:4908:992)
+    at file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:4909:282
+    at c.fire (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:115:286)
+    at file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:5569:875
+    at processTicksAndRejections (internal/process/task_queues.js:89:5)
+    at async e.openEditor (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:5568:750)
+    at async e.doOpenEditor (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:4911:304)
+[2019-12-19 02:30:31.531] [renderer1] [error] An unknown error occurred. Please consult the log for more details.
+[2019-12-19 02:31:04.387] [renderer1] [error] TreeError [MarkersPanel] Tree element not found: [object Object]: Error: TreeError [MarkersPanel] Tree element not found: [object Object]
+    at t.ObjectTreeModel.getElementLocation (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:133:120)
+    at t.ObjectTreeModel.isCollapsed (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:132:250)
+    at W.isCollapsed (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:1043:391)
+    at z.revealMarkersForCurrentActiveEditor (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:5926:628)
+    at z.autoReveal (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:5926:485)
+    at z.onActiveEditorChanged (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:5923:776)
+    at file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:5922:754
+    at file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:111:709
+    at c.fire (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:115:286)
+    at e.doEmitActiveEditorChangeEvent (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:4909:172)
+    at e.handleActiveEditorChange (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:4908:992)
+    at file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:4909:282
+    at c.fire (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:115:286)
+    at file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:5569:875
+    at async e.openEditor (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:5568:750)
+[2019-12-19 02:32:21.378] [renderer1] [error] TreeError [MarkersPanel] Tree element not found: [object Object]: Error: TreeError [MarkersPanel] Tree element not found: [object Object]
+    at t.ObjectTreeModel.getElementLocation (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:133:120)
+    at t.ObjectTreeModel.isCollapsed (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:132:250)
+    at W.isCollapsed (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:1043:391)
+    at z.revealMarkersForCurrentActiveEditor (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:5926:628)
+    at z.autoReveal (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:5926:485)
+    at z.onActiveEditorChanged (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:5923:776)
+    at file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:5922:754
+    at file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:111:709
+    at c.fire (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:115:286)
+    at e.doEmitActiveEditorChangeEvent (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:4909:172)
+    at e.handleActiveEditorChange (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:4908:992)
+    at file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:4909:282
+    at c.fire (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:115:286)
+    at file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:5569:875
+    at processTicksAndRejections (internal/process/task_queues.js:89:5)
+    at async e.openEditor (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:5568:750)
+    at async M.doOpenEditor (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:4911:304)
+    at async M.editorOpenHandler (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:5889:361)
+    at async M.doOpenEditor (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:4916:394)
+    at async file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:5866:813
+[2019-12-19 02:32:52.653] [renderer1] [error] TreeError [MarkersPanel] Tree element not found: [object Object]: Error: TreeError [MarkersPanel] Tree element not found: [object Object]
+    at t.ObjectTreeModel.getElementLocation (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:133:120)
+    at t.ObjectTreeModel.isCollapsed (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:132:250)
+    at W.isCollapsed (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:1043:391)
+    at z.revealMarkersForCurrentActiveEditor (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:5926:628)
+    at z.autoReveal (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:5926:485)
+    at z.onActiveEditorChanged (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:5923:776)
+    at file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:5922:754
+    at file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:111:709
+    at c.fire (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:115:286)
+    at e.doEmitActiveEditorChangeEvent (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:4909:172)
+    at e.handleActiveEditorChange (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:4908:992)
+    at file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:4909:282
+    at c.fire (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:115:286)
+    at file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:5569:875
+    at async e.openEditor (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:5568:750)
+    at async M.doOpenEditor (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:4911:304)
+    at async M.editorOpenHandler (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:5889:361)
+    at async M.doOpenEditor (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:4916:394)
+    at async file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:5866:813
+[2019-12-19 11:48:41.512] [renderer1] [error] TreeError [MarkersPanel] Tree element not found: [object Object]: Error: TreeError [MarkersPanel] Tree element not found: [object Object]
+    at t.ObjectTreeModel.getElementLocation (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:133:120)
+    at t.ObjectTreeModel.isCollapsed (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:132:250)
+    at W.isCollapsed (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:1043:391)
+    at z.revealMarkersForCurrentActiveEditor (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:5926:628)
+    at z.autoReveal (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:5926:485)
+    at z.onActiveEditorChanged (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:5923:776)
+    at file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:5922:754
+    at file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:111:709
+    at c.fire (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:115:286)
+    at e.doEmitActiveEditorChangeEvent (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:4909:172)
+    at e.handleActiveEditorChange (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:4908:992)
+    at file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:4909:282
+    at c.fire (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:115:286)
+    at file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:5569:875
+    at processTicksAndRejections (internal/process/task_queues.js:89:5)
+    at async e.openEditor (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:5568:750)
+    at async e.doOpenEditor (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:4911:304)
+    at async h.doOpenCodeEditor (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:3187:39)
+    at async D._onResult (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:2475:410)
+[2019-12-19 11:54:54.966] [renderer1] [error] File not found (/12/19): Error: File not found (/12/19)
+    at S.resolve (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:1555:706)
+[2019-12-19 11:55:18.925] [renderer1] [error] File not found (/12/19): Error: File not found (/12/19)
+    at S.resolve (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:1555:706)
+[2019-12-19 11:55:18.925] [renderer1] [error] File not found (/jmoiron/sqlx.): Error: File not found (/jmoiron/sqlx.)
+    at S.resolve (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:1555:706)
+[2019-12-19 11:55:18.925] [renderer1] [error] File not found (/MOOVE-Network/location_service/web.setupHeartBeatTimer.func1): Error: File not found (/MOOVE-Network/location_service/web.setupHeartBeatTimer.func1)
+    at S.resolve (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:1555:706)
+[2019-12-19 11:55:18.925] [renderer1] [error] File not found (/MOOVE-Network/location_service/web.setupHeartBeatTimer): Error: File not found (/MOOVE-Network/location_service/web.setupHeartBeatTimer)
+    at S.resolve (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:1555:706)
+[2019-12-19 11:55:18.925] [renderer1] [error] File not found (/jmoiron/sqlx.): Error: File not found (/jmoiron/sqlx.)
+    at S.resolve (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:1555:706)
+[2019-12-19 11:55:18.926] [renderer1] [error] File not found (/MOOVE-Network/location_service/web.setupHeartBeatTimer.func1): Error: File not found (/MOOVE-Network/location_service/web.setupHeartBeatTimer.func1)
+    at S.resolve (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:1555:706)
+[2019-12-19 11:55:18.926] [renderer1] [error] File not found (/MOOVE-Network/location_service/web.setupHeartBeatTimer): Error: File not found (/MOOVE-Network/location_service/web.setupHeartBeatTimer)
+    at S.resolve (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:1555:706)
+[2019-12-19 11:55:18.926] [renderer1] [error] File not found (/jmoiron/sqlx.): Error: File not found (/jmoiron/sqlx.)
+    at S.resolve (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:1555:706)
+[2019-12-19 11:55:18.926] [renderer1] [error] File not found (/MOOVE-Network/location_service/web.setupHeartBeatTimer.func1): Error: File not found (/MOOVE-Network/location_service/web.setupHeartBeatTimer.func1)
+    at S.resolve (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:1555:706)
+[2019-12-19 11:55:18.926] [renderer1] [error] File not found (/MOOVE-Network/location_service/web.setupHeartBeatTimer): Error: File not found (/MOOVE-Network/location_service/web.setupHeartBeatTimer)
+    at S.resolve (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:1555:706)
+[2019-12-19 11:55:22.673] [renderer1] [error] File not found (/12/19): Error: File not found (/12/19)
+    at S.resolve (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:1555:706)
+[2019-12-19 11:55:33.460] [renderer1] [error] TreeError [MarkersPanel] Tree element not found: [object Object]: Error: TreeError [MarkersPanel] Tree element not found: [object Object]
+    at t.ObjectTreeModel.getElementLocation (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:133:120)
+    at t.ObjectTreeModel.isCollapsed (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:132:250)
+    at W.isCollapsed (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:1043:391)
+    at z.revealMarkersForCurrentActiveEditor (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:5926:628)
+    at z.autoReveal (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:5926:485)
+    at z.onActiveEditorChanged (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:5923:776)
+    at file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:5922:754
+    at file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:111:709
+    at c.fire (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:115:286)
+    at e.doEmitActiveEditorChangeEvent (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:4909:172)
+    at e.handleActiveEditorChange (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:4908:992)
+    at file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:4909:282
+    at c.fire (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:115:286)
+    at file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:5569:875
+    at async e.openEditor (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:5568:750)
+[2019-12-19 11:56:01.027] [renderer1] [error] File not found (/12/19): Error: File not found (/12/19)
+    at S.resolve (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:1555:706)
+[2019-12-19 11:56:08.264] [renderer1] [error] File not found (/12/19): Error: File not found (/12/19)
+    at S.resolve (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:1555:706)
+[2019-12-19 11:56:08.265] [renderer1] [error] File not found (/jmoiron/sqlx.): Error: File not found (/jmoiron/sqlx.)
+    at S.resolve (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:1555:706)
+[2019-12-19 11:56:08.265] [renderer1] [error] File not found (/MOOVE-Network/location_service/web.setupTripLocationTimer.func1): Error: File not found (/MOOVE-Network/location_service/web.setupTripLocationTimer.func1)
+    at S.resolve (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:1555:706)
+[2019-12-19 11:56:08.265] [renderer1] [error] File not found (/MOOVE-Network/location_service/web.setupTripLocationTimer): Error: File not found (/MOOVE-Network/location_service/web.setupTripLocationTimer)
+    at S.resolve (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:1555:706)
+[2019-12-19 11:56:08.265] [renderer1] [error] File not found (/jmoiron/sqlx.): Error: File not found (/jmoiron/sqlx.)
+    at S.resolve (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:1555:706)
+[2019-12-19 11:56:08.265] [renderer1] [error] File not found (/MOOVE-Network/location_service/web.setupTripLocationTimer.func1): Error: File not found (/MOOVE-Network/location_service/web.setupTripLocationTimer.func1)
+    at S.resolve (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:1555:706)
+[2019-12-19 11:56:08.265] [renderer1] [error] File not found (/MOOVE-Network/location_service/web.setupTripLocationTimer): Error: File not found (/MOOVE-Network/location_service/web.setupTripLocationTimer)
+    at S.resolve (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:1555:706)
+[2019-12-19 11:56:08.265] [renderer1] [error] File not found (/jmoiron/sqlx.): Error: File not found (/jmoiron/sqlx.)
+    at S.resolve (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:1555:706)
+[2019-12-19 11:56:08.265] [renderer1] [error] File not found (/MOOVE-Network/location_service/web.setupTripLocationTimer.func1): Error: File not found (/MOOVE-Network/location_service/web.setupTripLocationTimer.func1)
+    at S.resolve (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:1555:706)
+[2019-12-19 11:56:08.265] [renderer1] [error] File not found (/MOOVE-Network/location_service/web.setupTripLocationTimer): Error: File not found (/MOOVE-Network/location_service/web.setupTripLocationTimer)
+    at S.resolve (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:1555:706)
+[2019-12-19 11:56:25.250] [renderer1] [error] File not found (/12/19): Error: File not found (/12/19)
+    at S.resolve (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:1555:706)
+[2019-12-19 11:56:44.976] [renderer1] [error] File not found (/12/19): Error: File not found (/12/19)
+    at S.resolve (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:1555:706)
+[2019-12-19 11:56:56.606] [renderer1] [error] File not found (/12/19): Error: File not found (/12/19)
+    at S.resolve (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:1555:706)
+[2019-12-19 11:57:01.356] [renderer1] [error] File not found (/12/19): Error: File not found (/12/19)
+    at S.resolve (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:1555:706)
+[2019-12-19 11:57:05.464] [renderer1] [error] File not found (/12/19): Error: File not found (/12/19)
+    at S.resolve (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:1555:706)
+[2019-12-19 11:57:05.465] [renderer1] [error] File not found (/jmoiron/sqlx.): Error: File not found (/jmoiron/sqlx.)
+    at S.resolve (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:1555:706)
+[2019-12-19 11:57:05.465] [renderer1] [error] File not found (/MOOVE-Network/location_service/web.setupHeartBeatTimer.func1): Error: File not found (/MOOVE-Network/location_service/web.setupHeartBeatTimer.func1)
+    at S.resolve (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:1555:706)
+[2019-12-19 11:57:05.465] [renderer1] [error] File not found (/MOOVE-Network/location_service/web.setupHeartBeatTimer): Error: File not found (/MOOVE-Network/location_service/web.setupHeartBeatTimer)
+    at S.resolve (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:1555:706)
+[2019-12-19 11:57:05.465] [renderer1] [error] File not found (/jmoiron/sqlx.): Error: File not found (/jmoiron/sqlx.)
+    at S.resolve (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:1555:706)
+[2019-12-19 11:57:05.465] [renderer1] [error] File not found (/MOOVE-Network/location_service/web.setupHeartBeatTimer.func1): Error: File not found (/MOOVE-Network/location_service/web.setupHeartBeatTimer.func1)
+    at S.resolve (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:1555:706)
+[2019-12-19 11:57:05.465] [renderer1] [error] File not found (/MOOVE-Network/location_service/web.setupHeartBeatTimer): Error: File not found (/MOOVE-Network/location_service/web.setupHeartBeatTimer)
+    at S.resolve (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:1555:706)
+[2019-12-19 11:57:05.465] [renderer1] [error] File not found (/jmoiron/sqlx.): Error: File not found (/jmoiron/sqlx.)
+    at S.resolve (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:1555:706)
+[2019-12-19 11:57:05.465] [renderer1] [error] File not found (/MOOVE-Network/location_service/web.setupHeartBeatTimer.func1): Error: File not found (/MOOVE-Network/location_service/web.setupHeartBeatTimer.func1)
+    at S.resolve (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:1555:706)
+[2019-12-19 11:57:05.465] [renderer1] [error] File not found (/MOOVE-Network/location_service/web.setupHeartBeatTimer): Error: File not found (/MOOVE-Network/location_service/web.setupHeartBeatTimer)
+    at S.resolve (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:1555:706)
+[2019-12-19 11:57:28.789] [renderer1] [error] File not found (/12/19): Error: File not found (/12/19)
+    at S.resolve (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:1555:706)
+[2019-12-19 11:57:34.895] [renderer1] [error] File not found (/12/19): Error: File not found (/12/19)
+    at S.resolve (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:1555:706)
+[2019-12-19 11:57:38.819] [renderer1] [error] File not found (/12/19): Error: File not found (/12/19)
+    at S.resolve (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:1555:706)
+[2019-12-19 11:57:48.878] [renderer1] [error] File not found (/12/19): Error: File not found (/12/19)
+    at S.resolve (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:1555:706)
+[2019-12-19 11:57:58.858] [renderer1] [error] File not found (/12/19): Error: File not found (/12/19)
+    at S.resolve (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:1555:706)
+[2019-12-19 11:58:02.030] [renderer1] [error] File not found (/12/19): Error: File not found (/12/19)
+    at S.resolve (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:1555:706)
+[2019-12-19 11:58:08.265] [renderer1] [error] timeout after 500 ms: Error: timeout after 500 ms
+    at t.RawDebugSession.handleErrorResponse (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:2798:1003)
+    at file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:2798:434
+    at async t.RawDebugSession.shutdown (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:2796:536)
+[2019-12-19 11:58:19.052] [renderer1] [error] TreeError [MarkersPanel] Tree element not found: [object Object]: Error: TreeError [MarkersPanel] Tree element not found: [object Object]
+    at t.ObjectTreeModel.getElementLocation (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:133:120)
+    at t.ObjectTreeModel.isCollapsed (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:132:250)
+    at W.isCollapsed (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:1043:391)
+    at z.revealMarkersForCurrentActiveEditor (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:5926:628)
+    at z.autoReveal (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:5926:485)
+    at z.onActiveEditorChanged (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:5923:776)
+    at file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:5922:754
+    at file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:111:709
+    at c.fire (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:115:286)
+    at e.doEmitActiveEditorChangeEvent (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:4909:172)
+    at e.handleActiveEditorChange (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:4908:992)
+    at file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:4909:282
+    at c.fire (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:115:286)
+    at file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:5569:875
+    at processTicksAndRejections (internal/process/task_queues.js:89:5)
+    at async e.openEditor (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:5568:750)
+    at async e.doOpenEditor (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:4911:304)
+    at async q.focusStackFrame (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:5202:277)
+    at async n (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:5181:221)
+[2019-12-19 11:58:21.281] [renderer1] [error] File not found (/12/19): Error: File not found (/12/19)
+    at S.resolve (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:1555:706)
+[2019-12-19 11:58:25.125] [renderer1] [error] File not found (/12/19): Error: File not found (/12/19)
+    at S.resolve (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:1555:706)
+[2019-12-19 11:58:27.537] [renderer1] [error] File not found (/12/19): Error: File not found (/12/19)
+    at S.resolve (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:1555:706)
+[2019-12-19 11:58:35.079] [renderer1] [error] File not found (/12/19): Error: File not found (/12/19)
+    at S.resolve (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:1555:706)
+[2019-12-19 11:58:49.598] [renderer1] [error] timeout after 500 ms: Error: timeout after 500 ms
+    at t.RawDebugSession.handleErrorResponse (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:2798:1003)
+    at file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:2798:434
+    at async t.RawDebugSession.shutdown (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:2796:536)
+    at async R.terminate (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:5173:637)
+    at async q.restartSession (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:5197:851)
+[2019-12-19 11:58:57.061] [renderer1] [error] timeout after 500 ms: Error: timeout after 500 ms
+    at t.RawDebugSession.handleErrorResponse (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:2798:1003)
+    at file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:2798:434
+    at async t.RawDebugSession.shutdown (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:2796:536)
+[2019-12-19 11:59:04.458] [renderer1] [error] File not found (/12/19): Error: File not found (/12/19)
+    at S.resolve (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:1555:706)
+[2019-12-19 11:59:05.062] [renderer1] [error] TreeError [MarkersPanel] Tree element not found: [object Object]: Error: TreeError [MarkersPanel] Tree element not found: [object Object]
+    at t.ObjectTreeModel.getElementLocation (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:133:120)
+    at t.ObjectTreeModel.isCollapsed (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:132:250)
+    at W.isCollapsed (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:1043:391)
+    at z.revealMarkersForCurrentActiveEditor (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:5926:628)
+    at z.autoReveal (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:5926:485)
+    at z.onActiveEditorChanged (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:5923:776)
+    at file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:5922:754
+    at file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:111:709
+    at c.fire (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:115:286)
+    at e.doEmitActiveEditorChangeEvent (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:4909:172)
+    at e.handleActiveEditorChange (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:4908:992)
+    at file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:4909:282
+    at c.fire (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:115:286)
+    at file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:5569:875
+    at processTicksAndRejections (internal/process/task_queues.js:89:5)
+    at async e.openEditor (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:5568:750)
+    at async e.doOpenEditor (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:4911:304)
+    at async q.focusStackFrame (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:5202:277)
+    at async n (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:5181:221)
+[2019-12-19 11:59:08.312] [renderer1] [error] File not found (/12/19): Error: File not found (/12/19)
+    at S.resolve (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:1555:706)
+[2019-12-19 11:59:10.530] [renderer1] [error] File not found (/12/19): Error: File not found (/12/19)
+    at S.resolve (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:1555:706)
+[2019-12-19 11:59:30.632] [renderer1] [error] File not found (/12/19): Error: File not found (/12/19)
+    at S.resolve (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:1555:706)
+[2019-12-19 11:59:30.632] [renderer1] [error] File not found (/jmoiron/sqlx.): Error: File not found (/jmoiron/sqlx.)
+    at S.resolve (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:1555:706)
+[2019-12-19 11:59:30.632] [renderer1] [error] File not found (/MOOVE-Network/location_service/web.setupHeartBeatTimer.func1): Error: File not found (/MOOVE-Network/location_service/web.setupHeartBeatTimer.func1)
+    at S.resolve (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:1555:706)
+[2019-12-19 11:59:30.632] [renderer1] [error] File not found (/MOOVE-Network/location_service/web.setupHeartBeatTimer): Error: File not found (/MOOVE-Network/location_service/web.setupHeartBeatTimer)
+    at S.resolve (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:1555:706)
+[2019-12-19 11:59:30.632] [renderer1] [error] File not found (/jmoiron/sqlx.): Error: File not found (/jmoiron/sqlx.)
+    at S.resolve (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:1555:706)
+[2019-12-19 11:59:30.633] [renderer1] [error] File not found (/MOOVE-Network/location_service/web.setupHeartBeatTimer.func1): Error: File not found (/MOOVE-Network/location_service/web.setupHeartBeatTimer.func1)
+    at S.resolve (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:1555:706)
+[2019-12-19 11:59:30.633] [renderer1] [error] File not found (/MOOVE-Network/location_service/web.setupHeartBeatTimer): Error: File not found (/MOOVE-Network/location_service/web.setupHeartBeatTimer)
+    at S.resolve (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:1555:706)
+[2019-12-19 11:59:30.633] [renderer1] [error] File not found (/jmoiron/sqlx.): Error: File not found (/jmoiron/sqlx.)
+    at S.resolve (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:1555:706)
+[2019-12-19 11:59:30.633] [renderer1] [error] File not found (/MOOVE-Network/location_service/web.setupHeartBeatTimer.func1): Error: File not found (/MOOVE-Network/location_service/web.setupHeartBeatTimer.func1)
+    at S.resolve (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:1555:706)
+[2019-12-19 11:59:30.633] [renderer1] [error] File not found (/MOOVE-Network/location_service/web.setupHeartBeatTimer): Error: File not found (/MOOVE-Network/location_service/web.setupHeartBeatTimer)
+    at S.resolve (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:1555:706)
+[2019-12-19 12:06:17.136] [renderer1] [error] TreeError [MarkersPanel] Tree element not found: [object Object]: Error: TreeError [MarkersPanel] Tree element not found: [object Object]
+    at t.ObjectTreeModel.getElementLocation (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:133:120)
+    at t.ObjectTreeModel.isCollapsed (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:132:250)
+    at W.isCollapsed (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:1043:391)
+    at z.revealMarkersForCurrentActiveEditor (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:5926:628)
+    at z.autoReveal (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:5926:485)
+    at z.onActiveEditorChanged (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:5923:776)
+    at file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:5922:754
+    at file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:111:709
+    at c.fire (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:115:286)
+    at e.doEmitActiveEditorChangeEvent (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:4909:172)
+    at e.handleActiveEditorChange (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:4908:992)
+    at file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:4909:282
+    at c.fire (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:115:286)
+    at file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:5569:875
+    at async e.openEditor (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:5568:750)
+[2019-12-19 12:06:32.882] [renderer1] [error] TreeError [MarkersPanel] Tree element not found: [object Object]: Error: TreeError [MarkersPanel] Tree element not found: [object Object]
+    at t.ObjectTreeModel.getElementLocation (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:133:120)
+    at t.ObjectTreeModel.isCollapsed (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:132:250)
+    at W.isCollapsed (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:1043:391)
+    at z.revealMarkersForCurrentActiveEditor (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:5926:628)
+    at z.autoReveal (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:5926:485)
+    at z.onActiveEditorChanged (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:5923:776)
+    at file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:5922:754
+    at file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:111:709
+    at c.fire (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:115:286)
+    at e.doEmitActiveEditorChangeEvent (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:4909:172)
+    at e.handleActiveEditorChange (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:4908:992)
+    at file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:4909:282
+    at c.fire (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:115:286)
+    at file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:5569:875
+    at async e.openEditor (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:5568:750)
+[2019-12-19 12:08:40.955] [renderer1] [error] TreeError [MarkersPanel] Tree element not found: [object Object]: Error: TreeError [MarkersPanel] Tree element not found: [object Object]
+    at t.ObjectTreeModel.getElementLocation (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:133:120)
+    at t.ObjectTreeModel.isCollapsed (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:132:250)
+    at W.isCollapsed (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:1043:391)
+    at z.revealMarkersForCurrentActiveEditor (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:5926:628)
+    at z.autoReveal (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:5926:485)
+    at z.onActiveEditorChanged (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:5923:776)
+    at file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:5922:754
+    at file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:111:709
+    at c.fire (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:115:286)
+    at e.doEmitActiveEditorChangeEvent (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:4909:172)
+    at e.handleActiveEditorChange (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:4908:992)
+    at file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:4909:282
+    at c.fire (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:115:286)
+    at file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:5569:875
+    at async e.openEditor (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:5568:750)
+[2019-12-19 12:09:35.854] [renderer1] [error] File not found (/12/19): Error: File not found (/12/19)
+    at S.resolve (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:1555:706)
+[2019-12-19 12:09:36.738] [renderer1] [error] TreeError [MarkersPanel] Tree element not found: [object Object]: Error: TreeError [MarkersPanel] Tree element not found: [object Object]
+    at t.ObjectTreeModel.getElementLocation (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:133:120)
+    at t.ObjectTreeModel.isCollapsed (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:132:250)
+    at W.isCollapsed (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:1043:391)
+    at z.revealMarkersForCurrentActiveEditor (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:5926:628)
+    at z.autoReveal (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:5926:485)
+    at z.onActiveEditorChanged (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:5923:776)
+    at file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:5922:754
+    at file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:111:709
+    at c.fire (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:115:286)
+    at e.doEmitActiveEditorChangeEvent (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:4909:172)
+    at e.handleActiveEditorChange (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:4908:992)
+    at file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:4909:282
+    at c.fire (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:115:286)
+    at file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:5569:875
+    at processTicksAndRejections (internal/process/task_queues.js:89:5)
+    at async e.openEditor (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:5568:750)
+    at async e.doOpenEditor (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:4911:304)
+    at async q.focusStackFrame (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:5202:277)
+    at async n (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:5181:221)
+[2019-12-19 12:09:50.907] [renderer1] [error] File not found (/12/19): Error: File not found (/12/19)
+    at S.resolve (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:1555:706)
+[2019-12-19 12:09:50.908] [renderer1] [error] File not found (/MOOVE-Network/location_service/db.TripRoute): Error: File not found (/MOOVE-Network/location_service/db.TripRoute)
+    at S.resolve (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:1555:706)
+[2019-12-19 12:10:04.920] [renderer1] [error] File not found (/12/19): Error: File not found (/12/19)
+    at S.resolve (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:1555:706)
+[2019-12-19 12:10:04.920] [renderer1] [error] File not found (/MOOVE-Network/location_service/db.TripRoute): Error: File not found (/MOOVE-Network/location_service/db.TripRoute)
+    at S.resolve (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:1555:706)
+[2019-12-19 12:10:04.920] [renderer1] [error] File not found (/12/19): Error: File not found (/12/19)
+    at S.resolve (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:1555:706)
+[2019-12-19 12:10:04.920] [renderer1] [error] File not found (/MOOVE-Network/location_service/db.TripRoute): Error: File not found (/MOOVE-Network/location_service/db.TripRoute)
+    at S.resolve (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:1555:706)
+[2019-12-19 12:10:13.650] [renderer1] [error] File not found (/12/19): Error: File not found (/12/19)
+    at S.resolve (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:1555:706)
+[2019-12-19 12:10:13.651] [renderer1] [error] File not found (/MOOVE-Network/location_service/db.TripRoute): Error: File not found (/MOOVE-Network/location_service/db.TripRoute)
+    at S.resolve (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:1555:706)
+[2019-12-19 12:10:13.651] [renderer1] [error] File not found (/12/19): Error: File not found (/12/19)
+    at S.resolve (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:1555:706)
+[2019-12-19 12:10:13.651] [renderer1] [error] File not found (/MOOVE-Network/location_service/db.TripRoute): Error: File not found (/MOOVE-Network/location_service/db.TripRoute)
+    at S.resolve (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:1555:706)
+[2019-12-19 12:10:13.651] [renderer1] [error] File not found (/12/19): Error: File not found (/12/19)
+    at S.resolve (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:1555:706)
+[2019-12-19 12:10:17.286] [renderer1] [error] File not found (/12/19): Error: File not found (/12/19)
+    at S.resolve (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:1555:706)
+[2019-12-19 12:10:17.286] [renderer1] [error] File not found (/MOOVE-Network/location_service/db.TripRoute): Error: File not found (/MOOVE-Network/location_service/db.TripRoute)
+    at S.resolve (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:1555:706)
+[2019-12-19 12:10:17.286] [renderer1] [error] File not found (/12/19): Error: File not found (/12/19)
+    at S.resolve (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:1555:706)
+[2019-12-19 12:10:17.286] [renderer1] [error] File not found (/MOOVE-Network/location_service/db.TripRoute): Error: File not found (/MOOVE-Network/location_service/db.TripRoute)
+    at S.resolve (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:1555:706)
+[2019-12-19 12:10:17.287] [renderer1] [error] File not found (/12/19): Error: File not found (/12/19)
+    at S.resolve (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:1555:706)
+[2019-12-19 12:10:19.369] [renderer1] [error] File not found (/MOOVE-Network/location_service/db.TripRoute): Error: File not found (/MOOVE-Network/location_service/db.TripRoute)
+    at S.resolve (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:1555:706)
+[2019-12-19 12:10:20.876] [renderer1] [error] File not found (/MOOVE-Network/location_service/db.Location): Error: File not found (/MOOVE-Network/location_service/db.Location)
+    at S.resolve (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:1555:706)
+[2019-12-19 12:10:21.695] [renderer1] [error] File not found (/sql.NullString): Error: File not found (/sql.NullString)
+    at S.resolve (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:1555:706)
+[2019-12-19 12:10:22.254] [renderer1] [error] File not found (/guregu/null): Error: File not found (/guregu/null)
+    at S.resolve (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:1555:706)
+[2019-12-19 12:10:24.637] [renderer1] [error] File not found (/MOOVE-Network/location_service/utils.Location): Error: File not found (/MOOVE-Network/location_service/utils.Location)
+    at S.resolve (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:1555:706)
+[2019-12-19 12:10:24.637] [renderer1] [error] File not found (/sql.NullString): Error: File not found (/sql.NullString)
+    at S.resolve (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:1555:706)
+[2019-12-19 12:10:27.389] [renderer1] [error] File not found (/sql.NullString): Error: File not found (/sql.NullString)
+    at S.resolve (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:1555:706)
+[2019-12-19 12:10:29.029] [renderer1] [error] File not found (/MOOVE-Network/location_service/utils.Location): Error: File not found (/MOOVE-Network/location_service/utils.Location)
+    at S.resolve (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:1555:706)
+[2019-12-19 12:10:31.003] [renderer1] [error] File not found (/sql.NullString): Error: File not found (/sql.NullString)
+    at S.resolve (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:1555:706)
+[2019-12-19 12:10:31.069] [renderer1] [error] File not found (/guregu/null): Error: File not found (/guregu/null)
+    at S.resolve (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:1555:706)
+[2019-12-19 12:10:50.901] [renderer1] [error] File not found (/guregu/null): Error: File not found (/guregu/null)
+    at S.resolve (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:1555:706)
+[2019-12-19 12:10:50.936] [renderer1] [error] File not found (/MOOVE-Network/location_service/db.Trip): Error: File not found (/MOOVE-Network/location_service/db.Trip)
+    at S.resolve (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:1555:706)
+[2019-12-19 12:13:59.193] [renderer1] [error] TreeError [MarkersPanel] Tree element not found: [object Object]: Error: TreeError [MarkersPanel] Tree element not found: [object Object]
+    at t.ObjectTreeModel.getElementLocation (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:133:120)
+    at t.ObjectTreeModel.isCollapsed (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:132:250)
+    at W.isCollapsed (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:1043:391)
+    at z.revealMarkersForCurrentActiveEditor (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:5926:628)
+    at z.autoReveal (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:5926:485)
+    at z.onActiveEditorChanged (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:5923:776)
+    at file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:5922:754
+    at file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:111:709
+    at c.fire (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:115:286)
+    at e.doEmitActiveEditorChangeEvent (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:4909:172)
+    at e.handleActiveEditorChange (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:4908:992)
+    at file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:4909:282
+    at c.fire (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:115:286)
+    at file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:5569:875
+    at async e.openEditor (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:5568:750)
+[2019-12-19 12:14:02.295] [renderer1] [error] File not found (/12/19): Error: File not found (/12/19)
+    at S.resolve (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:1555:706)
+[2019-12-19 12:14:09.849] [renderer1] [error] File not found (/12/19): Error: File not found (/12/19)
+    at S.resolve (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:1555:706)
+[2019-12-19 12:14:09.849] [renderer1] [error] File not found (/jmoiron/sqlx.): Error: File not found (/jmoiron/sqlx.)
+    at S.resolve (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:1555:706)
+[2019-12-19 12:14:09.849] [renderer1] [error] File not found (/MOOVE-Network/location_service/web.setupHeartBeatTimer.func1): Error: File not found (/MOOVE-Network/location_service/web.setupHeartBeatTimer.func1)
+    at S.resolve (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:1555:706)
+[2019-12-19 12:14:09.850] [renderer1] [error] File not found (/MOOVE-Network/location_service/web.setupHeartBeatTimer): Error: File not found (/MOOVE-Network/location_service/web.setupHeartBeatTimer)
+    at S.resolve (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:1555:706)
+[2019-12-19 12:14:09.850] [renderer1] [error] File not found (/jmoiron/sqlx.): Error: File not found (/jmoiron/sqlx.)
+    at S.resolve (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:1555:706)
+[2019-12-19 12:14:09.850] [renderer1] [error] File not found (/MOOVE-Network/location_service/web.setupHeartBeatTimer.func1): Error: File not found (/MOOVE-Network/location_service/web.setupHeartBeatTimer.func1)
+    at S.resolve (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:1555:706)
+[2019-12-19 12:14:09.850] [renderer1] [error] File not found (/MOOVE-Network/location_service/web.setupHeartBeatTimer): Error: File not found (/MOOVE-Network/location_service/web.setupHeartBeatTimer)
+    at S.resolve (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:1555:706)
+[2019-12-19 12:14:09.850] [renderer1] [error] File not found (/jmoiron/sqlx.): Error: File not found (/jmoiron/sqlx.)
+    at S.resolve (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:1555:706)
+[2019-12-19 12:14:09.850] [renderer1] [error] File not found (/MOOVE-Network/location_service/web.setupHeartBeatTimer.func1): Error: File not found (/MOOVE-Network/location_service/web.setupHeartBeatTimer.func1)
+    at S.resolve (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:1555:706)
+[2019-12-19 12:14:09.850] [renderer1] [error] File not found (/MOOVE-Network/location_service/web.setupHeartBeatTimer): Error: File not found (/MOOVE-Network/location_service/web.setupHeartBeatTimer)
+    at S.resolve (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:1555:706)
+[2019-12-19 12:14:09.851] [renderer1] [error] File not found (/12/19): Error: File not found (/12/19)
+    at S.resolve (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:1555:706)
+[2019-12-19 12:14:15.660] [renderer1] [error] TreeError [MarkersPanel] Tree element not found: [object Object]: Error: TreeError [MarkersPanel] Tree element not found: [object Object]
+    at t.ObjectTreeModel.getElementLocation (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:133:120)
+    at t.ObjectTreeModel.isCollapsed (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:132:250)
+    at W.isCollapsed (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:1043:391)
+    at z.revealMarkersForCurrentActiveEditor (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:5926:628)
+    at z.autoReveal (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:5926:485)
+    at z.onActiveEditorChanged (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:5923:776)
+    at file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:5922:754
+    at file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:111:709
+    at c.fire (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:115:286)
+    at e.doEmitActiveEditorChangeEvent (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:4909:172)
+    at e.handleActiveEditorChange (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:4908:992)
+    at file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:4909:282
+    at c.fire (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:115:286)
+    at file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:5569:875
+    at async e.openEditor (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:5568:750)
+[2019-12-19 12:14:36.728] [renderer1] [error] TreeError [MarkersPanel] Tree element not found: [object Object]: Error: TreeError [MarkersPanel] Tree element not found: [object Object]
+    at t.ObjectTreeModel.getElementLocation (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:133:120)
+    at t.ObjectTreeModel.isCollapsed (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:132:250)
+    at W.isCollapsed (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:1043:391)
+    at z.revealMarkersForCurrentActiveEditor (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:5926:628)
+    at z.autoReveal (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:5926:485)
+    at z.onActiveEditorChanged (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:5923:776)
+    at file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:5922:754
+    at file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:111:709
+    at c.fire (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:115:286)
+    at e.doEmitActiveEditorChangeEvent (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:4909:172)
+    at e.handleActiveEditorChange (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:4908:992)
+    at file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:4909:282
+    at c.fire (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:115:286)
+    at file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:5569:875
+    at async e.openEditor (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:5568:750)
+[2019-12-19 12:14:38.038] [renderer1] [error] File not found (/12/19): Error: File not found (/12/19)
+    at S.resolve (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:1555:706)
+[2019-12-19 12:14:41.803] [renderer1] [error] File not found (/12/19): Error: File not found (/12/19)
+    at S.resolve (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:1555:706)
+[2019-12-19 12:14:43.751] [renderer1] [error] File not found (/12/19): Error: File not found (/12/19)
+    at S.resolve (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:1555:706)
+[2019-12-19 12:14:48.141] [renderer1] [error] File not found (/12/19): Error: File not found (/12/19)
+    at S.resolve (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:1555:706)
+[2019-12-19 12:14:58.104] [renderer1] [error] File not found (/12/19): Error: File not found (/12/19)
+    at S.resolve (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:1555:706)
+[2019-12-19 12:15:08.096] [renderer1] [error] File not found (/12/19): Error: File not found (/12/19)
+    at S.resolve (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:1555:706)
+[2019-12-19 12:15:18.167] [renderer1] [error] File not found (/12/19): Error: File not found (/12/19)
+    at S.resolve (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:1555:706)
+[2019-12-19 12:15:28.102] [renderer1] [error] File not found (/12/19): Error: File not found (/12/19)
+    at S.resolve (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:1555:706)
+[2019-12-19 12:17:13.564] [renderer1] [error] File not found (/12/19): Error: File not found (/12/19)
+    at S.resolve (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:1555:706)
+[2019-12-19 12:17:18.089] [renderer1] [error] File not found (/12/19): Error: File not found (/12/19)
+    at S.resolve (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:1555:706)
+[2019-12-19 12:17:28.101] [renderer1] [error] File not found (/12/19): Error: File not found (/12/19)
+    at S.resolve (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:1555:706)
+[2019-12-19 12:17:38.077] [renderer1] [error] File not found (/12/19): Error: File not found (/12/19)
+    at S.resolve (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:1555:706)
+[2019-12-19 12:17:48.113] [renderer1] [error] File not found (/12/19): Error: File not found (/12/19)
+    at S.resolve (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:1555:706)
+[2019-12-19 12:17:51.204] [renderer1] [error] TreeError [MarkersPanel] Tree element not found: [object Object]: Error: TreeError [MarkersPanel] Tree element not found: [object Object]
+    at t.ObjectTreeModel.getElementLocation (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:133:120)
+    at t.ObjectTreeModel.isCollapsed (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:132:250)
+    at W.isCollapsed (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:1043:391)
+    at z.revealMarkersForCurrentActiveEditor (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:5926:628)
+    at z.autoReveal (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:5926:485)
+    at z.onActiveEditorChanged (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:5923:776)
+    at file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:5922:754
+    at file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:111:709
+    at c.fire (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:115:286)
+    at e.doEmitActiveEditorChangeEvent (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:4909:172)
+    at e.handleActiveEditorChange (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:4908:992)
+    at file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:4909:282
+    at c.fire (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:115:286)
+    at file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:5569:875
+    at processTicksAndRejections (internal/process/task_queues.js:89:5)
+    at async e.openEditor (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:5568:750)
+    at async e.doOpenEditor (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:4911:304)
+    at async h.doOpenCodeEditor (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:3187:39)
+    at async D._onResult (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:2475:410)
+[2019-12-19 12:17:58.103] [renderer1] [error] File not found (/12/19): Error: File not found (/12/19)
+    at S.resolve (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:1555:706)
+[2019-12-19 12:18:08.091] [renderer1] [error] File not found (/12/19): Error: File not found (/12/19)
+    at S.resolve (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:1555:706)
+[2019-12-19 12:18:18.086] [renderer1] [error] File not found (/12/19): Error: File not found (/12/19)
+    at S.resolve (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:1555:706)
+[2019-12-19 12:18:28.118] [renderer1] [error] File not found (/12/19): Error: File not found (/12/19)
+    at S.resolve (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:1555:706)
+[2019-12-19 12:18:38.090] [renderer1] [error] File not found (/12/19): Error: File not found (/12/19)
+    at S.resolve (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:1555:706)
+[2019-12-19 12:18:48.088] [renderer1] [error] File not found (/12/19): Error: File not found (/12/19)
+    at S.resolve (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:1555:706)
+[2019-12-19 12:18:58.093] [renderer1] [error] File not found (/12/19): Error: File not found (/12/19)
+    at S.resolve (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:1555:706)
+[2019-12-19 12:19:08.096] [renderer1] [error] File not found (/12/19): Error: File not found (/12/19)
+    at S.resolve (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:1555:706)
+[2019-12-19 12:19:18.095] [renderer1] [error] File not found (/12/19): Error: File not found (/12/19)
+    at S.resolve (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:1555:706)
+[2019-12-19 12:19:28.067] [renderer1] [error] File not found (/12/19): Error: File not found (/12/19)
+    at S.resolve (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:1555:706)
+[2019-12-19 12:19:38.086] [renderer1] [error] File not found (/12/19): Error: File not found (/12/19)
+    at S.resolve (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:1555:706)
+[2019-12-19 12:19:43.779] [renderer1] [error] File not found (/12/19): Error: File not found (/12/19)
+    at S.resolve (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:1555:706)
+[2019-12-19 12:19:44.089] [renderer1] [error] TreeError [MarkersPanel] Tree element not found: [object Object]: Error: TreeError [MarkersPanel] Tree element not found: [object Object]
+    at t.ObjectTreeModel.getElementLocation (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:133:120)
+    at t.ObjectTreeModel.isCollapsed (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:132:250)
+    at W.isCollapsed (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:1043:391)
+    at z.revealMarkersForCurrentActiveEditor (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:5926:628)
+    at z.autoReveal (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:5926:485)
+    at z.onActiveEditorChanged (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:5923:776)
+    at file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:5922:754
+    at file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:111:709
+    at c.fire (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:115:286)
+    at e.doEmitActiveEditorChangeEvent (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:4909:172)
+    at e.handleActiveEditorChange (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:4908:992)
+    at file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:4909:282
+    at c.fire (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:115:286)
+    at file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:5569:875
+    at processTicksAndRejections (internal/process/task_queues.js:89:5)
+    at async e.openEditor (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:5568:750)
+    at async e.doOpenEditor (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:4911:304)
+    at async q.focusStackFrame (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:5202:277)
+    at async n (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:5181:221)
+[2019-12-19 12:19:48.429] [renderer1] [error] File not found (/12/19): Error: File not found (/12/19)
+    at S.resolve (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:1555:706)
+[2019-12-19 12:19:58.101] [renderer1] [error] File not found (/12/19): Error: File not found (/12/19)
+    at S.resolve (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:1555:706)
+[2019-12-19 12:20:08.072] [renderer1] [error] File not found (/12/19): Error: File not found (/12/19)
+    at S.resolve (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:1555:706)
+[2019-12-19 12:20:18.108] [renderer1] [error] File not found (/12/19): Error: File not found (/12/19)
+    at S.resolve (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:1555:706)
+[2019-12-19 12:20:28.148] [renderer1] [error] File not found (/12/19): Error: File not found (/12/19)
+    at S.resolve (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:1555:706)
+[2019-12-19 12:20:38.087] [renderer1] [error] File not found (/12/19): Error: File not found (/12/19)
+    at S.resolve (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:1555:706)
+[2019-12-19 12:20:48.087] [renderer1] [error] File not found (/12/19): Error: File not found (/12/19)
+    at S.resolve (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:1555:706)
+[2019-12-19 12:20:58.086] [renderer1] [error] File not found (/12/19): Error: File not found (/12/19)
+    at S.resolve (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:1555:706)
+[2019-12-19 12:21:08.211] [renderer1] [error] File not found (/12/19): Error: File not found (/12/19)
+    at S.resolve (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:1555:706)
+[2019-12-19 12:21:18.099] [renderer1] [error] File not found (/12/19): Error: File not found (/12/19)
+    at S.resolve (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:1555:706)
+[2019-12-19 12:21:28.087] [renderer1] [error] File not found (/12/19): Error: File not found (/12/19)
+    at S.resolve (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:1555:706)
+[2019-12-19 12:21:38.164] [renderer1] [error] File not found (/12/19): Error: File not found (/12/19)
+    at S.resolve (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:1555:706)
+[2019-12-19 12:21:48.086] [renderer1] [error] File not found (/12/19): Error: File not found (/12/19)
+    at S.resolve (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:1555:706)
+[2019-12-19 12:21:58.126] [renderer1] [error] File not found (/12/19): Error: File not found (/12/19)
+    at S.resolve (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:1555:706)
+[2019-12-19 12:22:08.072] [renderer1] [error] File not found (/12/19): Error: File not found (/12/19)
+    at S.resolve (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:1555:706)
+[2019-12-19 12:22:18.091] [renderer1] [error] File not found (/12/19): Error: File not found (/12/19)
+    at S.resolve (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:1555:706)
+[2019-12-19 12:22:28.078] [renderer1] [error] File not found (/12/19): Error: File not found (/12/19)
+    at S.resolve (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:1555:706)
+[2019-12-19 12:22:38.093] [renderer1] [error] File not found (/12/19): Error: File not found (/12/19)
+    at S.resolve (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:1555:706)
+[2019-12-19 12:22:48.070] [renderer1] [error] File not found (/12/19): Error: File not found (/12/19)
+    at S.resolve (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:1555:706)
+[2019-12-19 12:22:51.928] [renderer1] [error] no debug adapter found: Error: no debug adapter found
+    at t.RawDebugSession.handleErrorResponse (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:2798:1003)
+    at file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:2798:434
+    at async R.fetchThreads (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:5180:411)
+[2019-12-19 12:22:51.973] [renderer1] [error] File not found (/12/19): Error: File not found (/12/19)
+    at S.resolve (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:1555:706)
+[2019-12-19 12:23:20.921] [renderer1] [error] File not found (/12/19): Error: File not found (/12/19)
+    at S.resolve (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:1555:706)
+[2019-12-19 12:23:57.899] [renderer1] [error] File not found (/12/19): Error: File not found (/12/19)
+    at S.resolve (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:1555:706)
+[2019-12-19 12:24:02.739] [renderer1] [error] no debug adapter found: Error: no debug adapter found
+    at t.RawDebugSession.handleErrorResponse (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:2798:1003)
+    at file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:2798:434
+    at async R.fetchThreads (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:5180:411)

@@ -1,0 +1,3 @@
+[2019-12-17 15:35:08.647] [sharedprocess] [info] main {"machineId":"e53cacdd0ae25b109489a033e807f1af55adc880c67b5d4a848fb31f16f138fd","windowId":2}
+[2019-12-17 15:35:20.326] [sharedprocess] [info] Deleted from disk ms-mssql.mssql /home/sachin/.vscode/extensions/ms-mssql.mssql-1.7.1
+[2019-12-17 15:35:48.664] [sharedprocess] [info] Starting to clean up unused language packs.

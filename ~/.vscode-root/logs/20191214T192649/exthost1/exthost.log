@@ -1,0 +1,34 @@
+[2019-12-14 19:27:03.166] [exthost] [info] extension host started
+[2019-12-14 19:27:03.337] [exthost] [info] ExtensionService#_doActivateExtension ms-vscode.Go {"startup":false,"extensionId":{"value":"ms-vscode.Go","_lower":"ms-vscode.go"},"activationEvent":"onLanguage:go"}
+[2019-12-14 19:27:03.338] [exthost] [info] ExtensionService#loadCommonJSModule file:///home/sachin/.vscode/extensions/ms-vscode.go-0.11.9/out/src/goMain
+[2019-12-14 19:27:07.834] [exthost] [info] ExtensionService#_doActivateExtension vscode.debug-auto-launch {"startup":true,"extensionId":{"value":"vscode.debug-auto-launch","_lower":"vscode.debug-auto-launch"},"activationEvent":"*"}
+[2019-12-14 19:27:07.835] [exthost] [info] ExtensionService#loadCommonJSModule file:///usr/share/code/resources/app/extensions/debug-auto-launch/dist/extension
+[2019-12-14 19:27:07.901] [exthost] [info] ExtensionService#_doActivateExtension vscode.emmet {"startup":true,"extensionId":{"value":"vscode.emmet","_lower":"vscode.emmet"},"activationEvent":"*"}
+[2019-12-14 19:27:07.902] [exthost] [info] ExtensionService#loadCommonJSModule file:///usr/share/code/resources/app/extensions/emmet/dist/extension
+[2019-12-14 19:27:08.031] [exthost] [info] ExtensionService#_doActivateExtension vscode.git {"startup":true,"extensionId":{"value":"vscode.git","_lower":"vscode.git"},"activationEvent":"*"}
+[2019-12-14 19:27:08.031] [exthost] [info] ExtensionService#loadCommonJSModule file:///usr/share/code/resources/app/extensions/git/dist/main
+[2019-12-14 19:27:08.241] [exthost] [info] ExtensionService#_doActivateExtension vscode.merge-conflict {"startup":true,"extensionId":{"value":"vscode.merge-conflict","_lower":"vscode.merge-conflict"},"activationEvent":"*"}
+[2019-12-14 19:27:08.241] [exthost] [info] ExtensionService#loadCommonJSModule file:///usr/share/code/resources/app/extensions/merge-conflict/dist/extension
+[2019-12-14 19:27:08.269] [exthost] [info] ExtensionService#_doActivateExtension eamodio.gitlens {"startup":true,"extensionId":{"value":"eamodio.gitlens","_lower":"eamodio.gitlens"},"activationEvent":"*"}
+[2019-12-14 19:27:08.269] [exthost] [info] ExtensionService#loadCommonJSModule file:///home/sachin/.vscode/extensions/eamodio.gitlens-10.2.0/dist/extension
+[2019-12-14 19:27:08.428] [exthost] [info] ExtensionService#_doActivateExtension esbenp.prettier-vscode {"startup":true,"extensionId":{"value":"esbenp.prettier-vscode","_lower":"esbenp.prettier-vscode"},"activationEvent":"*"}
+[2019-12-14 19:27:08.428] [exthost] [info] ExtensionService#loadCommonJSModule file:///home/sachin/.vscode/extensions/esbenp.prettier-vscode-3.11.0/dist/extension
+[2019-12-14 19:27:08.715] [exthost] [info] ExtensionService#_doActivateExtension HookyQR.beautify {"startup":true,"extensionId":{"value":"HookyQR.beautify","_lower":"hookyqr.beautify"},"activationEvent":"*"}
+[2019-12-14 19:27:08.715] [exthost] [info] ExtensionService#loadCommonJSModule file:///home/sachin/.vscode/extensions/hookyqr.beautify-1.5.0/extension
+[2019-12-14 19:27:09.017] [exthost] [info] eager extensions activated
+[2019-12-14 20:05:49.155] [exthost] [info] ExtensionService#_doActivateExtension ms-azuretools.vscode-docker {"startup":false,"extensionId":{"value":"ms-azuretools.vscode-docker","_lower":"ms-azuretools.vscode-docker"},"activationEvent":"onLanguage:yaml"}
+[2019-12-14 20:05:49.156] [exthost] [info] ExtensionService#loadCommonJSModule file:///home/sachin/.vscode/extensions/ms-azuretools.vscode-docker-0.9.0/main
+[2019-12-15 17:22:51.234] [exthost] [warning] ms-vscode.Go - Code actions of kind 'source.organizeImports 'requested but returned code action is of kind 'quickfix'. Code action will be dropped. Please check 'CodeActionContext.only' to only return requested code actions.
+[2019-12-15 17:23:59.567] [exthost] [warning] ms-vscode.Go - Code actions of kind 'source.organizeImports 'requested but returned code action is of kind 'quickfix'. Code action will be dropped. Please check 'CodeActionContext.only' to only return requested code actions.
+[2019-12-16 10:00:35.800] [exthost] [info] ExtensionService#_doActivateExtension vscode.debug-server-ready {"startup":false,"extensionId":{"value":"vscode.debug-server-ready","_lower":"vscode.debug-server-ready"},"activationEvent":"onDebugResolve"}
+[2019-12-16 10:00:35.801] [exthost] [info] ExtensionService#loadCommonJSModule file:///usr/share/code/resources/app/extensions/debug-server-ready/dist/extension
+[2019-12-16 10:07:55.108] [exthost] [error] [ms-vscode.Go] provider FAILED
+[2019-12-16 10:07:55.108] [exthost] [error] Error: selectionRange must be contained in fullRange
+	at Function.validate (/usr/share/code/resources/app/out/vs/workbench/services/extensions/node/extensionHostProcess.js:365:679)
+	at new w (/usr/share/code/resources/app/out/vs/workbench/services/extensions/node/extensionHostProcess.js:365:547)
+	at new w (/usr/share/code/resources/app/out/vs/workbench/services/extensions/node/extensionHostProcess.js:354:169)
+	at asDocumentSymbol (/home/sachin/.vscode/extensions/ms-vscode.go-0.11.9/node_modules/vscode-languageclient/lib/protocolConverter.js:396:22)
+	at Array.map (<anonymous>)
+	at Object.asDocumentSymbols (/home/sachin/.vscode/extensions/ms-vscode.go-0.11.9/node_modules/vscode-languageclient/lib/protocolConverter.js:393:23)
+	at /home/sachin/.vscode/extensions/ms-vscode.go-0.11.9/node_modules/vscode-languageclient/lib/client.js:1002:62
+[2019-12-16 13:10:02.902] [exthost] [warning] ms-vscode.Go - Code actions of kind 'source.organizeImports 'requested but returned code action is of kind 'quickfix'. Code action will be dropped. Please check 'CodeActionContext.only' to only return requested code actions.
