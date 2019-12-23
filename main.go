@@ -39,6 +39,11 @@ func main() {
 	redis.SetClient(redisClient)
 	defer closeConn(redisClient)
 
+	// os.Setenv("LOCATION_MAPS_API_KEY", "AIzaSyDEB6YkXU-hCTEnkBhyvygRRHoISOFXQho")
+	// //os.Setenv("FCM_API_KEY", "cjfAE2bgHOA:APA91bFGD1txBI4dxxkd7kwKO7zaYZkCOEStUMYWEwhYyeQf7Nlt000f5c70pAMDx5bpmoy51JhIXwfUwyz4OkApQ4czkL6-PyJHufHA2zdBLmvnWRTxVUnV6OwKYrpVEVeEci2mS_F_")
+	// os.Setenv("FCM_API_KEY", "AIzaSyCB6nMlJMBeO221GaH66vxY5WlHhr9pp4s")
+	// os.Setenv("FCM_TOPIC_PREFIX", "COMPLIANCE_DEFAULT_APP_TOPIC_createdby") //will change
+
 	services.InitDurationService(os.Getenv("LOCATION_MAPS_API_KEY"))
 	services.InitGoogleRoadsService(os.Getenv("LOCATION_MAPS_API_KEY"))
 	services.InitNotificationService(os.Getenv("FCM_API_KEY"), os.Getenv("FCM_TOPIC_PREFIX"))
