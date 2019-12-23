@@ -39,6 +39,7 @@ func main() {
 	redis.SetClient(redisClient)
 	defer closeConn(redisClient)
 
+	os.Setenv("LOCATION_MAPS_API_KEY", "AIzaSyDEB6YkXU-hCTEnkBhyvygRRHoISOFXQho")
 	services.InitDurationService(os.Getenv("LOCATION_MAPS_API_KEY"))
 	services.InitGoogleRoadsService(os.Getenv("LOCATION_MAPS_API_KEY"))
 	services.InitNotificationService(os.Getenv("FCM_API_KEY"), os.Getenv("FCM_TOPIC_PREFIX"))
