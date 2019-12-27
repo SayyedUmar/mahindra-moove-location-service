@@ -5,6 +5,7 @@ import (
 	"fmt"
 
 	"github.com/jmoiron/sqlx"
+	"github.com/prometheus/common/log"
 )
 
 //Driver structure that maps to drivers table
@@ -38,7 +39,7 @@ var getDriverByUserIDQuery = `
 	join users u on u.entity_id = d.id and u.entity_type = "Driver"
 	where u.id = ?`
 
-var getLastDriverLocationQuery = `select current_location from users where entity_id=? and entity_type = "Driver"`
+var getLastDriverLocationQuery = `select current_location from users where id=?`
 
 //GetDriverByID retuns Driver struct along with user for a give driver id if found otherwise will return error
 func GetDriverByID(db sqlx.Queryer, driverID int) (*Driver, error) {
@@ -75,6 +76,7 @@ func GetDriverByTripID(db sqlx.Queryer, tripID int) (*Driver, error) {
 
 //DriverLocation Returns last known location for the driver.
 func DriverLocation(db sqlx.Queryer, driverUserID int) (*Location, error) {
+	log.Info(driverUserID)
 	row := db.QueryRowx(getLastDriverLocationQuery, driverUserID)
 	var location Location
 	err := row.Scan(&location)
