@@ -51,6 +51,7 @@ func GetTripETA(w http.ResponseWriter, req *http.Request) {
 		ErrorWithMessage(fmt.Sprintf("Unable to find current location for trip %d. %s", trip.ID, err.Error())).Respond(w, 404)
 		return
 	}
+	fmt.Printf("tl.Location : ", tl.Location.Lat, tl.Location.Lng)
 	resp, err := services.GetETAForTrip(trip, tl.Location, services.RealClock{})
 	if err != nil {
 		ErrorWithMessage(fmt.Sprintf("Error: [%s] while calculating eta for trip : %d", err.Error(), trip.ID)).Respond(w, 500)

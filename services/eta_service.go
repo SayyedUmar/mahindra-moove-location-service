@@ -47,6 +47,7 @@ func handleCheckinTrip(trip *db.Trip, currentLocation db.Location, clock Clock) 
 	if trip.AllCheckedIn() {
 		endLocation := trip.TripRoutes[len(trip.TripRoutes)-1].ScheduledEndLocation
 		log.Infof("Requesting eta of trip %d from %s to %s with offset of %d mins\n", trip.ID, currentLocation.ToString(), endLocation.ToString(), 0)
+		fmt.Printf("==============", currentLocation.ToString(), endLocation.ToString())
 		dm, err := ds.GetDuration(currentLocation, endLocation, clock.Now())
 		if err != nil {
 			return nil, err
@@ -55,6 +56,7 @@ func handleCheckinTrip(trip *db.Trip, currentLocation db.Location, clock Clock) 
 		dateTime = dateTime.Add(dm.Duration)
 
 		for _, tr := range trip.TripRoutes {
+			
 			etaResp.TripRoutes = append(etaResp.TripRoutes, ETATripRoute{
 				ID:             tr.ID,
 				DropoffTime:    NotNullTime(dateTime),
@@ -72,7 +74,9 @@ func handleCheckinTrip(trip *db.Trip, currentLocation db.Location, clock Clock) 
 	var previousEndLocation db.Location
 	var oldDateTime time.Time
 	oldDateTime = clock.Now()
+
 	for _, tr := range trip.TripRoutes {
+		fmt.Print("=>==>==>==>==>==>==>==>=", tr, currentLocation.ToString(), "<<======<<====<<")
 		if tr.Status != "on_board" && tr.Status != "not_started" {
 			etaResp.TripRoutes = append(etaResp.TripRoutes, ETATripRoute{
 				ID:             tr.ID,
@@ -100,8 +104,10 @@ func handleCheckinTrip(trip *db.Trip, currentLocation db.Location, clock Clock) 
 				newDateTime := currentTime.Add(offset)
 
 				log.Infof("Requesting eta of trip %d from %s to %s with offset of %d mins\n", trip.ID, startLoc.ToString(), endLoc.ToString(), int64(offset.Minutes()))
+
 				dmLocal, err := ds.GetDuration(startLoc, endLoc, newDateTime)
 				if err != nil {
+					fmt.Printf("====================", err.Error())
 					return nil, err
 				}
 				etaBusMap[tr.ScheduledRouteOrder] = dmLocal
@@ -171,6 +177,7 @@ func handleCheckinTrip(trip *db.Trip, currentLocation db.Location, clock Clock) 
 }
 
 func handleCheckoutTrip(trip *db.Trip, currentLocation db.Location, clock Clock) (*ETAResponse, error) {
+	fmt.Println("trip.ID =============== ", trip.ID)
 	etaBusMap := make(map[int]DurationMetrics)
 	etaResp := ETAResponse{ID: trip.ID, UpdatedAt: clock.Now()}
 	ds := GetDurationService()
@@ -295,6 +302,8 @@ func GetETAForTrip(trip *db.Trip, currentLocation db.Location, clock Clock) (*ET
 	if len(trip.TripRoutes) < 1 {
 		return nil, fmt.Errorf("The trip %d has no trip routes", trip.ID)
 	}
+	fmt.Println("trip.ID =============== ", trip.ID, trip.TripType)
+
 	if trip.TripType == db.TripTypeCheckIn {
 		return handleCheckinTrip(trip, currentLocation, clock)
 	}
