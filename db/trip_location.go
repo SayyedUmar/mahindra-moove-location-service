@@ -45,19 +45,28 @@ func (tl *TripLocation) Save(db NamedExecer) error {
 // LatestTripLocation returns the latest trip location of the trip
 func LatestTripLocation(q sqlx.Queryer, tripID int) (*TripLocation, error) {
 	var tl TripLocation
-	rows, err := q.Query("select * from trip_locations where trip_id=? order by id desc limit 1", tripID)
+	/* rows, err := q.Query("select * from trip_locations where trip_id=? order by id desc limit 1", tripID)
 	if err != nil {
 		panic(err)
+	} */
+
+	row := q.QueryRowx("select id,trip_id,location,time,(case when speed is null THEN 0 else speed end) speed ,distance,created_at,updated_at from trip_locations where trip_id=? order by id desc limit 1", tripID)
+
+	err := row.StructScan(&tl)
+	fmt.Println(row, tl)
+	if err != nil {
+		return nil, err
 	}
+
 	// fmt.Println(rows)
 
-	for rows.Next() {
+	/* 	for rows.Next() {
 		err := rows.Scan(&tl.ID, &tl.TripID, &tl.Location, &tl.Time, &tl.Speed, &tl.Distance, &tl.CreatedAt, &tl.UpdatedAt)
 		if err != nil {
 			fmt.Println(err)
 		}
 		// fmt.Println("================================", tl)
-	}
+	} */
 
 	/*
 		ID        int       `db:"id"`
