@@ -56,7 +56,7 @@ func handleCheckinTrip(trip *db.Trip, currentLocation db.Location, clock Clock) 
 		dateTime = dateTime.Add(dm.Duration)
 
 		for _, tr := range trip.TripRoutes {
-			
+
 			etaResp.TripRoutes = append(etaResp.TripRoutes, ETATripRoute{
 				ID:             tr.ID,
 				DropoffTime:    NotNullTime(dateTime),
@@ -76,7 +76,7 @@ func handleCheckinTrip(trip *db.Trip, currentLocation db.Location, clock Clock) 
 	oldDateTime = clock.Now()
 
 	for _, tr := range trip.TripRoutes {
-		fmt.Print("=>==>==>==>==>==>==>==>=", tr, currentLocation.ToString(), "<<======<<====<<")
+		fmt.Print("=>==>==>==>==>==>==>==>=", tr.ScheduledStartLocation.Lat, tr.ScheduledStartLocation.Lng, currentLocation.Lat, currentLocation.Lng, "<<======<<====<<")
 		if tr.Status != "on_board" && tr.Status != "not_started" {
 			etaResp.TripRoutes = append(etaResp.TripRoutes, ETATripRoute{
 				ID:             tr.ID,
