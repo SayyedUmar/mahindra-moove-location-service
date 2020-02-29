@@ -174,23 +174,8 @@ func (tr *TripRoute) UpdateCompletedGeofenceInfo(db *sqlx.Tx, location Location,
 }
 
 func SaveEta(db sqlx.Execer, trId int, pickUpTime null.Time, dropOffTime null.Time) error {
-	if !pickUpTime.IsZero() && !dropOffTime.IsZero() {
-		_, err := db.Exec(`update trip_routes
+	_, err := db.Exec(`update trip_routes
 							set pick_up_time=?, drop_off_time=?
 							where id=?`, pickUpTime, dropOffTime, trId)
-		return err
-	}
-	if !pickUpTime.IsZero() && dropOffTime.IsZero() {
-		_, err := db.Exec(`update trip_routes
-							set pick_up_time=?
-							where id=?`, pickUpTime, trId)
-		return err
-	}
-	if pickUpTime.IsZero() && !dropOffTime.IsZero() {
-		_, err := db.Exec(`update trip_routes
-							set drop_off_time=?
-							where id=?`, dropOffTime, trId)
-		return err
-	}
-	return nil
+	return err
 }
