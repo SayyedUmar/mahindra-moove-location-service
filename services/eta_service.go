@@ -177,18 +177,19 @@ func handleCheckinTrip(trip *db.Trip, currentLocation db.Location, clock Clock) 
 }
 
 func handleCheckoutTrip(trip *db.Trip, currentLocation db.Location, clock Clock) (*ETAResponse, error) {
-	fmt.Println("trip.ID =============== ", trip.ID)
+	fmt.Println("trip.ID =============== ", trip.ID, " >>>>>>>>>>>>>>>>>>>>>>")
 	etaBusMap := make(map[int]DurationMetrics)
 	etaResp := ETAResponse{ID: trip.ID, UpdatedAt: clock.Now()}
 	ds := GetDurationService()
 	ns := GetNotificationService()
 	tripNotStarted := true
 	for _, tr := range trip.TripRoutes {
-		if tr.Status != "not_started" {
+		if tr.Status != "not_started" && tr.Status != "canceled" {
 			tripNotStarted = false
 			break
 		}
 	}
+	fmt.Println("tripNotStarted : ", tripNotStarted)
 	dateTime := clock.Now()
 	if tripNotStarted {
 		startLoc := currentLocation
