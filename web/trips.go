@@ -45,6 +45,11 @@ func GetTripETA(w http.ResponseWriter, req *http.Request) {
 		ErrorWithMessage(fmt.Sprintf("Unable to find trip %s", err.Error())).Respond(w, 404)
 		return
 	}
+	if trip.Status != "active" {
+		log.Error("Error getting Trip : Trip is not on-going ", trip.ID)
+		ErrorWithMessage(fmt.Sprintf("Error getting Trip : Trip is not on-going %d", trip.ID)).Respond(w, 404)
+		return
+	}
 	tl, err := db.LatestTripLocation(db.CurrentDB(), trip.ID)
 	if err != nil {
 		log.Errorf("Error getting current location for Trip %d", trip.ID)
