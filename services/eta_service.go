@@ -64,7 +64,7 @@ func handleCheckinTrip(trip *db.Trip, currentLocation db.Location, clock Clock) 
 				EmployeeUserID: tr.EmployeeUserID,
 				Status:         tr.Status,
 			})
-			NotifyTripRouteToEmployee(&tr, &dm, 0, ns)
+			// NotifyTripRouteToEmployee(&tr, &dm, 0, ns)
 		}
 		return &etaResp, nil
 	}
@@ -125,7 +125,7 @@ func handleCheckinTrip(trip *db.Trip, currentLocation db.Location, clock Clock) 
 					EmployeeUserID: tr.EmployeeUserID,
 					Status:         tr.Status,
 				})
-				NotifyTripRouteToEmployee(&tr, &dm, offset, ns)
+				// NotifyTripRouteToEmployee(&tr, &dm, offset, ns)
 				previousOffset = offset
 				offset += dm.Duration
 			} else {
@@ -141,7 +141,7 @@ func handleCheckinTrip(trip *db.Trip, currentLocation db.Location, clock Clock) 
 					EmployeeUserID: tr.EmployeeUserID,
 					Status:         tr.Status,
 				})
-				NotifyTripRouteToEmployee(&tr, &dm, previousOffset, ns)
+				// NotifyTripRouteToEmployee(&tr, &dm, previousOffset, ns)
 			}
 		}
 	}
@@ -170,7 +170,7 @@ func handleCheckinTrip(trip *db.Trip, currentLocation db.Location, clock Clock) 
 				EmployeeUserID: tr.EmployeeUserID,
 				Status:         tr.Status,
 			})
-			NotifyTripRouteToEmployee(&tr, &dm, offset, ns)
+			// NotifyTripRouteToEmployee(&tr, &dm, offset, ns)
 		}
 	}
 	return &etaResp, nil
@@ -212,7 +212,7 @@ func handleCheckoutTrip(trip *db.Trip, currentLocation db.Location, clock Clock)
 				EmployeeUserID: tr.EmployeeUserID,
 				Status:         tr.Status,
 			})
-			NotifyTripRouteToEmployee(&tr, &dm, 0, ns)
+			// NotifyTripRouteToEmployee(&tr, &dm, 0, ns)
 		}
 		return &etaResp, nil
 	}
@@ -263,7 +263,7 @@ func handleCheckoutTrip(trip *db.Trip, currentLocation db.Location, clock Clock)
 					EmployeeUserID: tr.EmployeeUserID,
 					Status:         tr.Status,
 				})
-				NotifyTripRouteToEmployee(&tr, &dm, offset, ns)
+				// NotifyTripRouteToEmployee(&tr, &dm, offset, ns)
 
 				previousOffset = offset
 				offset += dm.Duration
@@ -280,7 +280,7 @@ func handleCheckoutTrip(trip *db.Trip, currentLocation db.Location, clock Clock)
 					EmployeeUserID: tr.EmployeeUserID,
 					Status:         tr.Status,
 				})
-				NotifyTripRouteToEmployee(&tr, &dm, previousOffset, ns)
+				// NotifyTripRouteToEmployee(&tr, &dm, previousOffset, ns)
 			}
 		}
 	}
