@@ -41,7 +41,7 @@ func handleCheckinTrip(trip *db.Trip, currentLocation db.Location, clock Clock) 
 	etaBusMap := make(map[int]DurationMetrics)
 	etaResp := ETAResponse{ID: trip.ID, UpdatedAt: clock.Now()}
 	ds := GetDurationService()
-	ns := GetNotificationService()
+	// ns := GetNotificationService()
 	// TODO: Verify if driver_arrived should be one of the all checked in statuses
 	log.Info(trip)
 	if trip.AllCheckedIn() {
@@ -181,7 +181,7 @@ func handleCheckoutTrip(trip *db.Trip, currentLocation db.Location, clock Clock)
 	etaBusMap := make(map[int]DurationMetrics)
 	etaResp := ETAResponse{ID: trip.ID, UpdatedAt: clock.Now()}
 	ds := GetDurationService()
-	ns := GetNotificationService()
+	// ns := GetNotificationService()
 	tripNotStarted := true
 	for _, tr := range trip.TripRoutes {
 		if tr.Status != "not_started" && tr.Status != "canceled" {
